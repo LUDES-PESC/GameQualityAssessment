@@ -1,0 +1,54 @@
+# -*- coding: utf-8 -*-
+'''
+Created on 24/05/2015
+
+@author: mangeli
+'''
+from __future__ import division
+import math
+from code_pac.measures import MeasureTemplate, MeasureType
+
+class DramaByPointsUp2First(MeasureTemplate):
+    '''Evaluate drama in a game by measuring the points distance
+     from the game winner to the eventual first place in each round'''
+    
+    
+    
+    def __init__(self, game):
+        super(DramaByPointsUp2First, self).__init__(game)
+        self._measureType = MeasureType(0, "Drama by points", 1) #for retro compatibility
+        
+    def _evaluateMeasure(self):
+        dist = 0
+        count = 0
+        for gameRound in self._game.getGameStruct():
+            '''first gameRound hasn't results'''
+            if not self._game.getGameStruct().index(gameRound) == 0:
+                '''ordered gameRound results'''
+                totalScores = gameRound[1]
+                
+                '''winner isn't gameRound best totalScore'''
+                if not self._winner == totalScores[0][0]:
+                    count += 1 
+                    for t in totalScores:
+                        if t[0] == self._winner:
+                            dist += math.sqrt((totalScores[0][2] - t[2]) / totalScores[0][2])
+                            break
+        self._drama = dist / count if count > 0 else 0
+    
+        
+if __name__ == "__main__":
+    from code_pac import dataBaseAdapter, gamePlots
+    import code_pac.desafio.model as desafioModel
+    import code_pac.model as model
+    
+    connection = dataBaseAdapter.getConnection()
+    tournament = desafioModel.Tournament.retriveList(connection)[0]
+    series = desafioModel.Series.retrieveList(tournament, connection)[0]
+    game = desafioModel.Game.retrieveList(series, connection)[0]
+    obj = model.DesafioGame(game)
+    value = DramaByPointsUp2First(obj)
+    
+    print value.getWinner(), value.getMeasureValue()
+    
+    gamePlots.GamePlots(obj).byPoints()
