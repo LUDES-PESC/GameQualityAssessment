@@ -10,5 +10,7 @@ In Ubuntu:
 Run these commands under the code_pac folder
 
 PYTHONPATH=$(dirname `pwd`) python groupViewGui.py
+
 OR
+
 PYTHONPATH=$(dirname `pwd`) python DesafioGameGui.py
