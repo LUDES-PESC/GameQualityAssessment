@@ -199,7 +199,7 @@ class GroupView(wx.Frame):
         
         
     def _fillComboGraphType(self):
-        self.cmbGraphType.SetItems(['Choose a graph type ...','Drama by Points', 'Drama by Position'])
+        self.cmbGraphType.SetItems(['Choose a graph type ...','Drama by Points', 'Drama by Position', 'Drama by Paths'])
         self.cmbGraphType.SetSelection(0)
         
     def _gameSetValues(self, game, acItem):
@@ -306,11 +306,17 @@ class GroupView(wx.Frame):
         
                 if cmbValue == 'Drama by Points':
                     SP.points(selectedData, self.panelGraph)
+                    
+                if cmbValue == 'Drama by Paths':
+                    SP.position(selectedData, self.panelGraph)
+                
             else:
                 if cmbValue == 'Drama by Position':
                     SP.histGeral(values[1], self.panelGraph, cmbValue)
                 if cmbValue == 'Drama by Points':
                     SP.histGeral(values[0], self.panelGraph, cmbValue)
+                if cmbValue == 'Drama by Paths':
+                    SP.histGeral(values[2], self.panelGraph, cmbValue)
                     
     def exploringSelectionChanged(self, event):  # wxGlade: GroupView.<event_handler>
         acItem = event.GetItem()

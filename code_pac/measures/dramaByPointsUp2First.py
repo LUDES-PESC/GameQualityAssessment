@@ -14,25 +14,30 @@ class DramaByPointsUp2First(MeasureTemplate):
     
     
     
-    def __init__(self, game):
-        super(DramaByPointsUp2First, self).__init__(game)
-        self._measureType = MeasureType(0, "Drama by points", 1) #for retro compatibility
+    def __init__(self, *args, **kwargs):
+        super(DramaByPointsUp2First, self).__init__(*args, **kwargs)
+        self._measureType = MeasureType(0, "Drama by points", 3) #for retro compatibility
         
     def _evaluateMeasure(self):
         dist = 0
         count = 0
         for gameRound in self._game.getGameStruct():
             '''first gameRound hasn't results'''
-            if not self._game.getGameStruct().index(gameRound) == 0:
+            if not self._game.getGameStruct().index(gameRound) <= self._ignored - 1:
                 '''ordered gameRound results'''
                 totalScores = gameRound[1]
+                
+                if self._normScores:
+                    bestScore = self._game.getGameStruct()[self._game.getNumberRounds() - 1][1][0].totalScore
+                else:
+                    bestScore = totalScores[0][2]
                 
                 '''winner isn't gameRound best totalScore'''
                 if not self._winner == totalScores[0][0]:
                     count += 1 
                     for t in totalScores:
                         if t[0] == self._winner:
-                            dist += math.sqrt((totalScores[0][2] - t[2]) / totalScores[0][2])
+                            dist += math.sqrt((totalScores[0][2] - t[2]) / bestScore)
                             break
         self._drama = dist / count if count > 0 else 0
     

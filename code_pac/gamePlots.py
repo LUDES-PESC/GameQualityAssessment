@@ -37,17 +37,18 @@ class GamePlots(object):
         plt.xlabel(u'rodada')    
         plt.show()
         
-    def byPosition(self):
+    def byPosition(self, ignored = 1):
         #plt.subplot(2,1,2)
         x = xrange(1, len(self._gameObj)+1)
         x = np.array(x)
+        
         for player in self._players:
             y=[]
             for i in range(0, len(self._gameObj)):
-                if i == 0: #every one starts in same position
+                if i + 1 <= ignored: #every one starts in same position
                     #y.append(len(jogadores))
                     y.append(1)
-                    pass
+                    
                 else:
                     found = False
                     for result in self._gameObj[i][1]:

@@ -14,16 +14,16 @@ class DramaByPositionUp2First(MeasureTemplate):
     
     
     
-    def __init__(self, game):
-        super(DramaByPositionUp2First, self).__init__(game)
-        self._measureType = MeasureType(code=1, description='Drama by position', version=1) #for retro compatibility
+    def __init__(self, *args, **kwargs):
+        super(DramaByPositionUp2First, self).__init__(*args, **kwargs)
+        self._measureType = MeasureType(code=1, description='Drama by position', version=2) #for retro compatibility
         
     def _evaluateMeasure(self):
         dist = 0
         count = 0
         for gameRound in self._game.getGameStruct():
             '''first gameRound hasn't results'''
-            if not self._game.getGameStruct().index(gameRound) == 0:
+            if not self._game.getGameStruct().index(gameRound) <= self._ignored -1:
                 '''ordered gameRound results'''
                 totalScores = gameRound[1]
                 

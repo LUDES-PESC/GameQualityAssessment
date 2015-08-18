@@ -4,24 +4,28 @@ Created on 08/06/2015
 @author: mangeli
 '''
 from __future__ import division
-from measures import DramaByPointsUp2First, DramaByPositionUp2First
+from measures import DramaByPointsUp2First, DramaByPositionUp2First, DramaByPaths
 from time import sleep
 from multiprocessing import Value, Process, Pool
 from code_pac.model import DesafioGame
 import dataBaseAdapter
 
 
+
 def dramaAnalizerLocal(game):
     conn = dataBaseAdapter.getConnection()
     game_aux = DesafioGame(game)
-    valPoints = DramaByPointsUp2First(game_aux).getMeasureValue()
-    valPosition = DramaByPositionUp2First(game_aux).getMeasureValue()
-    game.storeMeasure(DramaByPointsUp2First(game_aux), conn)
-    game.storeMeasure(DramaByPositionUp2First(game_aux),conn)
+    
+    valPoints = DramaByPointsUp2First(game=game_aux, ignored=1).getMeasureValue()
+    valPosition = DramaByPositionUp2First(game=game_aux, ignored=1).setIgnored(1).getMeasureValue()
+    valPath = DramaByPaths(game=game_aux, ignored=1).getMeasureValue()
+    #game.storeMeasure(DramaByPointsUp2First(game_aux), conn)
+    #game.storeMeasure(DramaByPositionUp2First(game_aux),conn)
+    game.storeMeasure(DramaByPaths(game_aux),conn)
     dataBaseAdapter.closeConnection(conn)
     with counter.get_lock(): 
         counter.value += 1
-    return (game, valPoints, valPosition)
+    return valPath#(game, valPoints, valPosition, valPath)
 
 def printFollow(counter, total):
     while True:
@@ -51,7 +55,7 @@ if __name__ == "__main__":
     pool = Pool(processes=10, initargs=(counter,))
     r = pool.map(dramaAnalizerLocal, (jogos))
     drama = sum(r) / total.value
-    
+    print drama
     pool.close()
     pool.join()
     #print "                \r", counter.value, " -- ", counter.value / total.value * 100, "%",

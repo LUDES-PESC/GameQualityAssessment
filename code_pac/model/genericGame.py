@@ -19,8 +19,8 @@ class GenericGame(object):
     def _setGameStruct(self):
         '''
         roundNumber
-           |_ playerCode, roundScore, accumulatedScore
-       ''' 
+           |_ playerCode, roundScore, totalScore
+        ''' 
         raise NotImplementedError()
     
     def getGameStruct(self):

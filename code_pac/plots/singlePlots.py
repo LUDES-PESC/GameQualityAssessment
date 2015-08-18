@@ -67,7 +67,7 @@ def points(inputGame, panel):
 def histGeral(values, panel, xLabel=''):
     panel.figure.clf()
     axes = panel.figure.gca()
-    axes.hist(values)
+    axes.hist(values, bins=20, rwidth=0.9, range=(0,1))
     axes.set_xlabel(xLabel)
     panel.draw()
       

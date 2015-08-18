@@ -43,7 +43,7 @@ class GameRoundResult:
                             'playerRoundStatus' : self.pRoundStatus }
                            )
         except psycopg2.IntegrityError: # simula um insert ignore, não insere dados que já existem
-            connection.rollback()       # baseando-se na chave primária da tabela
+            connection.rollback()       # baseandose na chave primária da tabela
         else:
             connection.commit()
         cursor.close()
