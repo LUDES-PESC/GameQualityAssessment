@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
 
+
+
 from code_pac import dataBaseAdapter as db
 from multiprocessing import Pool, Value, Lock
 from parser import Parser
