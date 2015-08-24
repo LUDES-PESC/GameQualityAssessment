@@ -5,6 +5,10 @@ The code_pac folder contains python 2.7 code files including executables to laun
 
 The main application folder must be in PYTHONPATH to launch the GUI files.
 
+Additional Python modules:
+---------
++ConfigParser
+
 Ubuntu:
 ---------
 Within code_pac folder
