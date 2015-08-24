@@ -16,12 +16,12 @@ def dramaAnalizerLocal(game):
     conn = dataBaseAdapter.getConnection()
     game_aux = DesafioGame(game)
     
-    valPoints = DramaByPointsUp2First(game=game_aux, ignored=1).getMeasureValue()
-    valPosition = DramaByPositionUp2First(game=game_aux, ignored=1).setIgnored(1).getMeasureValue()
+    #valPoints = DramaByPointsUp2First(game=game_aux, ignored=1).getMeasureValue()
+    #valPosition = DramaByPositionUp2First(game=game_aux, ignored=1).setIgnored(1).getMeasureValue()
     valPath = DramaByPaths(game=game_aux, ignored=1).getMeasureValue()
-    #game.storeMeasure(DramaByPointsUp2First(game_aux), conn)
-    #game.storeMeasure(DramaByPositionUp2First(game_aux),conn)
-    game.storeMeasure(DramaByPaths(game_aux),conn)
+    game.storeMeasure(DramaByPointsUp2First(game=game_aux, ignored=1), conn)
+    game.storeMeasure(DramaByPositionUp2First(game=game_aux, ignored=1),conn)
+    game.storeMeasure(DramaByPaths(game=game_aux, ignored=1),conn)
     dataBaseAdapter.closeConnection(conn)
     with counter.get_lock(): 
         counter.value += 1
@@ -46,18 +46,22 @@ if __name__ == "__main__":
     for jogo in jogos:
         if not isinstance(jogo, Game):
             print 'merda'
+    print len(jogos)
     
     counter = Value('i', 0)
     total = Value('i', len(jogos))
     p = Process(target=printFollow, args=(counter, total,))
     p.start()
     
-    pool = Pool(processes=10, initargs=(counter,))
+    pool = Pool(processes=3, initargs=(counter,))
     r = pool.map(dramaAnalizerLocal, (jogos))
     drama = sum(r) / total.value
+    print ""
     print drama
     pool.close()
     pool.join()
+    
+    
     #print "                \r", counter.value, " -- ", counter.value / total.value * 100, "%",
     print ""
     p.terminate()
