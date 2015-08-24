@@ -1,12 +1,14 @@
 GameQualityAssessment 
 =====================
 
-The code_pac folder contains python 2.7 code files including executables to launch some graphical user interfaces that allow viewing data.
+The code_pac folder contains python 2.7 code files, including executables to launch graphical user interfaces that allow data viewing.
 
 The main application folder must be in PYTHONPATH to launch the GUI files.
 
 Additional Python modules:
 ---------
+In order to run the program, one need some additional Python modules:
+
 + ConfigParser
 
 Ubuntu:
