@@ -40,19 +40,20 @@ if __name__ == "__main__":
     from code_pac import dataBaseAdapter
     import code_pac.desafio.model as desafioModel
     import code_pac.model as model
+    from code_pac.gamePlots import GamePlots
     
     connection = dataBaseAdapter.getConnection()
     tournament = desafioModel.Tournament.retriveList(connection)[0]
     series = desafioModel.Series.retrieveList(tournament, connection)[0]
     game = desafioModel.Game.retrieveList(series, connection)[6]
     obj = model.DesafioGame(game)
-    value = DramaByPositionUp2First(obj)
-    game.storeMeasure(value,connection)
+    value = DramaByPositionUp2First(game=obj, ignored=1)
+    #game.storeMeasure(value,connection)
     print value.getWinner(), value.getMeasureValue()
     
     print value.getType().description
     dataBaseAdapter.closeConnection(connection)
-    #gamePlots.GamePlots(obj).byPosition()
+    GamePlots(obj).byPosition()
     
     
     

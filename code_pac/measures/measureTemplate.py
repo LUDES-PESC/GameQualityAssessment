@@ -4,7 +4,7 @@ Created on 24/05/2015
 
 @author: mangeli
 '''
-from code_pac.model import GenericGame
+#from code_pac.model import GenericGame
 from collections import namedtuple
 
 MeasureType = namedtuple("MeasureType", ["code", "description", "version"])
@@ -16,13 +16,13 @@ class MeasureTemplate(object):
         '''if not isinstance(game, GenericGame):
             raise TypeError("Arg isn't a GenericGame object") '''
         
-        #some games has first rounds without results
+        #some games have first rounds without results
         if kwargs.get('ignored') == None:
             self._ignored = 0 
         else:
             self._ignored = kwargs.get('ignored')
         
-        #some games has variable high scores round bases so the
+        #some games have variable high scores round bases so the
         #higher game score doesn't mean the game ending
         if kwargs.get('normScores') == None:
             self._normScores = False

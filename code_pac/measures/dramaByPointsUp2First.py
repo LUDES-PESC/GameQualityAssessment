@@ -5,8 +5,9 @@ Created on 24/05/2015
 @author: mangeli
 '''
 from __future__ import division
+from code_pac.measures import MeasureTemplate, MeasureType
 import math
-from code_pac.measures import MeasureType, MeasureTemplate
+
 
 class DramaByPointsUp2First(MeasureTemplate):
     '''Evaluate drama in a game by measuring the points distance
@@ -52,7 +53,7 @@ if __name__ == "__main__":
     series = desafioModel.Series.retrieveList(tournament, connection)[0]
     game = desafioModel.Game.retrieveList(series, connection)[0]
     obj = model.DesafioGame(game)
-    value = DramaByPointsUp2First(obj)
+    value = DramaByPointsUp2First(game=obj, ignored=1)
     
     print value.getWinner(), value.getMeasureValue()
     

@@ -69,8 +69,8 @@ if __name__ == "__main__":
     series = desafioModel.Series.retrieveList(tournament, connection)[0]
     game = desafioModel.Game.retrieveList(series, connection)[5]
     obj = model.DesafioGame(game)
-    value = DramaByPaths(obj)
-    game.storeMeasure(value,connection)
+    value = DramaByPaths(game=obj, ignored=1)
+    #game.storeMeasure(value,connection)
     print value.getWinner(), value.getMeasureValue()
     
     print value.getType().description
