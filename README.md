@@ -7,7 +7,7 @@ The main application folder must be in PYTHONPATH to launch the GUI files.
 
 Additional Python modules:
 ---------
-+ConfigParser
++ ConfigParser
 
 Ubuntu:
 ---------
