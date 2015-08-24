@@ -1,4 +1,4 @@
-from code_pac.model.genericGame import GenericGame, ItemTuple
+from genericGame import GenericGame, ItemTuple
 from desafioGame import DesafioGame
 from brasileiroGame import BrasileiroGame
 
