@@ -6,7 +6,7 @@ Created on 24/05/2015
 '''
 from __future__ import division
 import math
-from code_pac.measures import MeasureTemplate, MeasureType
+from code_pac.measures import MeasureType, MeasureTemplate
 
 class DramaByPointsUp2First(MeasureTemplate):
     '''Evaluate drama in a game by measuring the points distance
