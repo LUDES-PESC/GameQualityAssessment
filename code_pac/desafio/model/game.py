@@ -39,9 +39,9 @@ class Game:
         cursor.close()
     
     def storeMeasure(self, measureIn, connection):
-        '''if not isinstance(measureIn, code_pac.measures.measureTemplate.MeasureTemplate):
+        if not isinstance(measureIn, code_pac.measures.measureTemplate.MeasureTemplate):
             raise TypeError("First arg has to be a MeasureTemplate implementer object")
-        '''
+        
         cursor = connection.cursor()
         try:
             cursor.execute("""INSERT INTO measures (tournamentCode, seriesCode, groupCode, 
