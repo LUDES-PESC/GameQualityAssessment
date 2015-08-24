@@ -10,6 +10,7 @@ import code_pac.desafio.model
 class DesafioGame(GenericGame):
     
     def __init__(self, game):
+    
         if not isinstance(game, code_pac.desafio.model.Game):
             raise TypeError('Arg must to be a desafio.model.Game instance')
         
