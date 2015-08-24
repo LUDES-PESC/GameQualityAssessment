@@ -10,6 +10,7 @@ Additional Python modules:
 In order to run the program, one need some additional Python modules:
 
 + ConfigParser
++ wxPython
 
 Ubuntu:
 ---------
