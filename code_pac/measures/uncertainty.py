@@ -12,8 +12,10 @@ import math
 
 class Uncertainty(MeasureTemplate):
     '''
-    evaluates the game Uncertainty by measure the probability of players win the game based on their
-    relative position to the leader
+    evaluates the game Uncertainty by measure the distance between the
+    discrete uniform distribution of the probabilities of players win
+    the game and the actual probability distribution vis a vis the normalized
+    score relation
     '''
 
 
@@ -29,43 +31,42 @@ class Uncertainty(MeasureTemplate):
             self._measureValue = 0 #preventing possible garbage in dataset
         else:
             players = self._game.getPlayers() #list of players
-            winner = self.getWinner()
+            nPlayers = len(players)
+            #winner = self.getWinner()
                         
-            positionHistory = {} #alternative method
-            scoresHistory = {}
+            probabilitiesHistory = []
             turnCounter = 0
             
-            for player in players:
-                positionHistory[player] = []
-                scoresHistory[player] = []
-        
             for gameRound in self._game.getGameStruct():
                 inPlayers = []
+                normScores = []
+                probabilities = []
                 roundScores={}
                 topScore = 0
                 '''first gameRound hasn't results'''
                 if self._game.getGameStruct().index(gameRound) > self._ignored - 1: #starting from 0
                     turnCounter += 1
-                    turnDrama = 0
                     #building round players list and top score in the turn
                     for roundItem in gameRound[1]:
                         inPlayers.append(roundItem.playerCode)
-                        roundScores[roundItem.playerCode] = roundItem.roundScore 
+                        roundScores[roundItem.playerCode] = roundItem.roundScore
                         if roundItem.roundScore > topScore:
                             topScore = roundItem.roundScore
                             
-                    for player in positionHistory.keys():
-                        #filling scoresHistory with values from this turn
+                    for player in players:
                         if player in inPlayers:
-                            positionHistory[player].append(inPlayers.index(player) + 1)
-                            scoresHistory[player].append(roundScores[player]/topScore) 
-                        else: #player is eliminated
-                            positionHistory[player].append(0) 
-                            scoresHistory[player].append(0)
-                        #computing turn drama
-                        
+                            normScore = (roundScores[player]/topScore) #normalized score 
+                        else:
+                            normScore = 0
+                        normScores.append(normScore)
                     
+                    for score in normScores:
+                        probabilities.append(score/sum(normScores))
+                    
+                    probabilitiesHistory.append(probabilities)
             
+            
+                
             self._measureValue = 0
             
     def _getExpectedScore(self, scores):
@@ -98,8 +99,8 @@ if __name__ == '__main__':
     
     #set desafioGame data
     tournamentCode = 123
-    seriesCode = 264
-    groupCode = 10886
+    seriesCode = 272
+    groupCode = 13379
     
     
     if testType == 1:
