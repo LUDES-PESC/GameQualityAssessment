@@ -40,7 +40,7 @@ class DramaByPointsUp2First(MeasureTemplate):
                         if t[0] == self._winner:
                             dist += math.sqrt((totalScores[0][2] - t[2]) / bestScore)
                             break
-        self._drama = dist / count if count > 0 else 0
+        self._measureValue = dist / count if count > 0 else 0
     
         
 if __name__ == "__main__":

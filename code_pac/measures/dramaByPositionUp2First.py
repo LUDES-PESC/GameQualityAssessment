@@ -34,7 +34,7 @@ class DramaByPositionUp2First(MeasureTemplate):
                         if t.playerCode == self._winner:
                             dist += math.sqrt(totalScores.index(t) / len(totalScores))
                             break
-        self._drama = dist / count if count > 0 else 0 
+        self._measureValue = dist / count if count > 0 else 0 
 
 if __name__ == "__main__":
     from code_pac import dataBaseAdapter

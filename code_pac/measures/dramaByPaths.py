@@ -37,7 +37,7 @@ class DramaByPaths(MeasureTemplate):
                 if not self._winner == totalScores[0].playerCode:
                     weakCount +=1
                    
-        self._drama = (weakCount / (nTurn - 1)) *(1- (distSum))
+        self._measureValue = (weakCount / (nTurn - 1)) *(1- (distSum))
         
         
     def _maxDrama(self, m):

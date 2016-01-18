@@ -22,13 +22,20 @@ class MeasureTemplate(object):
         else:
             self._ignored = kwargs.get('ignored')
         
-        #some games have variable high scores round bases so the
+        #some games have variable high scores for each round and the
         #higher game score doesn't mean the game ending
+        #so we don't normalize scores
         if kwargs.get('normScores') == None:
             self._normScores = False
         else:
             self._normScores = kwargs.get('normScores')
-        
+            
+        #some games have a minumum number of points other than 0
+        if kwargs.get('minScore') == None:
+            self._minScore = 0
+        else:
+            self._minScore = kwargs.get('minScore')
+            
         self._game = kwargs.get('game')
         self._findWinner()
         self._evaluateMeasure()
@@ -48,7 +55,7 @@ class MeasureTemplate(object):
         raise NotImplementedError()
     
     def getMeasureValue(self):
-        return self._drama
+        return self._measureValue
     
     def getWinner(self):
         return self._winner
