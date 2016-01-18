@@ -104,3 +104,4 @@ class Game:
         for game in preRetorno:
             retorno.append(Game(series, game['groupcode']))
         return retorno
+    
