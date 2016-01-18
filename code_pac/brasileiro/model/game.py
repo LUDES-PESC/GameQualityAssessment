@@ -36,5 +36,5 @@ class Game:
             
             
 if __name__ == '__main__':
-    print Game.retrieveList()[1].year
-    
+    lista = Game.retrieveList()
+    print lista
