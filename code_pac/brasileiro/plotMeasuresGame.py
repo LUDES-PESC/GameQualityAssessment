@@ -10,7 +10,7 @@ from code_pac.model import BrasileiroGame
 import matplotlib.pyplot as plt
 import numpy as np
 import math
-from code_pac.measures import DramaByPaths, DramaByPositionUp2First, DramaByPointsUp2First
+from code_pac.measures import DramaByPaths, DramaByPositionUp2First, DramaByPointsUp2First, LeadChange
 
 def maxDrama(nPlayers, nRounds, m):
         x1 = 1 #primeira rodada 
@@ -44,7 +44,8 @@ def plotPath(players, rounds, order, winnerPath, dValues):
     fString = '{0:.4f}'
     plt.gca().text(0.63,0.02,'Drama by Path: ' + fString.format(dValues[0]) + '\n'
                    + 'Drama by Points: ' + fString.format(dValues[1]) + '\n'
-                   + 'Drama by Position: ' + fString.format(dValues[2])
+                   + 'Drama by Position: ' + fString.format(dValues[2]) + '\n'
+                   + 'Lead Change: ' + fString.format(dValues[3])
                    ,transform=plt.gca().transAxes,
                    verticalalignment='bottom', horizontalalignment='left', backgroundcolor='white')
     plt.legend(fontsize='medium', loc=7)
@@ -52,7 +53,7 @@ def plotPath(players, rounds, order, winnerPath, dValues):
 
 if __name__ == '__main__':
     games = Game.retrieveList()
-    ano = '2013'
+    ano = '2003'
     game = None
     for g in games:
         if g.year == ano:
@@ -73,7 +74,8 @@ if __name__ == '__main__':
     dramaPath = DramaByPaths(game=genGame, ignored=0).getMeasureValue() 
     dramaPoints = DramaByPointsUp2First(game=genGame, ignored=0, normScores=True).getMeasureValue()
     dramaPosition = DramaByPositionUp2First(game=genGame, ignored=0).getMeasureValue()
-    dValues = (dramaPath, dramaPoints, dramaPosition)
+    leadChange = LeadChange(game=genGame, ignored=0).getMeasureValue()
+    dValues = (dramaPath, dramaPoints, dramaPosition, leadChange)
     
     plotPath(nPlayers, nRounds, ano, winnerPath, dValues)
     plt.show()

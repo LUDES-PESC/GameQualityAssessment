@@ -4,7 +4,7 @@ Created on 08/06/2015
 @author: mangeli
 '''
 from __future__ import division
-from measures import DramaByPointsUp2First, DramaByPositionUp2First, DramaByPaths
+from measures import Uncertainty
 from time import sleep
 from multiprocessing import Value, Process, Pool
 from code_pac.model import DesafioGame
@@ -12,20 +12,27 @@ import dataBaseAdapter
 
 
 
-def dramaAnalizerLocal(game):
+def storeUncertainty(game):
     conn = dataBaseAdapter.getConnection()
     game_aux = DesafioGame(game)
     
     #valPoints = DramaByPointsUp2First(game=game_aux, ignored=1).getMeasureValue()
     #valPosition = DramaByPositionUp2First(game=game_aux, ignored=1).setIgnored(1).getMeasureValue()
-    valPath = DramaByPaths(game=game_aux, ignored=1).getMeasureValue()
-    game.storeMeasure(DramaByPointsUp2First(game=game_aux, ignored=1), conn)
-    game.storeMeasure(DramaByPositionUp2First(game=game_aux, ignored=1),conn)
-    game.storeMeasure(DramaByPaths(game=game_aux, ignored=1),conn)
+    #valPath = DramaByPaths(game=game_aux, ignored=1).getMeasureValue()
+    #valLeadChange = LeadChange(game=game_aux, ignored=1).getMeasureValue()
+    try:
+        valUncertainty = Uncertainty(game=game_aux, ignored=1, minScore=50).getMeasureValue()
+    except:
+        print 'Error:', game.tournamentCode, ' ', game.seriesCode, ' ', game.groupCode
+        
+    #game.storeMeasure(DramaByPointsUp2First(game=game_aux, ignored=1), conn)
+    #game.storeMeasure(DramaByPositionUp2First(game=game_aux, ignored=1),conn)
+    #game.storeMeasure(DramaByPaths(game=game_aux, ignored=1),conn)
+    game.storeMeasure(Uncertainty(game=game_aux, ignored=1, minScore=50),conn)
     dataBaseAdapter.closeConnection(conn)
     with counter.get_lock(): 
         counter.value += 1
-    return valPath#(game, valPoints, valPosition, valPath)
+    return valUncertainty#(game, valPoints, valPosition, valPath)
 
 def printFollow(counter, total):
     while True:
@@ -45,7 +52,7 @@ if __name__ == "__main__":
     #print jogos[:]
     for jogo in jogos:
         if not isinstance(jogo, Game):
-            print 'merda'
+            print 'error'
     print len(jogos)
     
     counter = Value('i', 0)
@@ -54,14 +61,15 @@ if __name__ == "__main__":
     p.start()
     
     pool = Pool(processes=3, initargs=(counter,))
-    r = pool.map(dramaAnalizerLocal, (jogos))
+    r = pool.map(storeUncertainty, (jogos))
     drama = sum(r) / total.value
     print ""
     print drama
     pool.close()
     pool.join()
     
-    
+    dataBaseAdapter.closeConnection(conn)
+
     #print "                \r", counter.value, " -- ", counter.value / total.value * 100, "%",
     print ""
     p.terminate()
