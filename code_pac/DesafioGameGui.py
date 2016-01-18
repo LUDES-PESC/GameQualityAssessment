@@ -1,4 +1,4 @@
-
+from __future__ import division
 import wx
 import wx.grid
 import dataBaseAdapter
@@ -213,13 +213,21 @@ class GUIDesafioGame(wx.Frame):
         measures = inputGame.retrieveMeasureList(conn, "last")
         dataBaseAdapter.closeConnection(conn)
         self.lstAssessment.DeleteAllItems()
+        self.txtOverall.SetValue('')
+        overallValue = 0
         index = 0
         for measure in measures:
             self.lstAssessment.InsertStringItem(index, str(measure['measurecode']))
             self.lstAssessment.SetStringItem(index, 1, measure['measuredescription'])
             self.lstAssessment.SetStringItem(index, 2, str(measure['measureversion']))
             self.lstAssessment.SetStringItem(index, 3, str(measure['measurevalue']))
+            #byPath-2 uncertainty-3 leadChang-4
+            if measure['measurecode'] == 2 or \
+                measure['measurecode'] == 3 or \
+                measure['measurecode'] == 4:  
+                overallValue += measure['measurevalue']
             index += 1
+        self.txtOverall.SetValue(str(overallValue / 3))
     
     def _fillTable(self, inputGame):
         obj = DesafioGame(inputGame)
@@ -258,10 +266,11 @@ class GUIDesafioGame(wx.Frame):
         self.pointsGraph.figure.clf()
         axes = self.pointsGraph.figure.gca()
         
-        x = xrange(1, len(gameObj)+1)
+        #x = xrange(1, len(gameObj)+1)
+        x = xrange(2, len(gameObj)+1) #ignoring the first round
         for player in players:
             y=[]
-            for i in range(0, len(gameObj)):
+            for i in range(1, len(gameObj)):
                 found = False
                 for result in gameObj[i][1]:
                     if result.playerCode == player:
@@ -282,15 +291,15 @@ class GUIDesafioGame(wx.Frame):
         self.positionGraph.figure.clf()
         axes = self.positionGraph.figure.gca()    
         
-        x = xrange(1, len(gameObj)+1)
-        x = np.array(x)
+        #x = xrange(1, len(gameObj)+1)
+        x = xrange(2, len(gameObj)+1) #ignoring the first round
         for player in players:
             y=[]
-            for i in range(0, len(gameObj)):
+            #for i in range(0, len(gameObj)):
+            for i in range(1, len(gameObj)):
                 if i == 0: #every one starts in same position
                     #y.append(len(jogadores))
                     y.append(1)
-                    pass
                 else:
                     found = False
                     for result in gameObj[i][1]:

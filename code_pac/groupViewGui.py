@@ -70,7 +70,7 @@ class GroupView(wx.Frame):
         tournaments = Tournament.retriveList(conn)
         #tList = []
         for t in tournaments:
-            tVal = t.country.strip() + " - " + str(t.refYear)
+            tVal = t.country.strip() + " - " + str(t.refYear) + " - " + "(code: " + str(t.tournamentCode) + ")"
             node = self.treeGameExploring.AppendItem(parent=root, text=tVal, data=wx.TreeItemData(t))
             series = sorted(Series.retrieveList(t, conn), key=lambda series: series.seriesOrder)
             #sList=[]
@@ -199,7 +199,7 @@ class GroupView(wx.Frame):
         
         
     def _fillComboGraphType(self):
-        self.cmbGraphType.SetItems(['Choose a graph type ...','Drama by Points', 'Drama by Position', 'Drama by Paths'])
+        self.cmbGraphType.SetItems(['Choose a graph type ...','Drama by Points', 'Drama by Position', 'Drama by Paths', 'Lead Change', 'Uncertainty'])
         self.cmbGraphType.SetSelection(0)
         
     def _gameSetValues(self, game, acItem):
@@ -239,6 +239,7 @@ class GroupView(wx.Frame):
     
     def _fillLstMeasures(self, games):
         self.lstMeasures.DeleteAllItems()
+        self.txtOverallEvaluation.SetValue('')
         if not type(games) == list:
             raise TypeError('First arg has to be a list of games')
         
@@ -285,6 +286,11 @@ class GroupView(wx.Frame):
             self.lstMeasures.SetStringItem(index, 3, str(measuresAvg[m['measurecode']]))
             index += 1
         
+        #overall drama_by_path + uncertainty + lead_change over 3
+        overallEvaluation = (measuresAvg[2] + measuresAvg[3] + measuresAvg[4]) / 3
+        
+        self.txtOverallEvaluation.SetValue(str(overallEvaluation))
+        
         dataBaseAdapter.closeConnection(connection)
         dlg.Destroy()
         self.treeGameExploring.SetFocus()
@@ -302,14 +308,20 @@ class GroupView(wx.Frame):
             selectedData = self.treeGameExploring.GetItemData(selected).GetData()
             if isinstance(selectedData, Game):
                 if cmbValue == 'Drama by Position':
-                    SP.position(selectedData, self.panelGraph)
+                    SP.position(selectedData, self.panelGraph, ignored=1)
         
                 if cmbValue == 'Drama by Points':
-                    SP.points(selectedData, self.panelGraph)
+                    SP.points(selectedData, self.panelGraph, ignored=1)
                     
                 if cmbValue == 'Drama by Paths':
-                    SP.position(selectedData, self.panelGraph)
+                    SP.position(selectedData, self.panelGraph, ignored=1)
                 
+                if cmbValue == 'Lead Change':
+                    SP.position(selectedData, self.panelGraph, ignored=1)
+                    
+                if cmbValue == 'Uncertainty':
+                    SP.points(selectedData, self.panelGraph, ignored=1)
+                    
             else:
                 if cmbValue == 'Drama by Position':
                     SP.histGeral(values[1], self.panelGraph, cmbValue)
@@ -317,6 +329,11 @@ class GroupView(wx.Frame):
                     SP.histGeral(values[0], self.panelGraph, cmbValue)
                 if cmbValue == 'Drama by Paths':
                     SP.histGeral(values[2], self.panelGraph, cmbValue)
+                if cmbValue == 'Uncertainty':
+                    SP.histGeral(values[3], self.panelGraph, cmbValue)   
+                if cmbValue == 'Lead Change':
+                    SP.histGeral(values[4], self.panelGraph, cmbValue)
+                
                     
     def exploringSelectionChanged(self, event):  # wxGlade: GroupView.<event_handler>
         acItem = event.GetItem()
