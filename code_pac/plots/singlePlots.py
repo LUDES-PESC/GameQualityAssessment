@@ -7,18 +7,18 @@ import matplotlib
 import numpy as np
 from code_pac.model import DesafioGame
 
-def position(inputGame, panel):
+def position(inputGame, panel, ignored=0):
     obj = DesafioGame(inputGame)
     players = obj.getPlayers()
     gameObj = obj.getGameStruct()
     panel.figure.clf()
     axes = panel.figure.gca()    
     
-    x = xrange(1, len(gameObj)+1)
+    x = xrange(1+ignored, len(gameObj)+1)
     x = np.array(x)
     for player in players:
         y=[]
-        for i in range(0, len(gameObj)):
+        for i in range(0+ignored, len(gameObj)):
             if i == 0: #every one starts in same position
                 #y.append(len(jogadores))
                 y.append(1)
@@ -40,17 +40,17 @@ def position(inputGame, panel):
     axes.invert_yaxis()    
     panel.draw()
     
-def points(inputGame, panel):
+def points(inputGame, panel, ignored=0):
     obj = DesafioGame(inputGame)
     players = obj.getPlayers()
     gameObj = obj.getGameStruct()
     panel.figure.clf()
     axes = panel.figure.gca()
     
-    x = xrange(1, len(gameObj)+1)
+    x = xrange(1+ignored, len(gameObj)+1)
     for player in players:
         y=[]
-        for i in range(0, len(gameObj)):
+        for i in range(0+ignored, len(gameObj)):
             found = False
             for result in gameObj[i][1]:
                 if result.playerCode == player:
