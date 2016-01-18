@@ -72,7 +72,7 @@ class GUIDesafioGame(wx.Frame):
 
     def __set_properties(self):
         # begin wxGlade: GUIDesafioGameView.__set_properties
-        self.SetTitle(_("Desafio Game View"))
+        self.SetTitle(_("Match Viewer"))
         #self.lstTournament.SetSelection(0)
         self.__fillBlankGrid()
         #self.pointsGraph.SetBackgroundColour(wx.WHITE)
@@ -282,6 +282,8 @@ class GUIDesafioGame(wx.Frame):
         
         axes.set_ylabel('Points')
         axes.set_xlabel('Turn')
+        axes.hlines(axes.get_yticks(),2, len(gameObj), colors='0.75')
+        axes.vlines(axes.get_xticks(), axes.get_ylim()[0], axes.get_ylim()[1], colors='0.75')
         self.pointsGraph.draw()   
     
     def _plotPositions(self, inputGame):
@@ -314,6 +316,8 @@ class GUIDesafioGame(wx.Frame):
         axes.set_yticks(xrange(0,len(players)+1))
         axes.set_ylabel('Position')
         axes.set_xlabel('Turn')
+        axes.hlines(axes.get_yticks(),2, len(gameObj), colors='0.75')
+        axes.vlines(axes.get_xticks(), axes.get_ylim()[0], axes.get_ylim()[1], colors='0.75')
         axes.invert_yaxis()    
         self.positionGraph.draw()
     

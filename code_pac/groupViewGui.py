@@ -90,7 +90,7 @@ class GroupView(wx.Frame):
 
     def __set_properties(self):
         # begin wxGlade: GroupView.__set_properties
-        self.SetTitle(_("Group View"))
+        self.SetTitle(_("Group Viewer"))
         self.SetSize((750, 600))
         self.lstMeasures.InsertColumn(0, 'Code', width=50)
         self.lstMeasures.InsertColumn(1, 'Measure', width=150)
@@ -211,17 +211,26 @@ class GroupView(wx.Frame):
         self.valQTYGame.SetLabel("1")
         #fill measures single game
         self.lstMeasures.DeleteAllItems()
+        self.txtOverallEvaluation.SetValue('')
         conn = dataBaseAdapter.getConnection()
         measures = self.treeGameExploring.GetItemData(acItem).GetData().retrieveMeasureList(conn)
         #fillLst
+        overallValue = 0
         index = 0
         for m in measures:
             self.lstMeasures.InsertStringItem(index, str(m['measurecode']))
             self.lstMeasures.SetStringItem(index, 1, m['measuredescription'])
             self.lstMeasures.SetStringItem(index, 2, str(m['measureversion']))
             self.lstMeasures.SetStringItem(index, 3, str(m['measurevalue']))
+            #byPath-2 uncertainty-3 leadChang-4
+            if m['measurecode'] == 2 or \
+                m['measurecode'] == 3 or \
+                m['measurecode'] == 4:  
+                overallValue += m['measurevalue']
             index += 1
         #self._fillComboGraphType()
+        #overall drama_by_path + uncertainty + lead_change over 3
+        self.txtOverallEvaluation.SetValue(str(overallValue / 3))
         
         self._fillGraphPanel()
         dataBaseAdapter.closeConnection(conn)

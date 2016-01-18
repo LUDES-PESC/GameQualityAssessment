@@ -37,6 +37,8 @@ def position(inputGame, panel, ignored=0):
     axes.set_yticks(xrange(0,len(players)+1))
     axes.set_ylabel('Position')
     axes.set_xlabel('Turn')
+    axes.hlines(axes.get_yticks(),1+ignored, len(gameObj), colors='0.75')
+    axes.vlines(axes.get_xticks(), axes.get_ylim()[0], axes.get_ylim()[1], colors='0.75')
     axes.invert_yaxis()    
     panel.draw()
     
@@ -62,12 +64,15 @@ def points(inputGame, panel, ignored=0):
     
     axes.set_ylabel('Points')
     axes.set_xlabel('Turn')
+    axes.hlines(axes.get_yticks(),1+ignored, len(gameObj), colors='0.75')
+    axes.vlines(axes.get_xticks(), axes.get_ylim()[0], axes.get_ylim()[1], colors='0.75')
     panel.draw()
     
 def histGeral(values, panel, xLabel=''):
     panel.figure.clf()
     axes = panel.figure.gca()
-    axes.hist(values, bins=20, rwidth=0.9, range=(0,1))
+    axes.hist(values, bins=20, rwidth=0.9, range=(0,1), zorder=2)
+    axes.hlines(axes.get_yticks(),axes.get_xlim()[0], axes.get_xlim()[1], colors='0.75',zorder=1)
     axes.set_xlabel(xLabel)
     panel.draw()
       
