@@ -94,9 +94,9 @@ if __name__ == '__main__':
     testType = 2
     
     #set desafioGame data
-    tournamentCode = 123
-    seriesCode = 272
-    groupCode = 13376
+    tournamentCode = 160
+    seriesCode = 296
+    groupCode = 64117
     
     
     if testType == 1:

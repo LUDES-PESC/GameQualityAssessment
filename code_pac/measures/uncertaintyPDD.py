@@ -28,7 +28,7 @@ class UncertaintyPDD(MeasureTemplate):
             self._scoreLimit = kwargs.get('scoreLimit')
             
         super(UncertaintyPDD, self).__init__(*args, **kwargs)
-        self._measureType = MeasureType(code=5, description='Uncertainty by PDD', version=2) #for retro compatibility
+        self._measureType = MeasureType(code=5, description='Uncertainty by PDD', version=3) #for retro compatibility
         #some games have a limit in the score increasing per turn
         
 
@@ -69,14 +69,14 @@ class UncertaintyPDD(MeasureTemplate):
                             proPlayer = self._probPlayer(player, turnScores, self) #(turnScores[player]/totalRoundScore) #probability of the player win the match
                         else:
                             proPlayer = 0
-                        turnUncertaintyPart += math.pow((math.sqrt(proPlayer) - 1/math.sqrt(nPlayers)),2) / (2 - 2/math.sqrt(nPlayers)) 
+                        turnUncertaintyPart += ((math.sqrt(proPlayer) - 1/math.sqrt(nPlayers))**2) / (2 - (2/math.sqrt(nPlayers))) 
                         '''for debug'''
                         #testProb += proPlayer
                         #print player, turnScores.get(player), proPlayer
                     
                     turnUncertainty = 1 - math.sqrt(turnUncertaintyPart)
                     matchUncertainty += turnUncertainty
-                    #print turnCertainty, testProb
+                    #print turnUncertainty, testProb
                             
             self._measureValue = matchUncertainty / (self._nTurns - 1)
                 
@@ -92,9 +92,9 @@ if __name__ == '__main__':
     testType = 2
     
     #set desafioGame data
-    tournamentCode = 123
-    seriesCode = 272
-    groupCode = 13376
+    tournamentCode = 160
+    seriesCode = 296
+    groupCode = 64117
     
     
     if testType == 1:
