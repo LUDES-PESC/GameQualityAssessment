@@ -28,7 +28,7 @@ class UncertaintyPDD(MeasureTemplate):
             self._scoreLimit = kwargs.get('scoreLimit')
             
         super(UncertaintyPDD, self).__init__(*args, **kwargs)
-        self._measureType = MeasureType(code=5, description='Uncertainty by PDD', version=1) #for retro compatibility
+        self._measureType = MeasureType(code=5, description='Uncertainty by PDD', version=2) #for retro compatibility
         #some games have a limit in the score increasing per turn
         
 
@@ -43,13 +43,13 @@ class UncertaintyPDD(MeasureTemplate):
             nPlayers = len(players)
             
                         
-            matchCertainty = 0
+            matchUncertainty = 0
             
             
             for gameRound in self._game.getGameStruct():
                 inPlayers = []
                 turnScores={}
-                turnCertainty = 0
+                turnUncertainty = 0
                 self._turnNumber = self._game.getGameStruct().index(gameRound) + 1
                 
                 '''first gameRound hasn't results, last gameRound is discarded'''
@@ -62,23 +62,23 @@ class UncertaintyPDD(MeasureTemplate):
                     for roundItem in gameRound[1]:
                         inPlayers.append(roundItem.playerCode)
                         turnScores[roundItem.playerCode] = max(0, roundItem.totalScore - self._minScore)
-                        turnCertaintyPart = 0
+                        turnUncertaintyPart = 0
                             
                     for player in players:
                         if player in inPlayers:
                             proPlayer = self._probPlayer(player, turnScores, self) #(turnScores[player]/totalRoundScore) #probability of the player win the match
                         else:
                             proPlayer = 0
-                        turnCertaintyPart += math.pow((math.sqrt(proPlayer) - 1/math.sqrt(nPlayers)),2) / (2 - 2/math.sqrt(nPlayers)) 
+                        turnUncertaintyPart += math.pow((math.sqrt(proPlayer) - 1/math.sqrt(nPlayers)),2) / (2 - 2/math.sqrt(nPlayers)) 
                         '''for debug'''
                         #testProb += proPlayer
                         #print player, turnScores.get(player), proPlayer
                     
-                    turnCertainty = math.sqrt(turnCertaintyPart)
-                    matchCertainty += turnCertainty
+                    turnUncertainty = 1 - math.sqrt(turnUncertaintyPart)
+                    matchUncertainty += turnUncertainty
                     #print turnCertainty, testProb
                             
-            self._measureValue = 1 - (matchCertainty / (self._nTurns - 1))
+            self._measureValue = matchUncertainty / (self._nTurns - 1)
                 
 if __name__ == '__main__':
     import code_pac.brasileiro.model as brasileiroModel
