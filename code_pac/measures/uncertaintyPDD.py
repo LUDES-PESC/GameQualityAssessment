@@ -69,7 +69,7 @@ class UncertaintyPDD(MeasureTemplate):
                             proPlayer = self._probPlayer(player, turnScores, self) #(turnScores[player]/totalRoundScore) #probability of the player win the match
                         else:
                             proPlayer = 0
-                        turnUncertaintyPart += ((math.sqrt(proPlayer) - 1/math.sqrt(nPlayers))**2) / (2 - (2/math.sqrt(nPlayers))) 
+                        turnUncertaintyPart += math.pow((math.sqrt(proPlayer) - 1/math.sqrt(nPlayers)),2) / (2 - (2/math.sqrt(nPlayers))) 
                         '''for debug'''
                         #testProb += proPlayer
                         #print player, turnScores.get(player), proPlayer
@@ -109,6 +109,6 @@ if __name__ == '__main__':
         series = desafioModel.Series.retrieve(tournament, seriesCode, conn)
         game = desafioModel.Game(series, groupCode)
         print tournament.refYear
-        print measures.UncertaintyPDD(game=model.DesafioGame(game), ignored=1, minScore=10).getMeasureValue()
+        print measures.UncertaintyPDD(game=model.DesafioGame(game), ignored=1, minScore=50).getMeasureValue()
         print '================'
     
