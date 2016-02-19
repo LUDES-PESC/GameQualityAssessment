@@ -3,7 +3,9 @@ from dramaByPointsUp2First import DramaByPointsUp2First
 from dramaByPositionUp2First import DramaByPositionUp2First
 from dramaByPaths import DramaByPaths
 from leadChange import LeadChange
-from uncertainty import Uncertainty
+from uncertaintyPDD import UncertaintyPDD
+from uncertaintyEntropy import UncertaintyEntropy
+import probWinning
 
 
 __all__ =['measureTemplate',
@@ -11,7 +13,9 @@ __all__ =['measureTemplate',
            'dramaByPositionUp2First',
            'dramaByPaths',
            'leadChange',
-           'uncertainty']
+           'uncertaintyPDD',
+           'probWinning',
+           'uncertaintyEntropy']
 
 
 

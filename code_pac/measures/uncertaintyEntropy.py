@@ -11,7 +11,7 @@ from code_pac.measures import probWinning
 import math, sys
 
 
-class UncertaintyPDD(MeasureTemplate):
+class UncertaintyEntropy(MeasureTemplate):
     '''
     evaluates the game Uncertainty by measure the distance between the
     discrete uniform distribution of the probabilities of players win
@@ -27,8 +27,8 @@ class UncertaintyPDD(MeasureTemplate):
             self._probPlayer = probWinning.probB
             self._scoreLimit = kwargs.get('scoreLimit')
             
-        super(UncertaintyPDD, self).__init__(*args, **kwargs)
-        self._measureType = MeasureType(code=5, description='Uncertainty by PDD', version=1) #for retro compatibility
+        super(UncertaintyEntropy, self).__init__(*args, **kwargs)
+        self._measureType = MeasureType(code=4, description='Uncertainty by Entropy', version=1) #for retro compatibility
         #some games have a limit in the score increasing per turn
         
 
@@ -43,7 +43,7 @@ class UncertaintyPDD(MeasureTemplate):
             nPlayers = len(players)
             
                         
-            matchCertainty = 0
+            matchUncertainty = 0
             
             
             for gameRound in self._game.getGameStruct():
@@ -62,23 +62,25 @@ class UncertaintyPDD(MeasureTemplate):
                     for roundItem in gameRound[1]:
                         inPlayers.append(roundItem.playerCode)
                         turnScores[roundItem.playerCode] = max(0, roundItem.totalScore - self._minScore)
-                        turnCertaintyPart = 0
+                        turnUncertaintyPart = 0
                             
                     for player in players:
                         if player in inPlayers:
                             proPlayer = self._probPlayer(player, turnScores, self) #(turnScores[player]/totalRoundScore) #probability of the player win the match
+                            turnUncertaintyPart += proPlayer*math.log(proPlayer,2) / math.log(nPlayers,2)
                         else:
                             proPlayer = 0
-                        turnCertaintyPart += math.pow((math.sqrt(proPlayer) - 1/math.sqrt(nPlayers)),2) / (2 - 2/math.sqrt(nPlayers)) 
+                            turnUncertaintyPart += proPlayer
+                            
                         '''for debug'''
                         #testProb += proPlayer
                         #print player, turnScores.get(player), proPlayer
                     
-                    turnCertainty = math.sqrt(turnCertaintyPart)
-                    matchCertainty += turnCertainty
-                    #print turnCertainty, testProb
+                    turnUncertainty = - turnUncertaintyPart
+                    matchUncertainty += turnUncertainty
+                    #print turnUncertainty, testProb
                             
-            self._measureValue = 1 - (matchCertainty / (self._nTurns - 1))
+            self._measureValue = (matchUncertainty / (self._nTurns - 1))
                 
 if __name__ == '__main__':
     import code_pac.brasileiro.model as brasileiroModel
@@ -101,7 +103,7 @@ if __name__ == '__main__':
         games = brasileiroModel.Game.retrieveList()
         for game in games:
             print game.year
-            print measures.UncertaintyPDD(game=model.BrasileiroGame(game), ignored=0, scoreLimit=3).getMeasureValue()
+            print measures.UncertaintyEntropy(game=model.BrasileiroGame(game), ignored=0, scoreLimit=3).getMeasureValue()
             print '==================='
     elif testType == 2:
         conn = dataBaseAdapter.getConnection()
@@ -109,6 +111,6 @@ if __name__ == '__main__':
         series = desafioModel.Series.retrieve(tournament, seriesCode, conn)
         game = desafioModel.Game(series, groupCode)
         print tournament.refYear
-        print measures.UncertaintyPDD(game=model.DesafioGame(game), ignored=1, minScore=10).getMeasureValue()
+        print measures.UncertaintyEntropy(game=model.DesafioGame(game), ignored=1, minScore=10).getMeasureValue()
         print '================'
     

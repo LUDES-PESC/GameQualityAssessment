@@ -13,7 +13,7 @@ class LeadChange(MeasureTemplate):
     
     def __init__(self, *args, **kwargs):
         super(LeadChange, self).__init__(*args, **kwargs)
-        self._measureType = MeasureType(code=4, description='Lead Change', version=4) #for retro compatibility
+        self._measureType = MeasureType(code=3, description='Lead Change', version=4) #for retro compatibility
         
     def _evaluateMeasure(self):
         gameRoundCount = self._game.getNumberRounds() - self._ignored #in case first gameRound hasn't results
