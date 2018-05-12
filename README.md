@@ -7,10 +7,30 @@ The main application folder must be in PYTHONPATH to launch the GUI files.
 
 Additional Python modules:
 ---------
-In order to run the program, one need some additional Python modules:
+In order to run the program, one need some additional Python modules that are in the `requirements` file and listed down below:
 
-+ ConfigParser
-+ wxPython
++ backports.functools-lru-cache==1.5
++ cycler==0.10.0
++ kiwisolver==1.0.1
++ matplotlib==2.2.2
++ numpy==1.14.3
++ psycopg2==2.7.4
++ pyparsing==2.2.0
++ python-dateutil==2.7.3
++ pytz==2018.4
++ six==1.11.0
++ subprocess32==3.2.7
++ wxPython==4.0.1
+
+Development libs:
+----
+Some libs __and its dev versions__ are required to run:
+
++ gtk+-3.0
++ gstreamer 1.0
++ gstreamer-plugin
++ gstreamer base
+
 
 Ubuntu:
 ---------
