@@ -31,28 +31,28 @@ class GUIDesafioGame(wx.Frame):
         # begin wxGlade: GUIDesafioGameView.__init__
         kwds["style"] = wx.DEFAULT_FRAME_STYLE
         wx.Frame.__init__(self, *args, **kwds)
-        self.label_1 = wx.StaticText(self, wx.ID_ANY, _("Tournament"))
+        self.label_1 = wx.StaticText(self, wx.ID_ANY, "Tournament")
         self.lstTournament = wx.ListBox(self, wx.ID_ANY)
-        self.label_2 = wx.StaticText(self, wx.ID_ANY, _("Series"))
+        self.label_2 = wx.StaticText(self, wx.ID_ANY, "Series")
         self.lstSeries = wx.ListBox(self, wx.ID_ANY, style=wx.LB_SINGLE)
-        self.label_3 = wx.StaticText(self, wx.ID_ANY, _("Game"))
+        self.label_3 = wx.StaticText(self, wx.ID_ANY, "Game")
         self.lstGame = wx.ListBox(self, wx.ID_ANY, style=wx.LB_SINGLE)
         self.gridPointsRows = wx.grid.Grid(self, wx.ID_ANY, size=(1, 1))
-        self.label_4 = wx.StaticText(self, wx.ID_ANY, _("Assessment"))
+        self.label_4 = wx.StaticText(self, wx.ID_ANY, "Assessment")
         self.lstAssessment = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT | wx.SUNKEN_BORDER)
         self.lstAssessment.InsertColumn(0, 'Code', width=50)
         self.lstAssessment.InsertColumn(1, 'Measure', width=150)
         self.lstAssessment.InsertColumn(2, 'Ver.', width=50)
         self.lstAssessment.InsertColumn(3, 'Value', width=125)
-        self.label_5 = wx.StaticText(self, wx.ID_ANY, _("Overall evaluation"))
+        self.label_5 = wx.StaticText(self, wx.ID_ANY, "Overall evaluation")
         self.txtOverall = wx.TextCtrl(self, wx.ID_ANY, "")
-        self.label_6 = wx.StaticText(self, wx.ID_ANY, _("History by Points"))
+        self.label_6 = wx.StaticText(self, wx.ID_ANY, "History by Points")
         #self.window_1 = CustomWidget(self, wx.ID_ANY)
         
         self.pointsGraph = panel_plot(self)
         self.positionGraph = panel_plot(self)
         
-        self.label_7 = wx.StaticText(self, wx.ID_ANY, _("History by Position"))
+        self.label_7 = wx.StaticText(self, wx.ID_ANY, "History by Position")
         #self.window_2 = CustomWidget(self, wx.ID_ANY)
         
         
@@ -197,7 +197,7 @@ class GUIDesafioGame(wx.Frame):
         self.positionGraph.figure.clf()
         self.__clearGrid()
         for game in games:
-            dlg.UpdatePulse()
+            dlg.Pulse()
             i = len(self.lstGame.GetItems())
             self.lstGame.Insert(str(i) + " - " + str(game.groupCode), i, game)
         dlg.Destroy()
@@ -217,10 +217,10 @@ class GUIDesafioGame(wx.Frame):
         overallValue = 0
         index = 0
         for measure in measures:
-            self.lstAssessment.InsertStringItem(index, str(measure['measurecode']))
-            self.lstAssessment.SetStringItem(index, 1, measure['measuredescription'])
-            self.lstAssessment.SetStringItem(index, 2, str(measure['measureversion']))
-            self.lstAssessment.SetStringItem(index, 3, str(measure['measurevalue']))
+            self.lstAssessment.InsertItem(index, str(measure['measurecode']))
+            self.lstAssessment.SetItem(index, 1, measure['measuredescription'])
+            self.lstAssessment.SetItem(index, 2, str(measure['measureversion']))
+            self.lstAssessment.SetItem(index, 3, str(measure['measurevalue']))
             #byPath-2 uncertainty-3 leadChang-4
             if measure['measurecode'] == 2 or \
                 measure['measurecode'] == 3 or \
@@ -362,7 +362,7 @@ class panel_plot(wx.Panel):
 if __name__ == "__main__":
     gettext.install("app") # replace with the appropriate catalog name
 
-    app = wx.PySimpleApp(0)
+    app = wx.App(0)
     wx.InitAllImageHandlers()
     desafioGUI = GUIDesafioGame(None, wx.ID_ANY, "")
     desafioGUI.fillTournament()

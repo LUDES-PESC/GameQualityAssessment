@@ -17,7 +17,7 @@ from code_pac.measures import DramaByPointsUp2First, DramaByPositionUp2First, Me
 
 # begin wxGlade: dependencies
 import gettext
-from wxPython._core import wxBoxSizer
+#from wxPyhton._core import wxBoxSizer
 
 # end wxGlade
 
@@ -31,20 +31,20 @@ class GroupView(wx.Frame):
         kwds["style"] = wx.DEFAULT_FRAME_STYLE
         wx.Frame.__init__(self, *args, **kwds)
         self.tabPanel = wx.Panel(self)
-        self.label_5 = wx.StaticText(self.tabPanel, wx.ID_ANY, _("Game Exploring"))
+        self.label_5 = wx.StaticText(self.tabPanel, wx.ID_ANY, "Game Exploring")
         self.treeGameExploring = wx.TreeCtrl(self.tabPanel, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_DEFAULT_STYLE | wx.SUNKEN_BORDER)
-        self.label_6 = wx.StaticText(self.tabPanel, wx.ID_ANY, _("Tournament:"))
-        self.valTournament = wx.StaticText(self.tabPanel, wx.ID_ANY, _("valTournament"))
-        self.label_7 = wx.StaticText(self.tabPanel, wx.ID_ANY, _("Series:"))
-        self.valSeries = wx.StaticText(self.tabPanel, wx.ID_ANY, _("valSeries"))
-        self.label_8 = wx.StaticText(self.tabPanel, wx.ID_ANY, _("Game:"))
-        self.valGame = wx.StaticText(self.tabPanel, wx.ID_ANY, _("valGame"))
-        self.label_11 = wx.StaticText(self.tabPanel, wx.ID_ANY, _("Games qty. :"))
-        self.valQTYGame = wx.StaticText(self.tabPanel, wx.ID_ANY, _("00000"))
+        self.label_6 = wx.StaticText(self.tabPanel, wx.ID_ANY, "Tournament:")
+        self.valTournament = wx.StaticText(self.tabPanel, wx.ID_ANY, "valTournament")
+        self.label_7 = wx.StaticText(self.tabPanel, wx.ID_ANY, "Series:")
+        self.valSeries = wx.StaticText(self.tabPanel, wx.ID_ANY, "valSeries")
+        self.label_8 = wx.StaticText(self.tabPanel, wx.ID_ANY, "Game:")
+        self.valGame = wx.StaticText(self.tabPanel, wx.ID_ANY, "valGame")
+        self.label_11 = wx.StaticText(self.tabPanel, wx.ID_ANY, "Games qty. :")
+        self.valQTYGame = wx.StaticText(self.tabPanel, wx.ID_ANY, "00000")
         self.lstMeasures = wx.ListCtrl(self.tabPanel, wx.ID_ANY, style=wx.LC_REPORT | wx.SUNKEN_BORDER)
-        self.label_10 = wx.StaticText(self.tabPanel, wx.ID_ANY, _("Overall evaluation"))
+        self.label_10 = wx.StaticText(self.tabPanel, wx.ID_ANY, "Overall evaluation")
         self.txtOverallEvaluation = wx.TextCtrl(self.tabPanel, wx.ID_ANY, "")
-        self.label_9 = wx.StaticText(self.tabPanel, wx.ID_ANY, _("Graph type"))
+        self.label_9 = wx.StaticText(self.tabPanel, wx.ID_ANY, "Graph type")
         self.cmbGraphType = wx.ComboBox(self.tabPanel, wx.ID_ANY, choices=['Drama by Points', 'Drama by Position', 'Overall Evaluation'], style=wx.CB_DROPDOWN | wx.CB_SIMPLE)
         self.panelGraph = PanelPlot(self.tabPanel)#wx.Panel(self, wx.ID_ANY)
 
@@ -71,17 +71,17 @@ class GroupView(wx.Frame):
         #tList = []
         for t in tournaments:
             tVal = t.country.strip() + " - " + str(t.refYear) + " - " + "(code: " + str(t.tournamentCode) + ")"
-            node = self.treeGameExploring.AppendItem(parent=root, text=tVal, data=wx.TreeItemData(t))
+            node = self.treeGameExploring.AppendItem(parent=root, text=tVal, data=t)
             series = sorted(Series.retrieveList(t, conn), key=lambda series: series.seriesOrder)
             #sList=[]
             for s in series:
                 sVal = str(s.seriesOrder) + " - " + str(s.seriesCode)
-                node2 = self.treeGameExploring.AppendItem(node, sVal, data=wx.TreeItemData(s))
+                node2 = self.treeGameExploring.AppendItem(node, sVal, data=s)
                 games = Game.retrieveList(s, conn)
                 i = 0
                 for g in games:
                     gVal = str(i) + " - " + str(g.groupCode)
-                    self.treeGameExploring.AppendItem(node2, gVal, data=wx.TreeItemData(g))
+                    self.treeGameExploring.AppendItem(node2, gVal, data=g)
                     i += 1
              
             
@@ -90,8 +90,8 @@ class GroupView(wx.Frame):
 
     def __set_properties(self):
         # begin wxGlade: GroupView.__set_properties
-        self.SetTitle(_("Group Viewer"))
-        self.SetSize((750, 600))
+        self.SetTitle("Group Viewer")
+        self.SetSize(750, 600)
         self.lstMeasures.InsertColumn(0, 'Code', width=50)
         self.lstMeasures.InsertColumn(1, 'Measure', width=150)
         self.lstMeasures.InsertColumn(2, 'Ver.', width=50)
@@ -115,7 +115,7 @@ class GroupView(wx.Frame):
         sizer_11 = wx.BoxSizer(wx.HORIZONTAL)
         sizer_10 = wx.BoxSizer(wx.HORIZONTAL)
         sizer_7 = wx.BoxSizer(wx.VERTICAL)
-        sizer_tab = wxBoxSizer(wx.HORIZONTAL)
+        sizer_tab = wx.BoxSizer(wx.HORIZONTAL)
         sizer_7.Add(self.label_5, 0, 0, 0)
         sizer_7.Add(self.treeGameExploring, 1, wx.EXPAND, 0)
         sizer_6.Add(sizer_7, 1, wx.EXPAND, 0)
@@ -213,15 +213,15 @@ class GroupView(wx.Frame):
         self.lstMeasures.DeleteAllItems()
         self.txtOverallEvaluation.SetValue('')
         conn = dataBaseAdapter.getConnection()
-        measures = self.treeGameExploring.GetItemData(acItem).GetData().retrieveMeasureList(conn)
+        measures = self.treeGameExploring.GetItemData(acItem).retrieveMeasureList(conn)
         #fillLst
         overallValue = 0
         index = 0
         for m in measures:
-            self.lstMeasures.InsertStringItem(index, str(m['measurecode']))
-            self.lstMeasures.SetStringItem(index, 1, m['measuredescription'])
-            self.lstMeasures.SetStringItem(index, 2, str(m['measureversion']))
-            self.lstMeasures.SetStringItem(index, 3, str(m['measurevalue']))
+            self.lstMeasures.InsertItem(index, str(m['measurecode']))
+            self.lstMeasures.SetItem(index, 1, m['measuredescription'])
+            self.lstMeasures.SetItem(index, 2, str(m['measureversion']))
+            self.lstMeasures.SetItem(index, 3, str(m['measurevalue']))
             #byPath-2 uncertainty-3 leadChang-4
             if m['measurecode'] == 2 or \
                 m['measurecode'] == 3 or \
@@ -256,7 +256,7 @@ class GroupView(wx.Frame):
         #fistMeasure
         connection = dataBaseAdapter.getConnection()
         if type(games) == list:
-            measuresControl = self.treeGameExploring.GetItemData(games[0]).GetData().retrieveMeasureList(connection)
+            measuresControl = self.treeGameExploring.GetItemData(games[0]).retrieveMeasureList(connection)
         nMeasures = len(measuresControl)
         
         # initializing measuresSum
@@ -274,7 +274,7 @@ class GroupView(wx.Frame):
                 dlg.Update(pulseCount)
             pulseCount += 1
             
-            gMeasures = self.treeGameExploring.GetItemData(g).GetData().retrieveMeasureList(connection)
+            gMeasures = self.treeGameExploring.GetItemData(g).retrieveMeasureList(connection)
             if not len(gMeasures) == nMeasures:
                 raise Exception('There is an error in measures stored.')
             for m in gMeasures:
@@ -289,10 +289,10 @@ class GroupView(wx.Frame):
         #fillLst
         index = 0
         for m in measuresControl:
-            self.lstMeasures.InsertStringItem(index, str(m['measurecode']))
-            self.lstMeasures.SetStringItem(index, 1, m['measuredescription'])
-            self.lstMeasures.SetStringItem(index, 2, str(m['measureversion']))
-            self.lstMeasures.SetStringItem(index, 3, str(measuresAvg[m['measurecode']]))
+            self.lstMeasures.InsertItem(index, str(m['measurecode']))
+            self.lstMeasures.SetItem(index, 1, m['measuredescription'])
+            self.lstMeasures.SetItem(index, 2, str(m['measureversion']))
+            self.lstMeasures.SetItem(index, 3, str(measuresAvg[m['measurecode']]))
             index += 1
         
         #overall drama_by_path + uncertainty + lead_change over 3
@@ -314,7 +314,7 @@ class GroupView(wx.Frame):
             return
         
         if selected.IsOk:
-            selectedData = self.treeGameExploring.GetItemData(selected).GetData()
+            selectedData = self.treeGameExploring.GetItemData(selected)
             if isinstance(selectedData, Game):
                 if cmbValue == 'Drama by Position':
                     SP.position(selectedData, self.panelGraph, ignored=1)
@@ -346,7 +346,7 @@ class GroupView(wx.Frame):
                     
     def exploringSelectionChanged(self, event):  # wxGlade: GroupView.<event_handler>
         acItem = event.GetItem()
-        acData = self.treeGameExploring.GetItemData(acItem).GetData()
+        acData = self.treeGameExploring.GetItemData(acItem)
         
         if acItem == self.treeGameExploring.GetRootItem():
             self._allSetValues()
@@ -372,7 +372,7 @@ class GroupView(wx.Frame):
 # end of class GroupView
 if __name__ == "__main__":
     gettext.install("app") # replace with the appropriate catalog name
-    app = wx.PySimpleApp(0)
+    app = wx.App(0)
     wx.InitAllImageHandlers()
     frame_1 = GroupView(None, wx.ID_ANY, "")
     app.SetTopWindow(frame_1)
