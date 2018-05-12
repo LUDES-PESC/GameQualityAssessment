@@ -7,7 +7,7 @@ The main application folder must be in PYTHONPATH to launch the GUI files.
 
 Additional Python modules:
 ---------
-In order to run the program, one need some additional Python modules that are in the `requirements` file and listed down below:
+In order to run the program, one need some additional Python modules that are in the `requirements.txt` file and listed down below:
 
 + backports.functools-lru-cache==1.5
 + cycler==0.10.0
@@ -21,6 +21,13 @@ In order to run the program, one need some additional Python modules that are in
 + six==1.11.0
 + subprocess32==3.2.7
 + wxPython==4.0.1
++ xlrd==1.1.0
+
+To install these modules type the following command in the __root__ project folder:
+
+```bash
+pip install -r requirements.txt
+```
 
 Development libs:
 ----
