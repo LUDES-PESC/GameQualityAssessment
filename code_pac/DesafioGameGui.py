@@ -185,9 +185,10 @@ class GUIDesafioGame(wx.Frame):
         dlg = wx.ProgressDialog("wait", "Loading games...", 100, self)
         manager = mp.Manager()
         rVal = manager.list()
-        p = mp.Process(target=self.__getGames, args=(inputSeries, rVal,))
-        p.start()
-        p.join()
+        self.__getGames(inputSeries, rVal)
+		#p = mp.Process(target=self.__getGames, args=(inputSeries, rVal,))
+        #p.start()
+        #p.join()
         
         games = rVal
         
