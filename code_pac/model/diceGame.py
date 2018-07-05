@@ -29,7 +29,7 @@ class DiceGame(GenericGame):
                     self._players.append(score.player)
                     lastScore[score.player] = 0
                 scores.append(ItemTuple(playerCode=score.player, roundScore= int(score.totalScore) - lastScore[score.player], totalScore=score.totalScore))
-                lastScore[score.player] = int(score.totalScore)
+                lastScore[score.player] = score.totalScore
             self._gameData.append((order, scores))
             order +=1
             
