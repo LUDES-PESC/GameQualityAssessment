@@ -9,20 +9,27 @@ from code_pac.gamePlots import GamePlots
 import code_pac.model as model
 from code_pac.measures import DramaByPaths, DramaByPointsUp2First
 import code_pac.diceGame.model as diceGameModel
-
+import matplotlib.pyplot as plot
 
 from collections import namedtuple
 
    
 if __name__ == '__main__':
-    game = diceGameModel.Game.retrieveList()[0];
-    print game;
-    obj = model.DiceGame(game)
-    value = DramaByPointsUp2First(game=obj, ignored=0)
-    print value.getWinner(), value.getMeasureValue()
-    print value.getType().description
-    GamePlots(obj).byPosition()
+    games = diceGameModel.Game.retrieveList();
+    dramas = []
+    for game in games:
+        obj = model.DiceGame(game)
+        value = DramaByPointsUp2First(game=obj, ignored=0)
+        dramas.append(value.getMeasureValue())
+    #print value.getWinner(), value.getMeasureValue()
+    #print value.getType().description
+    #GamePlots(obj).byPosition()
+    plot.hist(dramas, bins=30)
+    plot.ylabel('Quantidade de jogos');
+    plot.xlabel('Drama por Pontos');
+    plot.show()
+
     
-    
+
     
     

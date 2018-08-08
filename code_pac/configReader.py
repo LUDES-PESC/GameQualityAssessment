@@ -20,6 +20,16 @@ class ConfigReader:
             if f.startswith("simples"):
                 r.append(folder + os.sep + f)
         return r
+    
+    def listDiceGames(self):
+        r = [];
+        print os.path.dirname(__file__);
+        print os.sep
+        print self.parser.get('folder dado', 'folder')
+        folder = os.path.dirname(__file__) + os.sep + self.parser.get('folder dado', 'folder')
+        for f in os.listdir(folder):
+            r.append(folder + os.sep + f)
+        return r
         
 
 if __name__ == '__main__':
