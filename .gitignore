@@ -106,3 +106,12 @@ venv.bak/
 
 # pycharme
 .idea
+
+data/jogo_dados/amostra
+data/jogo_dados/dice_game_estatisticas_01
+data/jogo_dados/dice_game_estatisticas_02
+data/jogo_dados/dice_game_estatisticas_03
+data/jogo_dados/dice_game_estatisticas_04
+data/jogo_dados/dice_game_estatisticas_05
+data/jogo_dados/progresso_jogo_por_pontos
+data/jogo_dados/progresso_jogo_por_posicao
