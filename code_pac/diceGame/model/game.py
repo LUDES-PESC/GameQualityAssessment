@@ -15,9 +15,10 @@ from operator import itemgetter
 ItemTuple = namedtuple("ItemTuple", ['player', 'totalScore'])
 
 class Game:
-    def __init__(self, gameNumber, gameRounds):
+    def __init__(self, gameNumber, gameRounds, fileName):
         self.gameNumber = gameNumber
         self.gameRounds = gameRounds
+        self.fileName = fileName
         
     @classmethod
     def retrieveList(cls):
@@ -43,7 +44,7 @@ class Game:
                         gameRound = [];
                     gameRound.append(ItemTuple(player=row[1], totalScore=int(row[2])))
                 preGame.append(gameRound);
-            games.append(cls(i, preGame))
+            games.append(cls(i, preGame, gameFile))
             i += 1
         return sorted(games, key=lambda g: g.gameNumber)
             

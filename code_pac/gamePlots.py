@@ -4,6 +4,7 @@ Created on 24/05/2015
 
 @author: mangeli
 '''
+from __future__ import unicode_literals
 import matplotlib.pyplot as plt
 import code_pac.model as model
 import numpy as np
@@ -16,7 +17,10 @@ class GamePlots(object):
             raise TypeError("Arg isn't a GenericGame object")
         self._players = game.getPlayers()
         self._gameObj = game.getGameStruct()
+    
+    
         
+    
         
     def byPoints(self):
         x = xrange(1, len(self._gameObj)+1)
@@ -33,8 +37,9 @@ class GamePlots(object):
                 if not found:
                     y.append(float(0))
             plt.plot(x,y,'o-',linewidth=2)
-        plt.ylabel(u'pontuação')
-        plt.xlabel(u'rodada')    
+        plt.ylabel(u'Pontuação')
+        plt.xlabel(u'Rodada')    
+        plt.title('Progresso da Pontuação por Rodada')
         plt.show()
         
     def byPosition(self, ignored = 1):
@@ -61,7 +66,8 @@ class GamePlots(object):
             plt.plot(x,y,'o-',linewidth=2)
         #plt.ylim(0, len(self._players)+1)
         plt.yticks(xrange(0,len(self._players)+1))
-        plt.ylabel(u'posição')
-        plt.xlabel(u'rodada')
+        plt.ylabel(u'Posição')
+        plt.xlabel(u'Rodada')
+        plt.title('Progresso das Posições por Rodada')
         plt.gca().invert_yaxis()    
         plt.show()
