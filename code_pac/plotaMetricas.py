@@ -16,90 +16,68 @@ import numpy as np
 from collections import namedtuple
 
         
-def plotaHistogramaDramaPorPontos(dramas):
-    plot.hist(dramas, bins=100)
+def plotaHistograma(valores, nomeMetrica, ymax, nbins, variante):
+    plot.hist(valores, bins=nbins)
     plot.ylabel('Frequência de Simulações');
-    plot.xlabel('Drama por Pontos');
-    plot.title('Distribuição da Métrica de Drama por Pontos')
+    if(ymax != 0):
+        plot.ylim=(ymax)
+    else:
+        plot.autoscale(True)
+    plot.xlabel(nomeMetrica);
+    plot.title('Distribuição da Métrica de ' + nomeMetrica + ' ' + variante)
+    
+    plot.savefig('Distribuição da Métrica de ' + nomeMetrica + ' ' + variante+ '.png')
     plot.show()
-    plot.savefig('dramapontos_grupo3.png')
+
+
+def leArquivo(caminho):
+    listaValores = []
+    with open(caminho, "r") as arquivo:
+        for linha in arquivo:
+            if(float(linha) != 0 ):
+                listaValores.append(float(linha))
+    return listaValores;
     
-    
-def plotaHistogramaDramaPorPosicao(dramas):
-    plot.hist(dramas, bins=50)
-    plot.ylabel('Frequência de Simulações');
-    plot.xlabel('Drama por Posição');
-    plot.title('Distribuição da Métrica de Drama por Posição')
-    plot.show()
-    plot.savefig('dramaposicao_grupo3.png')
-    
-    
-def plotaHistogramaDramaPorCaminho(dramas):
-    plot.hist(dramas, bins=50)
-    plot.ylabel('Frequência de Simulações');
-    plot.xlabel('Drama por Caminho');
-    plot.title('Distribuição da Métrica de Drama por Caminho')
-    plot.show()
-    plot.savefig('dramacaminho_grupo3.png')
-    
+def salvarDados( metrica , listaValores, indiceVariante):
+    with open("dados_grupo"+ indiceVariante +".txt", 'a') as fp:
+        fp.write('{} {} {} {}\n'.format(metrica, len(listaValores), np.mean(listaValores), np.std(listaValores)))
     
 if __name__ == '__main__':
-
-    dramasPontos = [];
-    dramasPosicao = [];
-    dramasCaminho = [];
-    with open("dramaporpontos_grupo4.txt", "r") as arquivo:
-        for linha in arquivo:
-            if(float(linha) != 0 ):
-                dramasPontos.append(float(linha))
-    print "Drama por Pontos"
-    print "Quantidade de Dramas"
-    print len(dramasPontos)
     
-    print "Media"
-    print np.mean(dramasPontos)
+    #1 - 10Rd6
+    #2 - 10Rd10
+    #3 - 50R2d5
+    #4 - 50Rd10
+    #5 - 10R2d5
+    #6 - 50Rd6
+    #7 - 50Rd50
     
-    print "Desvio Padrão"
-    print np.std(dramasPontos)
-   
-    plotaHistogramaDramaPorPontos(dramasPontos)
+    indiceVariante = "1";
+    variante = "5 Rodadas"
     
     
     
-    with open("dramaporposicao_grupo4.txt", "r") as arquivo:
-        for linha in arquivo:
-            if(float(linha) != 0 ):
-                dramasPosicao.append(float(linha))
     
-    print "Drama por Posicao"
-    print "Quantidade de Dramas"
-    print len(dramasPosicao)
+    dramasPontos = leArquivo("dramaporpontos_grupo"+ indiceVariante +".txt");
+    salvarDados("Drama por Pontos", dramasPontos, indiceVariante);
+    plotaHistograma(dramasPontos, "Drama por Pontos", 0, 100, variante);
     
-    print "Media"
-    print np.mean(dramasPosicao)
+    dramasPosicao = leArquivo("dramaporposicao_grupo"+ indiceVariante +".txt");
+    salvarDados("Drama por Posicao", dramasPosicao, indiceVariante);    
+    plotaHistograma(dramasPosicao, "Drama por Posição", 0, 50, variante)
     
-    print "Desvio Padrão"
-    print np.std(dramasPosicao)
-   
-    plotaHistogramaDramaPorPosicao(dramasPosicao)
+    dramasCaminho = leArquivo("dramaporcaminho_grupo"+ indiceVariante +".txt");
+    salvarDados("Drama por Caminho", dramasCaminho, indiceVariante);
+    plotaHistograma(dramasCaminho, "Drama por Caminho", 1000, 50, variante)
     
+    leadChange = leArquivo("leadchange_grupo"+ indiceVariante +".txt");
+    salvarDados("Mudanca de Lideranca", leadChange, indiceVariante);
+    plotaHistograma(leadChange, "Mudança de Liderança", 0, 20, variante) 
     
+    incertezaEntropia = leArquivo("incertezaentropia_grupo"+ indiceVariante +".txt");
+    salvarDados("Incerteza por Entropia", incertezaEntropia, indiceVariante);
+    plotaHistograma(incertezaEntropia, "Incerteza por Entropia", 0, 100, variante)
     
-    with open("dramaporcaminho_grupo4.txt", "r") as arquivo:
-        for linha in arquivo:
-            if(float(linha) != 0 ):
-                dramasCaminho.append(float(linha))
-                
-                
-    print "Drama por Caminho"
-    print "Quantidade de Dramas"
-    print len(dramasCaminho)
-    
-    print "Media"
-    print np.mean(dramasCaminho)
-    
-    print "Desvio Padrão"
-    print np.std(dramasCaminho)
-   
-    plotaHistogramaDramaPorCaminho(dramasCaminho)
-    
+    incertezaPDD = leArquivo("incertezapdd_grupo"+ indiceVariante +".txt");
+    salvarDados("Incerteza por PDD", incertezaPDD, indiceVariante);
+    plotaHistograma(incertezaPDD, "Incerteza por PDD", 0 , 100, variante)

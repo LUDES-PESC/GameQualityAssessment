@@ -8,7 +8,7 @@ from __future__ import unicode_literals
 from code_pac import dataBaseAdapter
 from code_pac.gamePlots import GamePlots
 import code_pac.model as model
-from code_pac.measures import DramaByPaths, DramaByPointsUp2First, DramaByPositionUp2First
+from code_pac.measures import DramaByPaths, DramaByPointsUp2First, DramaByPositionUp2First, LeadChange, UncertaintyEntropy, UncertaintyPDD
 import code_pac.diceGame.model as diceGameModel
 import matplotlib.pyplot as plot
 
@@ -28,6 +28,22 @@ def calculaDramaPorPosicao(game):
     obj = model.DiceGame(game)
     value = DramaByPositionUp2First(game=obj, ignored=0)
     return value.getMeasureValue()  
+
+def calculaMudancasLideranca(game):
+    obj = model.DiceGame(game)
+    value = LeadChange(game=obj, ignored=0)
+    return value.getMeasureValue()  
+
+def calculaIncertezaEntropia(game):
+    obj = model.DiceGame(game)
+    value = UncertaintyEntropy(game=obj, ignored=0)
+    return value.getMeasureValue()  
+
+def calculaIncertezaPDD(game):
+    obj = model.DiceGame(game)
+    value = UncertaintyPDD(game=obj, ignored=0)
+    return value.getMeasureValue()  
+
     
 def plotaGraficoPorPontos(game):
     obj = model.DiceGame(game);
@@ -67,20 +83,13 @@ def winnerPieChart(games):
     print numberWins;
     plotaPieChart(numberWins)
         
-def plotaHistogramaDramaPorPontos(dramas):
-    plot.hist(dramas, bins=30)
-    plot.ylabel('Frequência de Simulações');
-    plot.xlabel('Drama por Pontos');
-    plot.title('Distribuição da Métrica de Drama por Pontos')
-    plot.show()
 
-
-def salvaArquivoDrama(dramas, arquivo):
+def salvaArquivoValores(valores, arquivo):
     with open(arquivo, 'w') as f:
-        for drama in dramas:
-            f.write("%s\n" % drama)   
+        for valor in valores:
+            f.write("%s\n" % valor)   
 
-def calculaESalvaDramas(games):
+def calculaESalvaDramas(games, indiceVariante):
     dramasPontos = [];
     dramasPosicao = [];
     dramasCaminho = [];
@@ -89,17 +98,41 @@ def calculaESalvaDramas(games):
         dramasPosicao.append(calculaDramaPorPosicao(game))
         dramasCaminho.append(calculaDramaPorCaminho(game))
         
-    salvaArquivoDrama(dramasPontos, 'dramaporpontos_grupo5.txt')
-    salvaArquivoDrama(dramasPosicao, 'dramaporposicao_grupo5.txt')
-    salvaArquivoDrama(dramasCaminho, 'dramaporcaminho_grupo5.txt')
-            
+    salvaArquivoValores(dramasPontos, 'dramaporpontos_grupo'+ indiceVariante +'.txt')
+    salvaArquivoValores(dramasPosicao, 'dramaporposicao_grupo'+ indiceVariante +'.txt')
+    salvaArquivoValores(dramasCaminho, 'dramaporcaminho_grupo'+ indiceVariante +'.txt')
+
+def calculaESalvaMudancaLideranca(games, indiceVariante):
+    mudancaLiderancao = [];
+    for game in games:
+        mudancaLiderancao.append(calculaMudancasLideranca(game))
+    salvaArquivoValores(mudancaLiderancao, 'leadchange_grupo'+ indiceVariante +'.txt')
+    
+    
+def calculaESalvaIncerteza(games, indiceVariante):
+    incertezaEntropia = [];
+    incertezaPDD = [];
+    for game in games:
+        incertezaEntropia.append(calculaIncertezaEntropia(game))
+        incertezaPDD.append(calculaIncertezaPDD(game))
+    salvaArquivoValores(incertezaEntropia, 'incertezaentropia_grupo'+ indiceVariante +'.txt')
+    salvaArquivoValores(incertezaPDD, 'incertezapdd_grupo'+ indiceVariante +'.txt')
+   
+
+    
+    
 if __name__ == '__main__':
     games = diceGameModel.Game.retrieveList();
     
-    #winnerPieChart(games)
+    #for game in games:
+    #    print calculaIncertezaPDD(game);
     
-    calculaESalvaDramas(games);
-
+    #winnerPieChart(games)
+    quebrando para nao rodar sem querer
+    indiceVariante = "2";
+    calculaESalvaDramas(games, indiceVariante);
+    calculaESalvaMudancaLideranca(games, indiceVariante);
+    calculaESalvaIncerteza(games, indiceVariante);
     #print calculaDramaPorPontos(games[0]);
     #print calculaDramaPorCaminho(games[0]);
     #print calculaDramaPorPosicao(games[0]);
