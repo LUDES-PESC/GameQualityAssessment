@@ -37,4 +37,4 @@ class Game:
             
 if __name__ == '__main__':
     lista = Game.retrieveList()
-    print lista
+    print(lista)
