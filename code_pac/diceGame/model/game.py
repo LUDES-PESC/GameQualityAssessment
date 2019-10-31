@@ -5,10 +5,10 @@ Created on 05/07/2015
 '''
 from collections import namedtuple
 import os
-import ConfigParser
+import configparser
 import json
-from code_pac.configReader import ConfigReader
-from code_pac.desafio.aux_old.modelo_old import Player
+from GameQualityAssessment.code_pac.configReader import ConfigReader
+from GameQualityAssessment.code_pac.desafio.aux_old.modelo_old import Player
 import csv
 from operator import itemgetter
 
@@ -23,27 +23,27 @@ class Game:
     @classmethod
     def retrieveList(cls):
         games = []
-        i = 0;
+        i = 0
         for gameFile in ConfigReader().listDiceGames():
             with open(gameFile, 'rb') as csvfile:
                 
                 statFile = csv.reader(csvfile, delimiter=';', quotechar='|')
-                statList = [];
+                statList = []
                 for line in statFile:
                     statList.append([int(line[0]), line[1], int(line[2])])
                 statList.sort(key=itemgetter(2), reverse=True)
                 statList.sort(key=itemgetter(0))
-                roundNumber = -1;
+                roundNumber = -1
                 preGame =[]
-                gameRound = [];
+                gameRound = []
                 for index,row in enumerate(statList):
                     if(roundNumber != row[0]):
                         if(index != 0):
-                            preGame.append(gameRound);
-                        roundNumber = row[0];
-                        gameRound = [];
+                            preGame.append(gameRound)
+                        roundNumber = row[0]
+                        gameRound = []
                     gameRound.append(ItemTuple(player=row[1], totalScore=int(row[2])))
-                preGame.append(gameRound);
+                preGame.append(gameRound)
             games.append(cls(i, preGame, gameFile))
             i += 1
         return sorted(games, key=lambda g: g.gameNumber)
@@ -51,4 +51,4 @@ class Game:
             
 if __name__ == '__main__':
     lista = Game.retrieveList()
-    print lista
+    print (lista)

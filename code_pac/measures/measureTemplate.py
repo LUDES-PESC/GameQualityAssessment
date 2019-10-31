@@ -12,6 +12,9 @@ MeasureType = namedtuple("MeasureType", ["code", "description", "version"])
 class MeasureTemplate(object):
     '''Template for drama measure implementations'''
     
+    _measureType = ''
+    _measureValue = ''
+
     def __init__(self, *args, **kwargs):
         '''if not isinstance(game, GenericGame):
             raise TypeError("Arg isn't a GenericGame object") '''

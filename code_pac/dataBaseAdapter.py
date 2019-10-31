@@ -4,7 +4,7 @@ Created on 24/05/2015
 
 @author: mangeli
 '''
-import ConfigParser
+import configparser
 import psycopg2.extras
 import os
 
@@ -35,7 +35,7 @@ def getConfigValues():
     global __host
     global __password
     global __port
-    c = ConfigParser.ConfigParser()
+    c = configparser.ConfigParser()
     f = open(os.path.dirname(__file__) + '//gameAnalyzer.ini', 'r')
     c.readfp(f)
     f.close()
@@ -88,9 +88,9 @@ if __name__ == "__main__":
     c = getCursor(conn)
     cursorExecute(c, "SELECT * FROM tournament;")
     l = fetchAll(c)
-    print l[:]
-    for retorno in l : print retorno["country"]
-    print c, conn
+    print (l[:])
+    for retorno in l : print (retorno["country"])
+    print (c, conn)
     closeCursor(c)
     closeConnection(conn)
-    print c, conn
+    print (c, conn)

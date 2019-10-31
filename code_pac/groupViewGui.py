@@ -7,13 +7,13 @@ from __future__ import division
 import wx
 import time
 import dataBaseAdapter as db
-from code_pac.desafio.model import Tournament, Series, Game
-from code_pac.model import DesafioGame
+from GameQualityAssessment.code_pac.desafio.model import Tournament, Series, Game
+from GameQualityAssessment.code_pac.model import DesafioGame
 from wx.lib.agw.pyprogress import PyProgress
-from code_pac import dataBaseAdapter
-from code_pac.plots.panelPlot import PanelPlot
-from code_pac.plots import singlePlots as SP
-from code_pac.measures import DramaByPointsUp2First, DramaByPositionUp2First, MeasureType
+from GameQualityAssessment.code_pac import dataBaseAdapter
+from GameQualityAssessment.code_pac.plots.panelPlot import PanelPlot
+from GameQualityAssessment.code_pac.plots import singlePlots as SP
+from GameQualityAssessment.code_pac.measures import DramaByPointsUp2First, DramaByPositionUp2First, MeasureType
 
 # begin wxGlade: dependencies
 import gettext
@@ -97,7 +97,7 @@ class GroupView(wx.Frame):
         self.lstMeasures.InsertColumn(2, 'Ver.', width=50)
         self.lstMeasures.InsertColumn(3, 'Value', width=125)
         order = (self.treeGameExploring, self.lstMeasures, self.txtOverallEvaluation, self.cmbGraphType)
-        for i in xrange(len(order) - 1):
+        for i in range(len(order) - 1):
             order[i+1].MoveAfterInTabOrder(order[i])
         self._fillComboGraphType()
         #wx.IdleEvent.SetMode(wx.IDLE_PROCESS_SPECIFIED)

@@ -3,11 +3,11 @@ from __future__ import division
 
 
 
-from code_pac import dataBaseAdapter as db
+from GameQualityAssessment.code_pac import dataBaseAdapter as db
 from multiprocessing import Pool, Value, Lock
-from parser import Parser
+from GameQualityAssessment.code_pac.desafio.parser import Parser
 
-import model
+import GameQualityAssessment.code_pac.desafio.model as model
 
 
 def procDataLines(dataLine):
@@ -41,8 +41,8 @@ def procDataLines(dataLine):
         contador.value += 1
     l.acquire()
     #print str((contador.value / tamanho.value) * 100), " %", "                                \r",
-    print "             \r", '%.2f' % ((contador.value / tamanho.value) * 100), "%", 
-    l.release()
+    print ("             \r", '%.2f' % ((contador.value / tamanho.value) * 100), "%", 
+    l.release())
     
     conn.close()
 
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     linhas = parser.getValues(0, 0) #planilha 0 com zero linhas de cabecalho
     
     
-    print len(linhas)
+    print (len(linhas))
     #imprime a associacao entre índice e nome do campo
     #for i in range(len(linhas[0])):
     #    print str(i) + ' - ' + linhas[0][i]

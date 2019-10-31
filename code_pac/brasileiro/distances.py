@@ -11,7 +11,7 @@ import scipy.spatial.distance
 
 def assignValues(row):
     retorno = []
-    for i in xrange(1, len(row)):
+    for i in range(0, len(row)):
                 retorno.append(row[i].value)
     return retorno
 
@@ -32,14 +32,14 @@ if __name__ == '__main__':
         if row[0].value == "judges":
             judges = assignValues(row)
     
-    print scipy.stats.kendalltau(judges, points)
-    print scipy.stats.kendalltau(judges, positions)
-    print scipy.stats.kendalltau(judges, path)
-    print scipy.spatial.distance.hamming(judges, points)  
-    print scipy.spatial.distance.hamming(judges, path)  
-    print scipy.spatial.distance.cosine(judges, points)  
-    print scipy.spatial.distance.cosine(judges, path)  
-    print scipy.spatial.distance.correlation(judges, points)  
-    print scipy.spatial.distance.correlation(judges, path)  
+    print (scipy.stats.kendalltau(judges, points))
+    print (scipy.stats.kendalltau(judges, positions))
+    print (scipy.stats.kendalltau(judges, path))
+    print (scipy.spatial.distance.hamming(judges, points))  
+    print (scipy.spatial.distance.hamming(judges, path))  
+    print (scipy.spatial.distance.cosine(judges, points))  
+    print (scipy.spatial.distance.cosine(judges, path))
+    print (scipy.spatial.distance.correlation(judges, points))  
+    print (scipy.spatial.distance.correlation(judges, path))
               
             

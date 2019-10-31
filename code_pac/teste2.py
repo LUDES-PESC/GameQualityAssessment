@@ -4,12 +4,12 @@ Created on 11/06/2015
 @author: mangeli
 '''
 from __future__ import division
-from measures import DramaByPointsUp2First, DramaByPositionUp2First
+from GameQualityAssessment.code_pac.measures import DramaByPointsUp2First, DramaByPositionUp2First
 from time import sleep
 from multiprocessing import Value, Process, Pool
-from code_pac.model import DesafioGame
-import dataBaseAdapter
-from code_pac.desafio.model import Game, Tournament, Series
+from GameQualityAssessment.code_pac.model import DesafioGame
+import GameQualityAssessment.code_pac.dataBaseAdapter as dataBaseAdapter
+from GameQualityAssessment.code_pac.desafio.model import Game, Tournament, Series
 
 conn = dataBaseAdapter.getConnection()
 jogos = []
@@ -20,9 +20,9 @@ for torneio in Tournament.retriveList(conn):
 #print jogos[:]
 for jogo in jogos:
     if not isinstance(jogo, Game):
-        print 'merda'
+        print ('merda')
     
     game_aux = DesafioGame(jogo)
-    print 'i'
+    print ('i')
     valPoints = DramaByPointsUp2First(game_aux).getMeasureValue()
     jogo.storeMeasure(DramaByPointsUp2First(jogo), conn)

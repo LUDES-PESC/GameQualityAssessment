@@ -6,8 +6,8 @@ Created on 15/05/2015
 '''
 import psycopg2.extras
 
-from series import Series
-import code_pac.measures
+from GameQualityAssessment.code_pac.desafio.model.series import Series
+import GameQualityAssessment.code_pac.measures as Measures
 
 
 class Game:
@@ -39,7 +39,7 @@ class Game:
         cursor.close()
     
     def storeMeasure(self, measureIn, connection):
-        if not isinstance(measureIn, code_pac.measures.measureTemplate.MeasureTemplate):
+        if not isinstance(measureIn, Measures.MeasureTemplate):
             raise TypeError("First arg has to be a MeasureTemplate implementer object")
         
         cursor = connection.cursor()

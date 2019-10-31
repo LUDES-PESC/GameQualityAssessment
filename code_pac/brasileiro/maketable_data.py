@@ -5,15 +5,15 @@ Created on 05/07/2015
 @author: mangeli
 '''
 from __future__ import division
-from code_pac.brasileiro.model.game import Game
-from code_pac.model import BrasileiroGame
+from GameQualityAssessment.code_pac.brasileiro.model.game import Game
+from GameQualityAssessment.code_pac.model import BrasileiroGame
 import matplotlib.pyplot as plt
 import numpy as np
 from bs4 import BeautifulSoup
-import csv, codecs, cStringIO
+import csv, codecs
+from io import StringIO
 
-
-from code_pac.measures import DramaByPaths, DramaByPositionUp2First, DramaByPointsUp2First
+from GameQualityAssessment.code_pac.measures import DramaByPaths, DramaByPositionUp2First, DramaByPointsUp2First
 
 class UnicodeWriter:
     """
@@ -23,7 +23,7 @@ class UnicodeWriter:
 
     def __init__(self, f, dialect=csv.excel, encoding="utf-8", **kwds):
         # Redirect output to a queue
-        self.queue = cStringIO.StringIO()
+        self.queue = StringIO()
         self.writer = csv.writer(self.queue, dialect=dialect, **kwds)
         self.stream = f
         self.encoder = codecs.getincrementalencoder(encoding)()
@@ -45,7 +45,7 @@ class UnicodeWriter:
             self.writerow(row)
 
 if __name__ == '__main__':
-    anos = xrange(2003, 2015)
+    anos = range(2003, 2015)
     f = open('tabela_resultados_full.csv', 'w')
     f2 = open('tabela_resultados.csv', 'w')
     arq = UnicodeWriter(f)
@@ -70,5 +70,5 @@ if __name__ == '__main__':
         scoreVencedor = times[0].find('td', rel='jogos-pontos').find_next().text
         aproveitamento = times[0].find('td', rel='grafico-aproveitamento').find_next().text
         arq.writerow([ str(ano), nTimes, str(nRodadas), vencedor, scoreVencedor, aproveitamento])
-        print ano, nTimes, nRodadas, vencedor, scoreVencedor, aproveitamento
+        print (ano, nTimes, nRodadas, vencedor, scoreVencedor, aproveitamento)
     

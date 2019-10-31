@@ -228,7 +228,7 @@ class GameRoundResult:
         self.roundScore = roundScore
         self.totalScore = totalScore
         self.pRoundStatus = pRoundStatus
-        
+
     def store(self, connection):
         cursor = connection.cursor()
         try:

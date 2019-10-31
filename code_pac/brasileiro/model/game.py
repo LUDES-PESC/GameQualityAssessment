@@ -5,10 +5,10 @@ Created on 05/07/2015
 '''
 from collections import namedtuple
 import os
-import ConfigParser
+import configparser
 import json
-from code_pac.configReader import ConfigReader
-from code_pac.desafio.aux_old.modelo_old import Player
+from GameQualityAssessment.code_pac.configReader import ConfigReader
+from GameQualityAssessment.code_pac.desafio.aux_old.modelo_old import Player
 
 ItemBRTuple = namedtuple("ItemBRTuple", ['player', 'totalScore'])
 
@@ -37,4 +37,4 @@ class Game:
             
 if __name__ == '__main__':
     lista = Game.retrieveList()
-    print lista
+    print (lista)

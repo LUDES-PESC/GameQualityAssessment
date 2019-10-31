@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
 
-from ..parser import Parser
+from GameQualityAssessment.code_pac.desafio.parser import Parser
 
 
 #abre o arqruivo
@@ -16,14 +16,14 @@ for i in linhas[0]:
 
 for i in range(len(linhas)):
     for j in range(len(linhas[i])):
-        if not isinstance(linhas[i][j], (float, int, long)):
+        if not isinstance(linhas[i][j], (float, int, int)):
             if len(linhas[i][j]) > tamanho[j]:
                 tamanho[j] = len(linhas[i][j])
         else:
             if tamanho[j] == 0:
                 tamanho[j] = str(type(linhas[i][j])) 
-    print str((i / len(linhas) * 100)), "%", "                      \r",
+    print (str((i / len(linhas) * 100)), "%", "                      \r")
 
-print ""
+print ("")
 
-print tamanho
+print (tamanho)
