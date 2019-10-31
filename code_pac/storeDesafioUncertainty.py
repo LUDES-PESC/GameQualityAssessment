@@ -4,11 +4,11 @@ Created on 08/06/2015
 @author: mangeli
 '''
 from __future__ import division
-from measures import Uncertainty
+from GameQualityAssessment.code_pac.measures import UncertaintyPDD
 from time import sleep
 from multiprocessing import Value, Process, Pool
-from code_pac.model import DesafioGame
-import dataBaseAdapter
+from GameQualityAssessment.code_pac.model import DesafioGame
+import GameQualityAssessment.code_pac.dataBaseAdapter as dataBaseAdapter
 
 
 
@@ -21,14 +21,14 @@ def storeUncertainty(game):
     #valPath = DramaByPaths(game=game_aux, ignored=1).getMeasureValue()
     #valLeadChange = LeadChange(game=game_aux, ignored=1).getMeasureValue()
     try:
-        valUncertainty = Uncertainty(game=game_aux, ignored=1, minScore=50).getMeasureValue()
+        valUncertainty = UncertaintyPDD(game=game_aux, ignored=1, minScore=50).getMeasureValue()
     except:
-        print 'Error:', game.tournamentCode, ' ', game.seriesCode, ' ', game.groupCode
+        print ('Error:', game.tournamentCode, ' ', game.seriesCode, ' ', game.groupCode)
         
     #game.storeMeasure(DramaByPointsUp2First(game=game_aux, ignored=1), conn)
     #game.storeMeasure(DramaByPositionUp2First(game=game_aux, ignored=1),conn)
     #game.storeMeasure(DramaByPaths(game=game_aux, ignored=1),conn)
-    game.storeMeasure(Uncertainty(game=game_aux, ignored=1, minScore=50),conn)
+    game.storeMeasure(UncertaintyPDD(game=game_aux, ignored=1, minScore=50),conn)
     dataBaseAdapter.closeConnection(conn)
     with counter.get_lock(): 
         counter.value += 1
@@ -36,13 +36,13 @@ def storeUncertainty(game):
 
 def printFollow(counter, total):
     while True:
-        print "                \r", counter.value, " -- ", counter.value / total.value * 100, "%",
-        sleep(0.01)
+        print ("                \r", counter.value, " -- ", counter.value / total.value * 100, "%",
+        sleep(0.01))
         
 if __name__ == "__main__":
 
-    import gamePlots
-    from code_pac.desafio.model import Game, Tournament, Series
+    import GameQualityAssessment.code_pac.gamePlots
+    from GameQualityAssessment.code_pac.desafio.model import Game, Tournament, Series
     conn = dataBaseAdapter.getConnection()
     jogos = []
     for torneio in Tournament.retriveList(conn):
@@ -52,8 +52,8 @@ if __name__ == "__main__":
     #print jogos[:]
     for jogo in jogos:
         if not isinstance(jogo, Game):
-            print 'error'
-    print len(jogos)
+            print ('error')
+    print (len(jogos))
     
     counter = Value('i', 0)
     total = Value('i', len(jogos))
@@ -63,15 +63,15 @@ if __name__ == "__main__":
     pool = Pool(processes=3, initargs=(counter,))
     r = pool.map(storeUncertainty, (jogos))
     drama = sum(r) / total.value
-    print ""
-    print drama
+    print ("")
+    print (drama)
     pool.close()
     pool.join()
     
     dataBaseAdapter.closeConnection(conn)
 
     #print "                \r", counter.value, " -- ", counter.value / total.value * 100, "%",
-    print ""
+    print ("")
     p.terminate()
     #print "drama: ", drama," | ", "maior: ", maior.value
     #gamePlots.GamePlots(desafioGame.DesafioGame(jogos[r.index(max(r))])).byPoints() 

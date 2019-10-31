@@ -6,9 +6,9 @@ Created on 15/05/2015
 '''
 import psycopg2.extras
 
-from gameRound import GameRound
-from enrollment import Enrollment
-from player import Player
+from GameQualityAssessment.code_pac.desafio.model.gameRound import GameRound
+from GameQualityAssessment.code_pac.desafio.model.enrollment import Enrollment
+from GameQualityAssessment.code_pac.desafio.model.player import Player
 
 
 class GameRoundResult:

@@ -20,7 +20,7 @@ if __name__ == '__main__':
             durty.append(row[0].value)
         else:
             clean.append(row[0].value)
-    print len(clean), len(durty)
+    print (len(clean), len(durty))
     plt.figure('clean')
     plt.hist(clean)
     plt.xlim((0,1))

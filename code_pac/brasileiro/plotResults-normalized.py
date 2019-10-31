@@ -27,7 +27,7 @@ if __name__ == "__main__":
     #only data
     pre_dados = []
     edition = []
-    for i in xrange(1, len(tabela)):
+    for i in range(1, len(tabela)):
         edition.append(int(tabela[i][0]))
         pre_dados.append([float(tabela[i][1]), float(tabela[i][2]), float(tabela[i][3])])
     

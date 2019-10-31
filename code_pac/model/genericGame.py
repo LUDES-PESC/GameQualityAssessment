@@ -12,6 +12,11 @@ class GenericGame(object):
     A generic class for games with turns (rounds) and variable number of players
     '''
 
+    _game = None
+    _gameData = []
+    _players = []
+
+
     def __init__(self, game):
         self._game = game
         self._setGameStruct()

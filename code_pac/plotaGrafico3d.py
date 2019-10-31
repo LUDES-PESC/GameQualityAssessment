@@ -5,11 +5,11 @@ Created on 14/07/2015
 @author: Augusto
 '''
 from __future__ import unicode_literals
-from code_pac import dataBaseAdapter
-from code_pac.gamePlots import GamePlots
-import code_pac.model as model
-from code_pac.measures import DramaByPaths, DramaByPointsUp2First, DramaByPositionUp2First
-import code_pac.diceGame.model as diceGameModel
+from GameQualityAssessment.code_pac import dataBaseAdapter
+from GameQualityAssessment.code_pac.gamePlots import GamePlots
+import GameQualityAssessment.code_pac.model as model
+from GameQualityAssessment.code_pac.measures import DramaByPaths, DramaByPointsUp2First, DramaByPositionUp2First
+import GameQualityAssessment.code_pac.diceGame.model as diceGameModel
 import matplotlib.pyplot as plot
 import numpy as np
 import scipy.stats as stats
@@ -30,7 +30,7 @@ def leArquivo(caminho):
         for linha in arquivo:
             if(float(linha) != 0 ):
                 listaValores.append(float(linha))
-    return listaValores;
+    return listaValores
     
 def salvarDados( metrica , listaValores, indiceVariante):
     with open("dados_grupo"+ indiceVariante +".txt", 'a') as fp:

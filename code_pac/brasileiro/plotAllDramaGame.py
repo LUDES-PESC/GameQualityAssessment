@@ -5,12 +5,12 @@ Created on 20/07/2015
 @author: mangeli
 '''
 from __future__ import division
-from code_pac.brasileiro.model.game import Game
-from code_pac.model import BrasileiroGame
+from GameQualityAssessment.code_pac.brasileiro.model.game import Game
+from GameQualityAssessment.code_pac.model import BrasileiroGame
 import matplotlib.pyplot as plt
 import numpy as np
 import math
-from code_pac.measures import DramaByPaths, DramaByPositionUp2First, DramaByPointsUp2First
+from GameQualityAssessment.code_pac.measures import DramaByPaths, DramaByPositionUp2First, DramaByPointsUp2First
 
 def maxDrama(nPlayers, nRounds, m):
         x1 = 1 #primeira rodada 
@@ -21,7 +21,7 @@ def maxDrama(nPlayers, nRounds, m):
 
 def plotPath(players, rounds, order, winnerPath, dValues):
     
-    x=xrange(1, rounds+1)
+    x=list(range(1, rounds+1))
     y=[]
     for res in x:
         y.append(maxDrama(players, rounds,res))
@@ -31,14 +31,14 @@ def plotPath(players, rounds, order, winnerPath, dValues):
     #plt.plot(x,y, '-mo', markersize=8, clip_on=False, label="MDP") #MDP
     plt.plot(x,winnerPath, '-bs', markersize=8, clip_on=False, label="Winner Path")
         
-    plt.yticks(xrange(1,players+1))
+    plt.yticks(list(range(1,players+1)))
     plt.xticks(np.arange(1,rounds+1,3))
     
     plt.gca().invert_yaxis()
     
     plt.title(order)
     plt.vlines(x,1,players, colors='0.75')
-    plt.hlines(xrange(1,players),1,rounds, colors='0.75')
+    plt.hlines(list(range(1,players)),1,rounds, colors='0.75')
     plt.ylabel("position")
     plt.xlabel('turn')
     fString = '{0:.4f}'
@@ -53,10 +53,10 @@ def plotPath(players, rounds, order, winnerPath, dValues):
 
 if __name__ == '__main__':
     games = Game.retrieveList()
-    anos = xrange(2003, 2015);
+    anos = list(range(2003, 2015))
     #ano = '2013'
     game = None
-    contador = 1;
+    contador = 1
     for ano in anos:
         for g in games:
             if g.year == str(ano):
@@ -68,7 +68,7 @@ if __name__ == '__main__':
         nPlayers = len(genGame.getPlayers())
         nRounds = genGame.getNumberRounds()
         winnerPath = []
-        for i in xrange(1, nRounds + 1):
+        for i in range(1, nRounds + 1):
             gameRound = genGame.getRound(i)[1]
             for r in gameRound:
                 if r.playerCode == winner:

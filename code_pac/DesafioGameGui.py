@@ -1,9 +1,10 @@
 from __future__ import division
 import wx
 import wx.grid
+from wx import Frame
 import dataBaseAdapter
-from code_pac.desafio.model import  Tournament, Series, Game
-from code_pac.model import DesafioGame
+from GameQualityAssessment.code_pac.desafio.model import  Tournament, Series, Game
+from GameQualityAssessment.code_pac.model import DesafioGame
 import matplotlib
 from wx.lib.agw.pyprogress import PyProgress
 
@@ -26,7 +27,7 @@ import gettext
 # end wxGlade
 
 
-class GUIDesafioGame(wx.Frame):
+class GUIDesafioGame(Frame):
     def __init__(self, *args, **kwds):
         # begin wxGlade: GUIDesafioGameView.__init__
         kwds["style"] = wx.DEFAULT_FRAME_STYLE
@@ -72,7 +73,7 @@ class GUIDesafioGame(wx.Frame):
 
     def __set_properties(self):
         # begin wxGlade: GUIDesafioGameView.__set_properties
-        self.SetTitle(_("Match Viewer"))
+        self.SetTitle(gettext.gettext("Match Viewer"))
         #self.lstTournament.SetSelection(0)
         self.__fillBlankGrid()
         #self.pointsGraph.SetBackgroundColour(wx.WHITE)

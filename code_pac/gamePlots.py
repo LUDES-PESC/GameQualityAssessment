@@ -6,7 +6,7 @@ Created on 24/05/2015
 '''
 from __future__ import unicode_literals
 import matplotlib.pyplot as plt
-import code_pac.model as model
+import GameQualityAssessment.code_pac.model as model
 import numpy as np
 
 
@@ -23,7 +23,7 @@ class GamePlots(object):
     
         
     def byPoints(self):
-        x = xrange(1, len(self._gameObj)+1)
+        x = range(1, len(self._gameObj)+1)
         #plt.subplot(2,1,1)
         plt.figure()
         for player in self._players:
@@ -44,7 +44,7 @@ class GamePlots(object):
         
     def byPosition(self, ignored = 1):
         #plt.subplot(2,1,2)
-        x = xrange(1, len(self._gameObj)+1)
+        x = list(range(1, len(self._gameObj)+1))
         x = np.array(x)
         
         for player in self._players:
@@ -65,9 +65,9 @@ class GamePlots(object):
             y = np.array(y)
             plt.plot(x,y,'o-',linewidth=2)
         #plt.ylim(0, len(self._players)+1)
-        plt.yticks(xrange(0,len(self._players)+1))
-        plt.ylabel(u'Posição')
-        plt.xlabel(u'Rodada')
+        plt.yticks(list(range(0,len(self._players)+1)))
+        plt.ylabel('Posição')
+        plt.xlabel('Rodada')
         plt.title('Progresso das Posições por Rodada')
         plt.gca().invert_yaxis()    
         plt.show()

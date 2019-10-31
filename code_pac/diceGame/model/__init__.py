@@ -1,1 +1,1 @@
-from game import Game
+from GameQualityAssessment.code_pac.diceGame.model.game import Game

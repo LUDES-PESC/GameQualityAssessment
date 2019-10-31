@@ -8,7 +8,7 @@ Created on 15/05/2015
 import psycopg2
 
 import matplotlib.pyplot as plt
-from modelo import Tournament, Series, Game, GameRound, GameRoundResult, PlayerGroup, Enrollment
+from GameQualityAssessment.code_pac.desafio.model import Tournament, Series, Game, GameRound, GameRoundResult, Enrollment
 import numpy as np
 
 
@@ -36,9 +36,9 @@ rodadas = sorted(GameRound.retrieveList(jogo, conn), key=lambda rodada: rodada.r
 for rodada in rodadas:
     #resultados da rodada ordenados
     resultados = sorted(GameRoundResult.retrieveList(rodada, conn), key=lambda resultado: resultado.totalScore, reverse=True)
-    print rodada.roundNumber
+    print (rodada.roundNumber)
     for r in resultados:
-        print r.playerCode, " - ", r.totalScore
+        print (r.playerCode, " - ", r.totalScore)
         if not r.playerCode in jogadores:
             jogadores.append(r.playerCode)
     
@@ -47,7 +47,7 @@ for rodada in rodadas:
 
   
 #pontuacao do jogador por rodada
-x = xrange(1, len(rodadas)+1)
+x = list(range(1, len(rodadas)+1))
 plt.subplot(2,1,1)
 for jogador in jogadores:
     y=[]
@@ -92,17 +92,19 @@ plt.show()
 
 
 
-print len(resultados)
+print (len(resultados))
 
 
 #playerGroup desse jogo
-playerGroupList = PlayerGroup.retrieveList(torneio, conn)
+#playerGroupList = PlayerGroup.retrieveList(torneio, conn)
+playerGroupList = []
 
 for playerGroup in playerGroupList:
     if playerGroup.tournamentCode == torneio.tournamentCode and playerGroup.groupCode == rodada.groupCode:
         grupo = playerGroup
 
 #inscritos no grupo
-inscritos = Enrollment.retrieveList(grupo, conn)
+#inscritos = Enrollment.retrieveList(grupo, conn)
+inscritos = []
 
-print len(inscritos) 
+print (len(inscritos) )

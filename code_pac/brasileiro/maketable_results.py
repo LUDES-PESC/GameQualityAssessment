@@ -5,16 +5,15 @@ Created on 05/07/2015
 @author: mangeli
 '''
 from __future__ import division
-from code_pac.brasileiro.model.game import Game
-from code_pac.model import BrasileiroGame
+from GameQualityAssessment.code_pac.brasileiro.model.game import Game
+from GameQualityAssessment.code_pac.model import BrasileiroGame
 import matplotlib.pyplot as plt
 import numpy as np
 from bs4 import BeautifulSoup
-import csv, codecs, cStringIO
+import csv, codecs
+from io import StringIO
 
-
-
-from code_pac.measures import DramaByPaths, DramaByPositionUp2First, DramaByPointsUp2First
+from GameQualityAssessment.code_pac.measures import DramaByPaths, DramaByPositionUp2First, DramaByPointsUp2First
 
 class UnicodeWriter:
     """
@@ -24,7 +23,7 @@ class UnicodeWriter:
 
     def __init__(self, f, dialect=csv.excel, encoding="utf-8", **kwds):
         # Redirect output to a queue
-        self.queue = cStringIO.StringIO()
+        self.queue = StringIO()
         self.writer = csv.writer(self.queue, dialect=dialect, **kwds)
         self.stream = f
         self.encoder = codecs.getincrementalencoder(encoding)()

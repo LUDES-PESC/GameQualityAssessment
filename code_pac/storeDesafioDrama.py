@@ -4,10 +4,10 @@ Created on 08/06/2015
 @author: mangeli
 '''
 from __future__ import division
-from measures import DramaByPointsUp2First, DramaByPositionUp2First, DramaByPaths
+from GameQualityAssessment.code_pac.measures import DramaByPointsUp2First, DramaByPositionUp2First, DramaByPaths
 from time import sleep
 from multiprocessing import Value, Process, Pool
-from code_pac.model import DesafioGame
+from GameQualityAssessment.code_pac.model import DesafioGame
 import dataBaseAdapter
 
 
@@ -29,13 +29,13 @@ def dramaAnalizerLocal(game):
 
 def printFollow(counter, total):
     while True:
-        print "                \r", counter.value, " -- ", counter.value / total.value * 100, "%",
-        sleep(0.01)
+        print ("                \r", counter.value, " -- ", counter.value / total.value * 100, "%",
+        sleep(0.01))
         
 if __name__ == "__main__":
 
     import gamePlots
-    from code_pac.desafio.model import Game, Tournament, Series
+    from GameQualityAssessment.code_pac.desafio.model import Game, Tournament, Series
     conn = dataBaseAdapter.getConnection()
     jogos = []
     for torneio in Tournament.retriveList(conn):
@@ -45,8 +45,8 @@ if __name__ == "__main__":
     #print jogos[:]
     for jogo in jogos:
         if not isinstance(jogo, Game):
-            print 'error'
-    print len(jogos)
+            print ('error')
+    print (len(jogos))
     
     counter = Value('i', 0)
     total = Value('i', len(jogos))
@@ -56,14 +56,14 @@ if __name__ == "__main__":
     pool = Pool(processes=3, initargs=(counter,))
     r = pool.map(dramaAnalizerLocal, (jogos))
     drama = sum(r) / total.value
-    print ""
-    print drama
+    print ("")
+    print (drama)
     pool.close()
     pool.join()
     
     
     #print "                \r", counter.value, " -- ", counter.value / total.value * 100, "%",
-    print ""
+    print ("")
     p.terminate()
     #print "drama: ", drama," | ", "maior: ", maior.value
     #gamePlots.GamePlots(desafioGame.DesafioGame(jogos[r.index(max(r))])).byPoints() 

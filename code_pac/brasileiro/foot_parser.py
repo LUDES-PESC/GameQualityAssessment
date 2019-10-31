@@ -29,7 +29,7 @@ for ano in anos:
     
     saida = open('../data/raw_data/simples_' + str(ano), 'w')    
     rodadas = parser.find_all('div','rodada-tabela')
-    print ano, len(rodadas)
+    print (ano, len(rodadas))
     for rodada in rodadas:
         campeonato.append(montaRanking(rodada))
         #print '          \r', rodada.find_next().get('data-rodada'), " ", int(rodada.text) / len(rodadas) * 100, '%'
