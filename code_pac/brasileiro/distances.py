@@ -8,6 +8,7 @@ from openpyxl import Workbook
 from openpyxl.reader.excel import load_workbook
 import scipy.stats
 import scipy.spatial.distance
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 
 def assignValues(row):
     retorno = []
@@ -16,7 +17,7 @@ def assignValues(row):
     return retorno
 
 if __name__ == '__main__':
-    wb = load_workbook(filename='vetores.xlsx',read_only=True)
+    wb = load_workbook(filename=abspath('code_pac/brasileiro/vetores.xlsx'),read_only=True)
     ws = wb['Sheet1']
     path = []
     points =[]
@@ -24,14 +25,14 @@ if __name__ == '__main__':
     judges = []
     for row in ws.rows:
         if row[0].value == "path":
-            path = assignValues(row)
+            path = assignValues(row[1:])
         if row[0].value == "points":
-            points = assignValues(row)   
+            points = assignValues(row[1:])   
         if row[0].value == "positions":
-            positions = assignValues(row)  
+            positions = assignValues(row[1:])  
         if row[0].value == "judges":
-            judges = assignValues(row)
-    
+            judges = assignValues(row[1:])
+            
     print (scipy.stats.kendalltau(judges, points))
     print (scipy.stats.kendalltau(judges, positions))
     print (scipy.stats.kendalltau(judges, path))

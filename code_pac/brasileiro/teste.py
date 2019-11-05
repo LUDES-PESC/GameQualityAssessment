@@ -8,7 +8,7 @@ from GameQualityAssessment.code_pac.model import BrasileiroGame
 import matplotlib.pyplot as plt
 import numpy as np
 from openpyxl import Workbook
-
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 from GameQualityAssessment.code_pac.measures import DramaByPaths, DramaByPositionUp2First, DramaByPointsUp2First
 
 if __name__ == '__main__':
@@ -49,4 +49,4 @@ if __name__ == '__main__':
                        ,transform=plt.gca().transAxes,
                        verticalalignment='bottom', horizontalalignment='left')
     plt.show()
-    wb.save('dadosDrama.xlsx')
+    wb.save(abspath('dadosDrama.xlsx'))

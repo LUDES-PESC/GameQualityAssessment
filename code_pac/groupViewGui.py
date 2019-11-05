@@ -166,7 +166,7 @@ class GroupView(wx.Frame):
             games += self._getChildrenList(s)
             
         self.valQTYGame.SetLabel(str(len(games)))
-        values = self._fillLstMeasures(games)
+        self._fillLstMeasures(games)
         self._fillGraphPanel(self.valuesContainer)
         #self._fillComboGraphType()    
 
@@ -182,7 +182,7 @@ class GroupView(wx.Frame):
             games += self._getChildrenList(s)
             
         self.valQTYGame.SetLabel(str(len(games)))
-        values = self._fillLstMeasures(games)
+        self._fillLstMeasures(games)
         self._fillGraphPanel(self.valuesContainer)
         #self._fillComboGraphType()
         
@@ -193,7 +193,7 @@ class GroupView(wx.Frame):
         self.valGame.SetLabel("ALL")
         games = self._getChildrenList(acItem)
         self.valQTYGame.SetLabel(str(len(games)))
-        values = self._fillLstMeasures(games)
+        self._fillLstMeasures(games)
         self._fillGraphPanel(self.valuesContainer)
         #self._fillComboGraphType()
         

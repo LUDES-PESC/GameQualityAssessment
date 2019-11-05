@@ -1,12 +1,13 @@
 '''
 Created on 27/05/2015
-
+FIXME
 @author: mangeli
 '''
 from __future__ import division
 
 from bs4 import BeautifulSoup
 import json
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 
 
 #anos = range(2003, 2014)
@@ -23,16 +24,17 @@ def montaRanking(tabelaDados):
 
 for ano in anos:
     campeonato = []
-    entrada = open('../data/raw_data/full' + ano, 'r')
+    file_to_be_open = 'data/raw_data/full' + str(ano)
+    entrada = open(abspath(file_to_be_open), 'r')
     parser = BeautifulSoup(entrada.read())
     entrada.close()
     
-    saida = open('../data/raw_data/simples_' + str(ano), 'w')    
+    saida = open(abspath('data/raw_data/simples_' + str(ano)), 'w')    
     rodadas = parser.find_all('div','rodada-tabela')
     print (ano, len(rodadas))
     for rodada in rodadas:
         campeonato.append(montaRanking(rodada))
-        #print '          \r', rodada.find_next().get('data-rodada'), " ", int(rodada.text) / len(rodadas) * 100, '%'
+    #print '          \r', rodada.find_next().get('data-rodada'), " ", int(rodada.text) / len(rodadas) * 100, '%'
     json.dump(campeonato, saida)
     saida.close()
     

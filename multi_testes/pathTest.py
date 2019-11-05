@@ -6,7 +6,7 @@ Created on 08/07/2015
 '''
 from __future__ import division
 import math
-
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 
 def maxDrama(nPlayers, nRounds, gRound, target=1):
         x1 = 1 #primeira rodada 
@@ -62,7 +62,7 @@ if __name__ == '__main__':
                 if target > players - 1:
                     break
                 identiS = str(players) + '_r' + str(gRounds) + '_t' + str(target)
-                pp = PdfPages('envio/graficos_p' + identiS + '.pdf')
+                pp = PdfPages(abspath('multi_testes/envio/graficos_p' + identiS + '.pdf'))
                 planilha = wb.create_sheet(title=identiS)
                 paths = pathMaker(players, gRounds, target)
                 values = []
@@ -104,5 +104,5 @@ if __name__ == '__main__':
                 pp.savefig()
                 plt.close()
                 pp.close()
-    wb.save('envio/dados.xlsx')
+    wb.save(abspath('multi_testes/envio/dados.xlsx'))
     #plt.show()

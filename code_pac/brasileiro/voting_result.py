@@ -9,7 +9,7 @@ from openpyxl.reader.excel import load_workbook
 from py3votecore.schulze_method import SchulzeMethod
 from py3votecore.schulze_pr import SchulzePR
 from py3votecore.schulze_npr import SchulzeNPR
-
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 
 def assignValues(row, limit=None):
     if limit == None:
@@ -17,11 +17,11 @@ def assignValues(row, limit=None):
     retorno = []
     editions = list(range(2003, 2014+1))
     for i in range(1, limit):
-                retorno.append(row[i].value-1)
+        retorno.append(row[i].value-1)
     return [[str(x)] for(y,x) in sorted(zip(retorno, editions))]#retorno
 
 if __name__ == '__main__':
-    wb = load_workbook(filename='ranking.xlsx',read_only=True)
+    wb = load_workbook(filename=abspath('code_pac/brasileiro/ranking.xlsx'),read_only=True)
     ws = wb['Planilha1']
     
     ballots = []

@@ -10,6 +10,7 @@ from GameQualityAssessment.code_pac.gamePlots import GamePlots
 import GameQualityAssessment.code_pac.model as model
 from GameQualityAssessment.code_pac.measures import DramaByPaths, DramaByPointsUp2First, DramaByPositionUp2First
 import GameQualityAssessment.code_pac.diceGame.model as diceGameModel
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 import matplotlib.pyplot as plot
 import numpy as np
 
@@ -39,7 +40,7 @@ def leArquivo(caminho):
     return listaValores
     
 def salvarDados( metrica , listaValores, indiceVariante):
-    with open("dados_grupo"+ indiceVariante +".txt", 'a') as fp:
+    with open(abspath("dados_grupo"+ indiceVariante +".txt"), 'a') as fp:
         fp.write('{} {} {} {}\n'.format(metrica, len(listaValores), np.mean(listaValores), np.std(listaValores)))
     
 if __name__ == '__main__':
@@ -58,26 +59,26 @@ if __name__ == '__main__':
     
     
     
-    dramasPontos = leArquivo("dramaporpontos_grupo"+ indiceVariante +".txt")
+    dramasPontos = leArquivo(abspath("code_pac/dramaporpontos_grupo"+ indiceVariante +".txt"))
     salvarDados("Drama por Pontos", dramasPontos, indiceVariante)
     plotaHistograma(dramasPontos, "Drama por Pontos", 0, 100, variante)
     
-    dramasPosicao = leArquivo("dramaporposicao_grupo"+ indiceVariante +".txt")
+    dramasPosicao = leArquivo(abspath("code_pac/dramaporposicao_grupo"+ indiceVariante +".txt"))
     salvarDados("Drama por Posicao", dramasPosicao, indiceVariante)    
     plotaHistograma(dramasPosicao, "Drama por Posição", 0, 50, variante)
     
-    dramasCaminho = leArquivo("dramaporcaminho_grupo"+ indiceVariante +".txt")
+    dramasCaminho = leArquivo(abspath("code_pac/dramaporcaminho_grupo"+ indiceVariante +".txt"))
     salvarDados("Drama por Caminho", dramasCaminho, indiceVariante)
     plotaHistograma(dramasCaminho, "Drama por Caminho", 1000, 50, variante)
     
-    leadChange = leArquivo("leadchange_grupo"+ indiceVariante +".txt")
+    leadChange = leArquivo(abspath("code_pac/leadchange_grupo"+ indiceVariante +".txt"))
     salvarDados("Mudanca de Lideranca", leadChange, indiceVariante)
     plotaHistograma(leadChange, "Mudança de Liderança", 0, 20, variante) 
     
-    incertezaEntropia = leArquivo("incertezaentropia_grupo"+ indiceVariante +".txt")
+    incertezaEntropia = leArquivo(abspath("code_pac/incertezaentropia_grupo"+ indiceVariante +".txt"))
     salvarDados("Incerteza por Entropia", incertezaEntropia, indiceVariante)
     plotaHistograma(incertezaEntropia, "Incerteza por Entropia", 0, 100, variante)
     
-    incertezaPDD = leArquivo("incertezapdd_grupo"+ indiceVariante +".txt")
+    incertezaPDD = leArquivo(abspath("code_pac/incertezapdd_grupo"+ indiceVariante +".txt"))
     salvarDados("Incerteza por PDD", incertezaPDD, indiceVariante)
     plotaHistograma(incertezaPDD, "Incerteza por PDD", 0 , 100, variante)

@@ -10,6 +10,7 @@ from GameQualityAssessment.code_pac.gamePlots import GamePlots
 import GameQualityAssessment.code_pac.model as model
 from GameQualityAssessment.code_pac.measures import DramaByPaths, DramaByPointsUp2First, DramaByPositionUp2First
 import GameQualityAssessment.code_pac.diceGame.model as diceGameModel
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 import matplotlib.pyplot as plot
 import numpy as np
 import scipy.stats as stats
@@ -51,7 +52,7 @@ def leArquivo(caminho):
     return listaValores
     
 def salvarDados( metrica , listaValores, indiceVariante):
-    with open("dados_grupo"+ indiceVariante +".txt", 'a') as fp:
+    with open(abspath("dados_grupo"+ indiceVariante +".txt"), 'a') as fp:
         fp.write('{} {} {} {}\n'.format(metrica, len(listaValores), np.mean(listaValores), np.std(listaValores)))
     
 if __name__ == '__main__':
@@ -73,11 +74,11 @@ if __name__ == '__main__':
     plot.xlabel(nomeMetrica)
     
     for indiceVariante in range(7):
-        dramasPontos = leArquivo("dramaporcaminho_grupo"+ str(indiceVariante+1) +".txt")
+        dramasPontos = leArquivo(abspath("code_pac/dramaporcaminho_grupo"+ str(indiceVariante+1) +".txt"))
         print (indiceVariante)
         #salvarDados("Drama por Pontos", dramasPontos, indiceVariante)
         plotaHistograma(dramasPontos, nomeMetrica, 0, 50, variantes[indiceVariante])
     ax.legend()
-    plot.savefig('dist_dramaporcaminho.png')
+    plot.savefig(abspath('dist_dramaporcaminho.png'))
     plot.show()
     
