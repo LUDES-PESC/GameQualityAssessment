@@ -8,10 +8,10 @@ import math
 import matplotlib.pyplot as plt
 from openpyxl import Workbook
 from openpyxl.reader.excel import load_workbook
-
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 
 if __name__ == '__main__':
-    wb = load_workbook(filename='envio/dados.xlsx',read_only=True)
+    wb = load_workbook(filename=abspath('multi_testes/envio/dados.xlsx'),read_only=True)
     ws = wb['5_r5_t1']
     clean = []
     durty = []

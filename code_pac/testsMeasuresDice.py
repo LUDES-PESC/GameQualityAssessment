@@ -10,6 +10,7 @@ from GameQualityAssessment.code_pac.gamePlots import GamePlots
 import GameQualityAssessment.code_pac.model as model
 from GameQualityAssessment.code_pac.measures import DramaByPaths, DramaByPointsUp2First, DramaByPositionUp2First, LeadChange, UncertaintyEntropy, UncertaintyPDD
 import GameQualityAssessment.code_pac.diceGame.model as diceGameModel
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 import matplotlib.pyplot as plot
 
 from collections import namedtuple
@@ -98,15 +99,15 @@ def calculaESalvaDramas(games, indiceVariante):
         dramasPosicao.append(calculaDramaPorPosicao(game))
         dramasCaminho.append(calculaDramaPorCaminho(game))
         
-    salvaArquivoValores(dramasPontos, 'dramaporpontos_grupo'+ indiceVariante +'.txt')
-    salvaArquivoValores(dramasPosicao, 'dramaporposicao_grupo'+ indiceVariante +'.txt')
-    salvaArquivoValores(dramasCaminho, 'dramaporcaminho_grupo'+ indiceVariante +'.txt')
+    salvaArquivoValores(dramasPontos, abspath('code_pac/dramaporpontos_grupo'+ indiceVariante +'.txt'))
+    salvaArquivoValores(dramasPosicao, abspath('code_pac/dramaporposicao_grupo'+ indiceVariante +'.txt'))
+    salvaArquivoValores(dramasCaminho, abspath('code_pac/dramaporcaminho_grupo'+ indiceVariante +'.txt'))
 
 def calculaESalvaMudancaLideranca(games, indiceVariante):
     mudancaLiderancao = []
     for game in games:
         mudancaLiderancao.append(calculaMudancasLideranca(game))
-    salvaArquivoValores(mudancaLiderancao, 'leadchange_grupo'+ indiceVariante +'.txt')
+    salvaArquivoValores(mudancaLiderancao, abspath('code_pac/deadchange_grupo'+ indiceVariante +'.txt'))
     
     
 def calculaESalvaIncerteza(games, indiceVariante):
@@ -115,13 +116,12 @@ def calculaESalvaIncerteza(games, indiceVariante):
     for game in games:
         incertezaEntropia.append(calculaIncertezaEntropia(game))
         incertezaPDD.append(calculaIncertezaPDD(game))
-    salvaArquivoValores(incertezaEntropia, 'incertezaentropia_grupo'+ indiceVariante +'.txt')
-    salvaArquivoValores(incertezaPDD, 'incertezapdd_grupo'+ indiceVariante +'.txt')
-   
+    salvaArquivoValores(incertezaEntropia, abspath('code_pac/dncertezaentropia_grupo'+ indiceVariante +'.txt'))
+    salvaArquivoValores(incertezaPDD, abspath('code_pac/dncertezapdd_grupo'+ indiceVariante +'.txt'))
 
-    
-    
+
 if __name__ == '__main__':
+    
     games = diceGameModel.Game.retrieveList()
     
     #for game in games:

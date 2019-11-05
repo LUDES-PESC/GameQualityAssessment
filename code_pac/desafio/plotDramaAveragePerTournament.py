@@ -6,6 +6,7 @@ Created on 02/10/2015
 from __future__ import division
 from GameQualityAssessment.code_pac import dataBaseAdapter as db, measures
 from GameQualityAssessment.code_pac.desafio.model import Tournament, Series, Game
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 import csv
 import matplotlib as mpl
 #from mpl_toolkits.mplot3d import Axes3D
@@ -101,7 +102,7 @@ if __name__ == '__main__':
     print ("Retrieving drama information from db...")
     targets = [(123,272), (123,264), (160,296), (160,303), (166,313), (166,324), (127,281), (127,291)]
     for target in targets:
-        arq = csv.reader(open("../../data/desafio/raw_data/valid_games.csv", "r"), delimiter=";")
+        arq = csv.reader(open(abspath("../../data/desafio/raw_data/valid_games.csv"), "r"), delimiter=";")
         t = Tournament.retrieve(target[0], conn)
         games = getValidGames(Series.retrieve(t, target[1], conn), arq)
         values = getMeasureValues(games)

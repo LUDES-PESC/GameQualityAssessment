@@ -12,7 +12,7 @@ import numpy as np
 from bs4 import BeautifulSoup
 import csv, codecs
 from io import StringIO
-
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 from GameQualityAssessment.code_pac.measures import DramaByPaths, DramaByPositionUp2First, DramaByPointsUp2First
 
 class UnicodeWriter:
@@ -29,12 +29,13 @@ class UnicodeWriter:
         self.encoder = codecs.getincrementalencoder(encoding)()
 
     def writerow(self, row):
-        self.writer.writerow([s.encode("utf-8") for s in row])
+        #self.writer.writerow([s.encode("utf-8") for s in row])
+        self.writer.writerow([str(s) for s in row])
         # Fetch UTF-8 output from the queue ...
         data = self.queue.getvalue()
-        data = data.decode("utf-8")
+        #data = data.decode("utf-8")
         # ... and reencode it into the target encoding
-        data = self.encoder.encode(data)
+        #data = self.encoder.encode(data)
         # write to the target stream
         self.stream.write(data)
         # empty queue
@@ -46,15 +47,16 @@ class UnicodeWriter:
 
 if __name__ == '__main__':
     anos = range(2003, 2015)
-    f = open('tabela_resultados_full.csv', 'w')
-    f2 = open('tabela_resultados.csv', 'w')
+    f = open(abspath('code_pac/brasileiro/tabela_resultados_full.csv'), 'w')
+    #f2 = open(abspath('code_pac/brasileiro/tabela_resultados.csv'), 'w')
     arq = UnicodeWriter(f)
     arq_r = UnicodeWriter(f)
     
     header = ['Edition','Teams No.', 'Rounds No.', 'Winner', 'Winner final score', 'Winner effectiveness']
+    arq.writerow(header)
     for ano in anos:
-        entrada = open('../../data/brasileiro/raw_data/full' + str(ano), 'r')
-        parser = BeautifulSoup(entrada.read())
+        entrada = open(abspath('data/brasileiro/raw_data/full' + str(ano)), 'r')
+        parser = BeautifulSoup(entrada.read(), features="html.parser")
         entrada.close()
         rodadas = parser.find_all('div','rodada-tabela')
         #contando rodadas

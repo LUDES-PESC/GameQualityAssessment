@@ -269,7 +269,7 @@ class GUIDesafioGame(Frame):
         axes = self.pointsGraph.figure.gca()
         
         #x = xrange(1, len(gameObj)+1)
-        x = xrange(2, len(gameObj)+1) #ignoring the first round
+        x = list(range(2, len(gameObj)+1)) #ignoring the first round
         for player in players:
             y=[]
             for i in range(1, len(gameObj)):
@@ -296,7 +296,7 @@ class GUIDesafioGame(Frame):
         axes = self.positionGraph.figure.gca()    
         
         #x = xrange(1, len(gameObj)+1)
-        x = xrange(2, len(gameObj)+1) #ignoring the first round
+        x = list(range(2, len(gameObj)+1)) #ignoring the first round
         for player in players:
             y=[]
             #for i in range(0, len(gameObj)):
@@ -315,7 +315,7 @@ class GUIDesafioGame(Frame):
             y = np.array(y)
             axes.plot(x,y,'o-',linewidth=2)
         #plt.ylim(0, len(self._players)+1)
-        axes.set_yticks(xrange(0,len(players)+1))
+        axes.set_yticks(list(range(0,len(players)+1)))
         axes.set_ylabel('Position')
         axes.set_xlabel('Turn')
         axes.hlines(axes.get_yticks(),2, len(gameObj), colors='0.75')
