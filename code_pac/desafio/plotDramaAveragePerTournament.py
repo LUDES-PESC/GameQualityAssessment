@@ -83,7 +83,7 @@ def getMeasureValues(games):
     return measures
     
 if __name__ == '__main__':
-    db.setValues('desafio_simples', 'mangeli', 'localhost', 'agoravai', 5432)
+    #db.setValues('desafio_simples', 'mangeli', 'localhost', 'agoravai', 5432)
     conn = db.getConnection()
     dbCursor = db.getCursor(conn)
     
@@ -102,7 +102,7 @@ if __name__ == '__main__':
     print ("Retrieving drama information from db...")
     targets = [(123,272), (123,264), (160,296), (160,303), (166,313), (166,324), (127,281), (127,291)]
     for target in targets:
-        arq = csv.reader(open(abspath("../../data/desafio/raw_data/valid_games.csv"), "r"), delimiter=";")
+        arq = csv.reader(open(abspath("data/desafio/raw_data/valid_games.csv"), "r"), delimiter=";")
         t = Tournament.retrieve(target[0], conn)
         games = getValidGames(Series.retrieve(t, target[1], conn), arq)
         values = getMeasureValues(games)
