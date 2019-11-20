@@ -2,10 +2,10 @@
 from __future__ import division
 
 from GameQualityAssessment.code_pac.desafio.parser import Parser
-
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 
 #abre o arqruivo
-parser = Parser('/home/mangeli/Dropbox/mestrado/dados desafio sebrae/Pontuação2.xlsx')
+parser = Parser(abspath('/home/mangeli/Dropbox/mestrado/dados desafio sebrae/Pontuação2.xlsx'))
 
 #le o arquivo
 linhas = parser.getValues(0, 0) #planilha 0 com zero linhas de cabecalho

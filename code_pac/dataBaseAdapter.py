@@ -35,16 +35,16 @@ def getConfigValues():
     global __host
     global __password
     global __port
-    c = configparser.ConfigParser()
+    conf_parser = configparser.ConfigParser()
     f = open(os.path.dirname(__file__) + '//gameAnalyzer.ini', 'r')
-    c.readfp(f)
+    conf_parser.read_file(f)
     f.close()
     
-    __dbname = c.get('database desafio', 'dbname')
-    __user = c.get('database server', 'user')
-    __host = c.get('database server', 'host')
-    __password = c.get('database server', 'password')
-    __port = c.get('database server', 'port')
+    __dbname = conf_parser.get('database desafio', 'dbname')
+    __user = conf_parser.get('database server', 'user')
+    __host = conf_parser.get('database server', 'host')
+    __password = conf_parser.get('database server', 'password')
+    __port = conf_parser.get('database server', 'port')
 
 
 def getConnection():
