@@ -14,7 +14,7 @@ class BrasileiroGame(GenericGame):
         
         super(BrasileiroGame, self).__init__(game)
     
-    def _setGameStruct(self):
+    def _setGameStruct(self,game):
         self._players = []
         self._gameData = []
         lastScore = {}

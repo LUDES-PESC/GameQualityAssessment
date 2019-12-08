@@ -67,7 +67,8 @@ class UncertaintyEntropy(MeasureTemplate):
                     for player in players:
                         if player in inPlayers:
                             proPlayer = self._probPlayer(player, turnScores, self) #(turnScores[player]/totalRoundScore) #probability of the player win the match
-                            turnUncertaintyPart += proPlayer*math.log(proPlayer,2) / math.log(nPlayers,2)
+                            if(proPlayer > 0):
+                                turnUncertaintyPart += proPlayer*math.log(proPlayer,2) / math.log(nPlayers,2)
                         else:
                             proPlayer = 0
                             turnUncertaintyPart += proPlayer
@@ -91,7 +92,7 @@ if __name__ == '__main__':
     import GameQualityAssessment.code_pac.desafio.model as desafioModel
     
     #set the test type (brasileiro = 1, desafio = 2)
-    testType = 2
+    testType = 1
     
     #set desafioGame data
     tournamentCode = 160

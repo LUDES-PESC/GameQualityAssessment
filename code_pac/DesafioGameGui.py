@@ -226,7 +226,7 @@ class GUIDesafioGame(Frame):
             #byPath-2 uncertainty-3 leadChang-4
             if measure['measurecode'] == 2 or \
                 measure['measurecode'] == 3 or \
-                measure['measurecode'] == 4:  
+                measure['measurecode'] == 5:  
                 overallValue += measure['measurevalue']
             index += 1
         self.txtOverall.SetValue(str(overallValue / 3))

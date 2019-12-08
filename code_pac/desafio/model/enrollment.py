@@ -44,9 +44,11 @@ class Enrollment:
     @classmethod
     def retrieve(cls, player, groupCode, seriesCode, connection):
         cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor) # to retrieve a dictionary
-        cursor.execute("""SELECT * FROM Enrollment WHERE tournamentCode = (%(tournamentCode)s) 
-                        AND playerCode = (%(playerCode)s)
-                        AND groupCode = (%(groupCode)s)""",
+        cursor.execute("""SELECT groupcode, en.tournamentcode, playercode,finalscore, seriescode FROM Enrollment en
+                        inner join Series ser on en.tournamentCode = ser.tournamentCode
+                        WHERE en.tournamentCode = (%(tournamentCode)s) 
+                        AND en.playerCode = (%(playerCode)s)
+                        AND en.groupCode = (%(groupCode)s)""",
                        { 'tournamentCode' : player.tournamentCode,
                         'playerCode' : player.playerCode,
                         'seriesCode' : seriesCode,

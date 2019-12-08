@@ -9,18 +9,21 @@ import GameQualityAssessment.code_pac.desafio.model as desafio_model
 
 class DesafioGame(GenericGame):
     
-    def __init__(self, game):
-    
-        if not isinstance(game, desafio_model):
+    def __init__(self, game, connection = None):
+        if not isinstance(game, desafio_model.Game ):
             raise TypeError('Arg must to be a desafio.model.Game instance')
         
-        super(DesafioGame, self).__init__(game)
-        
-    def _setGameStruct(self):
-        connection = dataBaseAdapter.getConnection()
+        super(DesafioGame, self).__init__(game,connection)
+
+    def _setGameStruct(self,game,connection=None):
         self._players = []
         self._gameData = []
-        
+        connection_were_none = False
+
+        if(connection == None):
+            connection_were_none = True
+            connection = dataBaseAdapter.getConnection()
+
         gameRounds = sorted(desafio_model.GameRound.retrieveList(self._game, connection), key=lambda gameRound: gameRound.roundOrder)
         for gameRound in gameRounds:
             totalScores = sorted(desafio_model.GameRoundResult.retrieveList(gameRound, connection), key=lambda result: result.totalScore, reverse=True)
@@ -31,8 +34,10 @@ class DesafioGame(GenericGame):
                     self._players.append(t.playerCode)
             
             self._gameData.append((gameRound.roundOrder, scores))
-        dataBaseAdapter.closeConnection(connection)
         
+        if(connection_were_none):
+            dataBaseAdapter.closeConnection(connection)
+    
 if __name__ == "__main__":
     connection = dataBaseAdapter.getConnection()
     tournament = desafio_model.Tournament.retriveList(connection)[0]

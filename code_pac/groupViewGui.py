@@ -120,28 +120,28 @@ class GroupView(wx.Frame):
         sizer_7.Add(self.treeGameExploring, 1, wx.EXPAND, 0)
         sizer_6.Add(sizer_7, 1, wx.EXPAND, 0)
         sizer_6.Add((10, 20), 0, 0, 0)
-        sizer_10.Add(self.label_6, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL, 0)
+        sizer_10.Add(self.label_6, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         sizer_10.Add(self.valTournament, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 4)
         sizer_8.Add(sizer_10, 0, wx.LEFT | wx.TOP | wx.EXPAND, 6)
-        sizer_11.Add(self.label_7, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL, 0)
+        sizer_11.Add(self.label_7, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         sizer_11.Add(self.valSeries, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 4)
         sizer_8.Add(sizer_11, 0, wx.LEFT | wx.TOP | wx.EXPAND, 6)
-        sizer_12.Add(self.label_8, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL, 0)
+        sizer_12.Add(self.label_8, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         sizer_12.Add(self.valGame, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 4)
         sizer_8.Add(sizer_12, 0, wx.LEFT | wx.TOP | wx.BOTTOM | wx.EXPAND, 6)
         sizer_14.Add(self.label_11, 0, 0, 0)
         sizer_14.Add(self.valQTYGame, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 4)
-        sizer_8.Add(sizer_14, 0, wx.LEFT | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL, 6)
+        sizer_8.Add(sizer_14, 0, wx.LEFT | wx.EXPAND, 6)
         sizer_8.Add(self.lstMeasures, 1, wx.TOP | wx.EXPAND, 5)
         sizer_13.Add(self.label_10, 0, 0, 0)
         sizer_13.Add(self.txtOverallEvaluation, 0, wx.EXPAND, 0)
         sizer_8.Add(sizer_13, 0, wx.EXPAND, 0)
         sizer_6.Add(sizer_8, 1, wx.EXPAND, 0)
         sizer_5.Add(sizer_6, 1, wx.LEFT | wx.RIGHT | wx.TOP | wx.EXPAND, 6)
-        sizer_9.Add(self.label_9, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL, 0)
+        sizer_9.Add(self.label_9, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         sizer_9.Add(self.cmbGraphType, 1, wx.EXPAND, 0)
         sizer_5.Add(sizer_9, 0, wx.LEFT | wx.RIGHT | wx.TOP, 6)
-        sizer_5.Add(self.panelGraph, 1, wx.EXPAND | wx.ALIGN_BOTTOM, 0)
+        sizer_5.Add(self.panelGraph, 1, wx.EXPAND, 0)
         sizer_tab.Add(self.tabPanel, 1, wx.EXPAND, 0)
         self.tabPanel.SetSizer(sizer_5)
         self.SetSizer(sizer_tab)
@@ -225,7 +225,7 @@ class GroupView(wx.Frame):
             #byPath-2 uncertainty-3 leadChang-4
             if m['measurecode'] == 2 or \
                 m['measurecode'] == 3 or \
-                m['measurecode'] == 4:  
+                m['measurecode'] == 5:  
                 overallValue += m['measurevalue']
             index += 1
         #self._fillComboGraphType()
@@ -296,7 +296,7 @@ class GroupView(wx.Frame):
             index += 1
         
         #overall drama_by_path + uncertainty + lead_change over 3
-        overallEvaluation = (measuresAvg[2] + measuresAvg[3] + measuresAvg[4]) / 3
+        overallEvaluation = (measuresAvg[2] + measuresAvg[5] + measuresAvg[3]) / 3
         
         self.txtOverallEvaluation.SetValue(str(overallEvaluation))
         
@@ -339,9 +339,9 @@ class GroupView(wx.Frame):
                 if cmbValue == 'Drama by Paths':
                     SP.histGeral(values[2], self.panelGraph, cmbValue)
                 if cmbValue == 'Uncertainty':
-                    SP.histGeral(values[3], self.panelGraph, cmbValue)   
+                    SP.histGeral(values[5], self.panelGraph, cmbValue)   
                 if cmbValue == 'Lead Change':
-                    SP.histGeral(values[4], self.panelGraph, cmbValue)
+                    SP.histGeral(values[3], self.panelGraph, cmbValue)
                 
                     
     def exploringSelectionChanged(self, event):  # wxGlade: GroupView.<event_handler>

@@ -31,7 +31,7 @@ class GameRoundResult:
     def store(self, connection):
         cursor = connection.cursor()
         try:
-            cursor.execute("""INSERT INTO GameRoundResult (roundCode, tournamentCode, seriesCode, groupCode, playerCode, roundScore, totalScore, playerRoundStatus)
+            cursor.execute("""INSERT INTO RoundResult (roundCode, tournamentCode, seriesCode, groupCode, playerCode, roundScore, totalScore, playerRoundStatus)
                            VALUES (%(roundCode)s, %(tournamentCode)s, %(seriesCode)s, %(groupCode)s, %(playerCode)s, %(roundScore)s, %(totalScore)s, %(playerRoundStatus)s)""",
                            {'roundCode' : self.roundCode,
                             'tournamentCode' : self.tournamentCode,
@@ -51,7 +51,7 @@ class GameRoundResult:
     @classmethod
     def retrieve(cls, gameRound, enrollment,  connection):
         cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor) # to retrieve a dictionary
-        cursor.execute("""SELECT * FROM GameRoundResult WHERE tournamentCode = (%(tournamentCode)s) 
+        cursor.execute("""SELECT * FROM RoundResult WHERE tournamentCode = (%(tournamentCode)s) 
                         AND playerCode = (%(playerCode)s)
                         AND groupCode = (%(groupCode)s)
                         AND seriesCode = (%(seriesCode)s)
@@ -69,7 +69,7 @@ class GameRoundResult:
     @classmethod
     def retrieveList(cls, gameRound, connection):
         cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        cursor.execute("""SELECT * FROM GameRoundResult WHERE tournamentCode = (%(tournamentCode)s)
+        cursor.execute("""SELECT * FROM RoundResult WHERE tournamentCode = (%(tournamentCode)s)
                         AND groupCode = (%(groupCode)s)
                         AND seriesCode =  (%(seriesCode)s)
                         AND roundCode = (%(roundCode)s)""", 

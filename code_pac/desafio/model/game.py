@@ -57,6 +57,7 @@ class Game:
                             'measureValue' : measureIn.getMeasureValue() }
                            )
         except psycopg2.Error: # simula um insert ignore, não insere dados que já existem
+            print("rollback")
             connection.rollback()       # baseandose na chave primária da tabela
         else:
             connection.commit()

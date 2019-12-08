@@ -16,12 +16,14 @@ class GenericGame(object):
     _gameData = []
     _players = []
 
-
-    def __init__(self, game):
+    def __init__(self,game,connection=None):
         self._game = game
-        self._setGameStruct()
-        
-    def _setGameStruct(self):
+        if(connection != None):
+            self._setGameStruct(game,connection)
+        else:
+            self._setGameStruct(game)
+    
+    def _setGameStruct(self,game,connection=None):
         '''
         roundNumber
            |_ playerCode, roundScore, totalScore

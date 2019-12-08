@@ -11,7 +11,7 @@ from GameQualityAssessment.code_pac.desafio.model.game import Game
 class GameRound:
     '''RoundCode, TournamentCode, SeriesCode, GroupCode is PK'''
   
-    def __init__(self, game, roundCode, roundOrder):
+    def __init__(self, game, roundCode, roundNumber):
         if not isinstance(game, Game):
             print (game)
             raise TypeError('The first arg has to be a Game object')
@@ -20,20 +20,20 @@ class GameRound:
         self.tournamentCode = game.tournamentCode
         self.seriesCode = game.seriesCode
         self.groupCode = game.groupCode
-        self.roundOrder = roundOrder
+        self.roundOrder = roundNumber
         self.game = game
         self.tournament = game.tournament
         
     def store(self, connection):
         cursor = connection.cursor()
         try:
-            cursor.execute("""INSERT INTO GameRound (roundCode, tournamentCode, seriesCode, groupCode, roundOrder)
-                           VALUES (%(roundCode)s, %(tournamentCode)s, %(seriesCode)s, %(groupCode)s, %(roundOrder)s)""",
+            cursor.execute("""INSERT INTO Round (roundCode, tournamentCode, seriesCode, groupCode, roundNumber)
+                           VALUES (%(roundCode)s, %(tournamentCode)s, %(seriesCode)s, %(groupCode)s, %(roundNumber)s)""",
                            {'tournamentCode' : self.tournamentCode,
                             'groupCode' : self.groupCode,
                             'roundCode' : self.roundCode,
                             'seriesCode' : self.seriesCode,
-                            'roundOrder' : self.roundOrder }
+                            'roundNumber' : self.roundOrder }
                            )
         except psycopg2.IntegrityError: # simula um insert ignore, não insere dados que já existem
             connection.rollback()       # baseandose na chave primária da tabela
@@ -44,7 +44,7 @@ class GameRound:
     @classmethod
     def retrieve(cls, game, roundCode, connection):
         cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor) # to retrieve a dictionary
-        cursor.execute("""SELECT * FROM gameRound WHERE tournamentCode = (%(tournamentCode)s) 
+        cursor.execute("""SELECT * FROM Round WHERE tournamentCode = (%(tournamentCode)s) 
                         AND roundCode = (%(groundCode)s)
                         AND seriesCode = (%(seriesCode)s)
                         AND groupCode = (%(groupCode)s)""",
@@ -55,12 +55,12 @@ class GameRound:
                        )
         retorno = cursor.fetchone()
         cursor.close()
-        return cls(game, roundCode, retorno['roundorder'])
+        return cls(game, roundCode, retorno['roundnumber'])
     
     @classmethod
     def retrieveList(cls, game, connection):
         cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        cursor.execute("""SELECT * FROM gameRound WHERE seriesCode = (%(seriesCode)s)
+        cursor.execute("""SELECT * FROM Round WHERE seriesCode = (%(seriesCode)s)
                         AND tournamentCode = (%(tournamentCode)s)
                         AND groupCode = (%(groupCode)s)""", 
                         {'seriesCode' : game.seriesCode,
@@ -71,5 +71,5 @@ class GameRound:
         cursor.close()
         retorno = []
         for gameRound in preRetorno:
-            retorno.append(GameRound(game, gameRound['roundcode'], gameRound['roundorder']))
+            retorno.append(GameRound(game, gameRound['roundcode'], gameRound['roundnumber']))
         return retorno 
