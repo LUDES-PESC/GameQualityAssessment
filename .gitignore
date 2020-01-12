@@ -107,6 +107,19 @@ venv.bak/
 # pycharme
 .idea
 
+#specific files
+code_pac/aprendendo_a_fazer_tabbed_pane.py
+code_pac/aprendendo_a_usar_measures.py
+code_pac/aprendendo_a_usar_os_eventos.py
+code_pac/aprendendo_a_usar_panel_plot.py
+code_pac/aprendendo_a_usar_tree_control.py
+code_pac/aprendendo_importar_um_jogo.py
+code_pac/colocando_measures_na_tela.py
+code_pac/fazendo_um_teste_com_botoes.py
+code_pac/setando_grid_na_tela.py
+code_pac/usando_brasileiro_plots.py
+code_pac/usando_tree_control_com_jogos.py
+
 data/jogo_dados/amostra
 data/jogo_dados/dice_game_estatisticas_01
 data/jogo_dados/dice_game_estatisticas_02
