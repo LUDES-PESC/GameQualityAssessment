@@ -1,9 +1,10 @@
 from __future__ import division
 import wx
 import wx.grid
+from wx import Frame
 import dataBaseAdapter
-from code_pac.desafio.model import  Tournament, Series, Game
-from code_pac.model import DesafioGame
+from GameQualityAssessment.code_pac.desafio.model import  Tournament, Series, Game
+from GameQualityAssessment.code_pac.model import DesafioGame
 import matplotlib
 from wx.lib.agw.pyprogress import PyProgress
 
@@ -26,7 +27,7 @@ import gettext
 # end wxGlade
 
 
-class GUIDesafioGame(wx.Frame):
+class GUIDesafioGame(Frame):
     def __init__(self, *args, **kwds):
         # begin wxGlade: GUIDesafioGameView.__init__
         kwds["style"] = wx.DEFAULT_FRAME_STYLE
@@ -72,7 +73,7 @@ class GUIDesafioGame(wx.Frame):
 
     def __set_properties(self):
         # begin wxGlade: GUIDesafioGameView.__set_properties
-        self.SetTitle(_("Match Viewer"))
+        self.SetTitle(gettext.gettext("Match Viewer"))
         #self.lstTournament.SetSelection(0)
         self.__fillBlankGrid()
         #self.pointsGraph.SetBackgroundColour(wx.WHITE)
@@ -82,7 +83,7 @@ class GUIDesafioGame(wx.Frame):
         self.gridPointsRows.CreateGrid(37, 9)
         self.gridPointsRows.EnableEditing(0)
         self.gridPointsRows.EnableDragRowSize(0)
-        self.gridPointsRows.SetSelectionMode(wx.grid.Grid.wxGridSelectColumns)
+        self.gridPointsRows.SetSelectionMode(wx.grid.Grid.GridSelectColumns)
         self.gridPointsRows.SetColSize(0, 10)
         self.gridPointsRows.SetColSize(1, 10)
         self.gridPointsRows.SetColSize(2, 10)
@@ -132,7 +133,7 @@ class GUIDesafioGame(wx.Frame):
         sizer_8.Add(sizer_9, 3, wx.EXPAND, 0)
         sizer_8.Add((20, 20), 0, 0, 0)
         sizer_15.Add(self.label_4, 0, 0, 0)
-        sizer_15.Add(self.lstAssessment, 1, wx.EXPAND | wx.ALIGN_RIGHT, 0)
+        sizer_15.Add(self.lstAssessment, 1, wx.EXPAND, 0)
         sizer_15.Add((20, 20), 0, 0, 0)
         sizer_15.Add(self.label_5, 0, 0, 0)
         sizer_15.Add(self.txtOverall, 0, wx.EXPAND, 0)
@@ -268,7 +269,7 @@ class GUIDesafioGame(wx.Frame):
         axes = self.pointsGraph.figure.gca()
         
         #x = xrange(1, len(gameObj)+1)
-        x = xrange(2, len(gameObj)+1) #ignoring the first round
+        x = list(range(2, len(gameObj)+1)) #ignoring the first round
         for player in players:
             y=[]
             for i in range(1, len(gameObj)):
@@ -295,7 +296,7 @@ class GUIDesafioGame(wx.Frame):
         axes = self.positionGraph.figure.gca()    
         
         #x = xrange(1, len(gameObj)+1)
-        x = xrange(2, len(gameObj)+1) #ignoring the first round
+        x = list(range(2, len(gameObj)+1)) #ignoring the first round
         for player in players:
             y=[]
             #for i in range(0, len(gameObj)):
@@ -314,7 +315,7 @@ class GUIDesafioGame(wx.Frame):
             y = np.array(y)
             axes.plot(x,y,'o-',linewidth=2)
         #plt.ylim(0, len(self._players)+1)
-        axes.set_yticks(xrange(0,len(players)+1))
+        axes.set_yticks(list(range(0,len(players)+1)))
         axes.set_ylabel('Position')
         axes.set_xlabel('Turn')
         axes.hlines(axes.get_yticks(),2, len(gameObj), colors='0.75')

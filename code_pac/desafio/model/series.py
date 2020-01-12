@@ -6,7 +6,7 @@ Created on 15/05/2015
 '''
 import psycopg2.extras
 
-from tournament import Tournament
+from GameQualityAssessment.code_pac.desafio.model.tournament import Tournament
 
 
 class Series:

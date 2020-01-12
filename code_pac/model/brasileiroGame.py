@@ -3,9 +3,9 @@ Created on 05/07/2015
 
 @author: mangeli
 '''
-from code_pac.model import GenericGame, ItemTuple
-import code_pac.brasileiro.model.game as BRmodel
-from code_pac.measures.dramaByPointsUp2First import DramaByPointsUp2First
+from GameQualityAssessment.code_pac.model import GenericGame, ItemTuple
+import GameQualityAssessment.code_pac.brasileiro.model.game as BRmodel
+from GameQualityAssessment.code_pac.measures.dramaByPointsUp2First import DramaByPointsUp2First
 
 class BrasileiroGame(GenericGame):
     def __init__(self, game):
@@ -20,7 +20,7 @@ class BrasileiroGame(GenericGame):
         lastScore = {}
         
         gameRounds = self._game.gameRounds
-        order = 1;
+        order = 1
         for gameRound in gameRounds:
             
             scores = []
@@ -34,8 +34,8 @@ class BrasileiroGame(GenericGame):
             order +=1
             
 if __name__ == "__main__":
-    from code_pac.measures import DramaByPaths,DramaByPositionUp2First
-    from code_pac.gamePlots import GamePlots
+    from GameQualityAssessment.code_pac.measures import DramaByPaths,DramaByPositionUp2First
+    from GameQualityAssessment.code_pac.gamePlots import GamePlots
     import matplotlib.pyplot as plt
     import numpy as np
     
@@ -46,8 +46,8 @@ if __name__ == "__main__":
         values.append([DramaByPaths(game=g, ignored=0).getMeasureValue(), 
                        DramaByPointsUp2First(game=g, ignored=0).getMeasureValue(),
                        DramaByPositionUp2First(game=g, ignored=0).getMeasureValue()])
-    print values[:]
-    print np.transpose(values)
+    print (values[:])
+    print (np.transpose(values))
     #p = GamePlots(game)
     #p.byPosition(ignored=0)
     plt.figure()

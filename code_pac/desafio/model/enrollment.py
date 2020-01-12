@@ -7,7 +7,7 @@ Created on 15/05/2015
 
 import psycopg2.extras
 
-from player import Player
+from GameQualityAssessment.code_pac.desafio.model.player import Player
 
 
 class Enrollment:

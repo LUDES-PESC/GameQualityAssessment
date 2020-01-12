@@ -17,17 +17,17 @@ def maxDrama(nPlayers, nRounds, m):
 
 def plotPath(players, rounds, order):
     
-    x=xrange(1, rounds+1)
+    x=list(range(1, rounds+1))
     y=[]
     for res in x:
         y.append(maxDrama(players, rounds,res))
-    #y=xrange(4)
+    #y=list(range(4)
     fig = plt.figure(order)
     
     plt.plot(x,y, '-mo', markersize=8, clip_on=False)
         
-    plt.yticks(xrange(1,players+1))
-    plt.xticks(xrange(1,rounds+1))
+    plt.yticks(list(range(1,players+1)))
+    plt.xticks(list(range(1,rounds+1)))
     
     plt.gca().invert_yaxis()
     

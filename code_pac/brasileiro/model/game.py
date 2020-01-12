@@ -5,7 +5,7 @@ Created on 05/07/2015
 '''
 from collections import namedtuple
 import os
-import ConfigParser
+import configparser
 import json
 from GameQualityAssessment.code_pac.configReader import ConfigReader
 from GameQualityAssessment.code_pac.desafio.aux_old.modelo_old import Player

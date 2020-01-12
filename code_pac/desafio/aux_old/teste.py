@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import psycopg2
 
-from modelo import Tournament, Player, Series, PlayerGroup, Game, GameRound, Enrollment, GameRoundResult
+from GameQualityAssessment.code_pac.desafio.model import Tournament, Player, Series, Game, GameRound, Enrollment, GameRoundResult
 
 
 conn = psycopg2.connect("dbname=desafio_sebrae user=mangeli host=localhost password=agoravai")
@@ -24,7 +24,8 @@ seriesList = Series.retrieveList(torneio, conn)
 
 series = seriesList[0]
 
-playerGroupList = PlayerGroup.retrieveList(torneio, conn)
+#playerGroupList = PlayerGroup.retrieveList(torneio, conn)
+playerGroupList = []
 
 gameList = Game.retrieveList(series, conn)
 
@@ -36,5 +37,5 @@ enrollmentList = Enrollment.retrieveList(playerGroupList[1], conn)
 
 roundResultList = GameRoundResult.retrieveList(gameRoundList[0], conn)
 
-print roundResultList[1].roundScore
+print (roundResultList[1].roundScore)
 

@@ -9,6 +9,7 @@ from __future__ import division
 from bs4 import BeautifulSoup
 from openpyxl import Workbook
 import datetime
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 
 #<div class="rodada-tabela">
 #<tr class="linha-classificacao" rel="juventude" data-escudo="http://s.glbimg.com/es/sde/f/organizacoes/2011/01/03/juventude30.png">
@@ -18,7 +19,7 @@ if __name__ == '__main__':
     anos = range(2003, 2015)
     wb = Workbook()
     for ano in anos:
-        entrada = open('../../data/brasileiro/raw_data/full' + str(ano), 'r')
+        entrada = open(abspath('data/brasileiro/raw_data/full') + str(ano), 'r')
         planilha = wb.create_sheet(title=str(ano))
         planilha.append(['rodada', 'data-hora', 'local', 'mandante', 'gols-mandante', 'gols-visitante', 'visitante'])
         parser = BeautifulSoup(entrada.read())
@@ -41,4 +42,4 @@ if __name__ == '__main__':
                          ]
                 planilha.append(dados)
                 #print dados
-    wb.save('../../data/brasileiro/raw_data/jogos_dados.xlsx')
+    wb.save( abspath('data/brasileiro/raw_data/jogos_dados.xlsx') )

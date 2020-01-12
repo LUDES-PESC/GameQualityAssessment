@@ -11,7 +11,7 @@ from numpy.f2py.rules import aux_rules
 import psycopg2.extras
 
 import matplotlib.pyplot as plt
-from modelo import *
+from GameQualityAssessment.code_pac.desafio.model import *
 import numpy as np
 
 
@@ -68,8 +68,8 @@ def analizeGameDrama(game):
         maiorDramaJogo[0] = game.tournamentCode
         maiorDramaJogo[1] = game.seriesCode
         maiorDramaJogo[2] = game.groupCode
-    print "             \r", '%.2f' % ((contador.value / tamanho.value) * 100), "%", 
-    l.release()
+    print ("             \r", '%.2f' % ((contador.value / tamanho.value) * 100), "%", 
+    l.release())
     
     return retorno
 
@@ -88,7 +88,7 @@ def printGameStory(game, connection):
         jogoObjeto.append((rodada.roundNumber, resultados))
         
     #pontuacao do jogador por rodada
-    x = xrange(1, len(rodadas)+1)
+    x = list(range(1, len(rodadas)+1))
     #plt.subplot(2,1,1)
     plt.figure()
     for jogador in jogadores:
@@ -120,14 +120,14 @@ if __name__ == "__main__":
     fase = Series.retrieveList(torneio, conn)[3]
     jogos = Game.retrieveList(fase, conn)
     
-    print "total de jogos: ", len(jogos)
+    print ("total de jogos: ", len(jogos))
     
     contador = Value('i', 0)
     tamanho = Value('i', len(jogos))
     maiorDrama = Value('f',0)
     maiorDramaJogo = Array('i', [jogos[0].tournamentCode, jogos[0].seriesCode, jogos[0].groupCode])
     l=Lock()
-    print 'maiorDramaJogo antes: ', maiorDramaJogo[:]
+    print ('maiorDramaJogo antes: ', maiorDramaJogo[:])
     pool = Pool(processes=4, initargs=(contador,l,tamanho, maiorDrama, maiorDramaJogo,))
     resultado = pool.map(analizeGameDrama, (jogos))
     drama = sum(resultado) / len(resultado)
@@ -135,7 +135,7 @@ if __name__ == "__main__":
     pool.close()
     pool.join()
     
-    print "drama: ", drama
+    print ("drama: ", drama)
     
     '''drama = 0
     maiorDrama = (jogos[0], analizeGameDrama(jogos[0], conn))
@@ -147,10 +147,10 @@ if __name__ == "__main__":
         print "                      ", "\r", jogos.index(jogo), "  de ", len(jogos),
     drama = drama / len(jogos)
     print drama'''
-    print "maior drama", maiorDrama.value
-    print maiorDramaJogo[:]
+    print ("maior drama", maiorDrama.value)
+    print (maiorDramaJogo[:])
     torneio = Tournament.retrieve(maiorDramaJogo[0], conn)
     fase = Series.retrieve(torneio, maiorDramaJogo[1], conn)
-    grupo = PlayerGroup.retrieve(torneio, maiorDramaJogo[2], conn)
-    jogo = Game.retrieve(fase, grupo, conn)
-    printGameStory(jogo, conn)
+    #grupo = PlayerGroup.retrieve(torneio, maiorDramaJogo[2], conn)
+    #jogo = Game.retrieve(fase, grupo, conn)
+    #printGameStory(jogo, conn)

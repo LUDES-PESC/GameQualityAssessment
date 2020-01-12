@@ -3,13 +3,13 @@ Created on 05/07/2015
 
 @author: mangeli
 '''
-from code_pac.brasileiro.model.game import Game
-from code_pac.model import BrasileiroGame
+from GameQualityAssessment.code_pac.brasileiro.model.game import Game
+from GameQualityAssessment.code_pac.model import BrasileiroGame
 import matplotlib.pyplot as plt
 import numpy as np
 from openpyxl import Workbook
-
-from code_pac.measures import DramaByPaths, DramaByPositionUp2First, DramaByPointsUp2First
+from GameQualityAssessment.project_path import make_absolute_path as abspath
+from GameQualityAssessment.code_pac.measures import DramaByPaths, DramaByPositionUp2First, DramaByPointsUp2First
 
 if __name__ == '__main__':
     wb = Workbook()
@@ -29,7 +29,7 @@ if __name__ == '__main__':
         nPlayers = len(genGame.getPlayers())
         nRounds = genGame.getNumberRounds()
         winnerPath = []
-        for i in xrange(1, nRounds + 1):
+        for i in range(1, nRounds + 1):
             gameRound = genGame.getRound(i)[1]
             for r in gameRound:
                 if r.playerCode == winner:
@@ -49,4 +49,4 @@ if __name__ == '__main__':
                        ,transform=plt.gca().transAxes,
                        verticalalignment='bottom', horizontalalignment='left')
     plt.show()
-    wb.save('dadosDrama.xlsx')
+    wb.save(abspath('dadosDrama.xlsx'))

@@ -5,7 +5,7 @@ Created on 15/05/2015
 @author: mangeli
 '''
 import psycopg2.extras
-from game import Game
+from GameQualityAssessment.code_pac.desafio.model.game import Game
 
 
 class GameRound:
@@ -13,7 +13,7 @@ class GameRound:
   
     def __init__(self, game, roundCode, roundOrder):
         if not isinstance(game, Game):
-            print game
+            print (game)
             raise TypeError('The first arg has to be a Game object')
         
         self.roundCode = roundCode

@@ -4,12 +4,12 @@ Created on 14/07/2015
 
 @author: mangeli
 '''
-from code_pac import dataBaseAdapter
-from code_pac.gamePlots import GamePlots
-import code_pac.desafio.model as desafioModel
-import code_pac.model as model
-from code_pac.measures import DramaByPaths, DramaByPointsUp2First
-import code_pac.brasileiro.model as brasileiroModel
+from GameQualityAssessment.code_pac import dataBaseAdapter
+from GameQualityAssessment.code_pac.gamePlots import GamePlots
+import GameQualityAssessment.code_pac.desafio.model as desafioModel
+import GameQualityAssessment.code_pac.model as model
+from GameQualityAssessment.code_pac.measures import DramaByPaths, DramaByPointsUp2First
+import GameQualityAssessment.code_pac.brasileiro.model as brasileiroModel
    
 if __name__ == '__main__':
     '''
@@ -23,9 +23,9 @@ if __name__ == '__main__':
     obj = model.BrasileiroGame(game)
     value = DramaByPointsUp2First(game=obj, ignored=0, normScores=True)
     #game.storeMeasure(value,connection)
-    print value.getWinner(), value.getMeasureValue()
+    print (value.getWinner(), value.getMeasureValue())
     
-    print value.getType().description
+    print (value.getType().description)
     #print game.tournamentCode, " ", game.seriesCode, " ", game.groupCode
     '''dataBaseAdapter.closeConnection(connection)'''
     GamePlots(obj).byPoints()
