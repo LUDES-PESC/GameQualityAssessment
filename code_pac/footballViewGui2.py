@@ -1,10 +1,10 @@
 import wx
 import wx.grid as grid
-from GameQualityAssessment.code_pac.model import BrasileiroGame
-import GameQualityAssessment.code_pac.brasileiro.model as model
+from GameQualityAssessment.code_pac.model import PremierLeagueGame
+import GameQualityAssessment.code_pac.ingles.model as model
 from GameQualityAssessment.code_pac.measures import DramaByPaths as Drama, UncertaintyPDD as Uncertainty, LeadChange
 from GameQualityAssessment.code_pac.plots.panelPlot import PanelPlot
-import GameQualityAssessment.code_pac.plots.brasileiroPlots as bp
+import GameQualityAssessment.code_pac.plots.inglesPlots as plp
 
 class FootballView(wx.Frame):
     def __init__(self):
@@ -105,10 +105,10 @@ class FootballView(wx.Frame):
         uncerts = []
         leadChgs = []
         for game in games :
-            brgame = BrasileiroGame(game)
-            dramas.append(Drama(game=brgame,ignored=0).getMeasureValue())
-            uncerts.append(Uncertainty(game=brgame,ignored=0).getMeasureValue())
-            leadChgs.append(LeadChange(game=brgame,ignored=0).getMeasureValue())
+            plgame = PremierLeagueGame(game)
+            dramas.append(Drama(game=plgame,ignored=0).getMeasureValue())
+            uncerts.append(Uncertainty(game=plgame,ignored=0).getMeasureValue())
+            leadChgs.append(LeadChange(game=plgame,ignored=0).getMeasureValue())
         
         self.dataGrid.SetCellValue(0,0,str(sum(dramas)/len(dramas)))
         self.dataGrid.SetCellValue(1,0,str(sum(uncerts)/len(uncerts)))
@@ -133,10 +133,10 @@ class FootballView(wx.Frame):
             panel_uncert = PanelPlot(self.graphShow)
             panel_leadChg = PanelPlot(self.graphShow)
             panel_evals = PanelPlot(self.graphShow)
-            bp.values_histogram(dramas,panel_drama,'Drama')
-            bp.values_histogram(uncerts,panel_uncert,'Uncertainty')
-            bp.values_histogram(leadChgs,panel_leadChg,'Lead Change')
-            bp.values_histogram(overall_evals,panel_evals,'Overall Eval.')
+            plp.values_histogram(dramas,panel_drama,'Drama')
+            plp.values_histogram(uncerts,panel_uncert,'Uncertainty')
+            plp.values_histogram(leadChgs,panel_leadChg,'Lead Change')
+            plp.values_histogram(overall_evals,panel_evals,'Overall Eval.')
             self.graphShow.AddPage(panel_drama,"Histogram - Drama")
             self.graphShow.AddPage(panel_uncert,"Histogram - Uncertainty")
             self.graphShow.AddPage(panel_leadChg,"Histogram - Lead Change")
@@ -153,8 +153,8 @@ class FootballView(wx.Frame):
         else:
             panel_points = PanelPlot(self.graphShow)
             panel_positions = PanelPlot(self.graphShow)
-            bp.points(games[0],panel_points)
-            bp.positions(games[0],panel_positions)
+            plp.points(games[0],panel_points)
+            plp.positions(games[0],panel_positions)
             self.graphShow.AddPage(panel_points,"History by Points")
             self.graphShow.AddPage(panel_positions,"History by Positions")
 

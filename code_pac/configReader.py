@@ -28,6 +28,14 @@ class ConfigReader:
         for f in os.listdir(folder):
             r.append(folder + os.sep + f)
         return r
+    
+    def listPremierLeagueGames(self):
+        r = []
+        folder = abspath(self.parser.get('folder ingles','folder'))
+        for f in os.listdir(folder):
+            if f.startswith("simples"):
+                r.append(folder + os.sep + f)
+        return r
         
 
 if __name__ == '__main__':
