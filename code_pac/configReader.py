@@ -44,6 +44,14 @@ class ConfigReader:
             if f.startswith("simples"):
                 r.append(folder + os.sep + f)
         return r
+    
+    def listLegaNazionaleGames(self):
+        r = []
+        folder = abspath(self.parser.get('folder italiano','folder'))
+        for f in os.listdir(folder):
+            if f.startswith("simples"):
+                r.append(folder + os.sep + f)
+        return r
         
 
 if __name__ == '__main__':

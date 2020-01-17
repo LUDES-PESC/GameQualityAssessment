@@ -4,5 +4,6 @@ from GameQualityAssessment.code_pac.model.brasileiroGame import BrasileiroGame
 from GameQualityAssessment.code_pac.model.diceGame import DiceGame
 from GameQualityAssessment.code_pac.model.inglesGame import PremierLeagueGame
 from GameQualityAssessment.code_pac.model.espanholGame import LaLigaGame
+from GameQualityAssessment.code_pac.model.italianoGame import LegaNazionaleGame
 
-__all__ = ['genericGame', 'desafioGame', 'brasileiroGame', 'diceGame','inglesGame','espanholGame']
+__all__ = ['genericGame', 'desafioGame', 'brasileiroGame', 'diceGame','inglesGame','espanholGame','italianoGame']
