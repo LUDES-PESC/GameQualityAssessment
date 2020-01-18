@@ -52,6 +52,32 @@ class ConfigReader:
             if f.startswith("simples"):
                 r.append(folder + os.sep + f)
         return r
+    
+    def listBunsligaGames(self):
+        r = []
+        folder = abspath(self.parser.get('folder alemao','folder'))
+        for f in os.listdir(folder):
+            if f.startswith("simples"):
+                r.append(folder + os.sep + f)
+        return r
+    
+    def listPrimeiraLigaGames(self):
+        r = []
+        folder = abspath(self.parser.get('folder portugal','folder'))
+        for f in os.listdir(folder):
+            if f.startswith("simples"):
+                r.append(folder + os.sep + f)
+        return r
+    
+    def listPontosCorridosGames(self):
+        r = []
+        countries = ['brasileiro','ingles','espanhol','italiano','alemao','portugal']
+        for country in countries:
+            folder = abspath(self.parser.get('folder '+country,'folder'))
+            for f in os.listdir(folder):
+                if f.startswith("simples"):
+                    r.append(folder + os.sep + f)
+        return r
         
 
 if __name__ == '__main__':
