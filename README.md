@@ -72,3 +72,13 @@ subprocess.check_call([sys.executable,"-m","pip","install","xlrd"])
 subprocess.check_call([sys.executable,"-m","pip","install","pillow"])
 subprocess.check_call([sys.executable,"-m","pip","install","wxPython"])
 ```
++ Create a empty python file called setup.py and put this code on it:
+```
+import setuptools as st
+
+st.setup(name="game_qa",version="0.2",packages=st.find_packages())
+```
++ Execute this command so python files on subdirectories can see the root directory
+```
+pip install -e .
+```
