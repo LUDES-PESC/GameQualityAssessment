@@ -1,50 +1,74 @@
 GameQualityAssessment 
 =====================
 
-The code_pac folder contains python 2.7 code files, including executables to launch graphical user interfaces that allow data viewing.
+The code_pac folder contains python 3 code files, including executables to launch graphical user interfaces that allow data viewing.
 
-The main application folder must be in PYTHONPATH to launch the GUI files.
-
-Additional Python modules:
+Installation Process
 ---------
-In order to run the program, one need some additional Python modules that are in the `requirements.txt` file and listed down below:
+In order to run the program, one need to follow the steps below:
 
-+ backports.functools-lru-cache==1.5
-+ cycler==0.10.0
-+ kiwisolver==1.0.1
-+ matplotlib==2.2.2
-+ numpy==1.14.3
-+ psycopg2==2.7.4
-+ pyparsing==2.2.0
-+ python-dateutil==2.7.3
-+ pytz==2018.4
-+ six==1.11.0
-+ subprocess32==3.2.7
-+ wxPython==4.0.1
-+ xlrd==1.1.0
-
-To install these modules type the following command in the __root__ project folder:
-
-```bash
-pip install -r requirements.txt
++ Clone the repository
 ```
+git clone https://github.com/FilipeMSoares/GameQualityAssessment.git
+```
++ Create the virtual environment
+```
+python -m venv GameQualityAssessment
+```
++ Activate the virtual environment
+```
+GameQualityAssessment\Scripts\activate
+```
+or
+```
+GameQualityAssessment/Scripts/activate
+```
++ Copy and paste this code on a empty python script and run it:
+```
+import subprocess
+import sys
 
-Development libs:
-----
-Some libs __and its dev versions__ are required to run:
+#installing requests
+subprocess.check_call([sys.executable,"-m","pip","install","chardet"])
+subprocess.check_call([sys.executable,"-m","pip","install","idna"])
+subprocess.check_call([sys.executable,"-m","pip","install","urllib3"])
+subprocess.check_call([sys.executable,"-m","pip","install","certifi"])
+subprocess.check_call([sys.executable,"-m","pip","install","requests"])
 
-+ gtk+-3.0
-+ gstreamer 1.0
-+ gstreamer-plugin
-+ gstreamer base
+#installing openpyxl
+subprocess.check_call([sys.executable,"-m","pip","install","et-xmlfile"])
+subprocess.check_call([sys.executable,"-m","pip","install","jdcal"])
+subprocess.check_call([sys.executable,"-m","pip","install","openpyxl"])
 
+#installing beautifulsoup4
+subprocess.check_call([sys.executable,"-m","pip","install","soupsieve"])
+subprocess.check_call([sys.executable,"-m","pip","install","beautifulsoup4"])
 
-Ubuntu:
----------
-Within code_pac folder
+#installing numpy
+subprocess.check_call([sys.executable,"-m","pip","install","numpy"])
 
-PYTHONPATH=$(dirname \`pwd\`) python groupViewGui.py
+#installing scipy
+subprocess.check_call([sys.executable,"-m","pip","install","scipy"])
 
-OR
+#installing matplotlib
+subprocess.check_call([sys.executable,"-m","pip","install","pyparsing"])
+subprocess.check_call([sys.executable,"-m","pip","install","kiwisolver"])
+subprocess.check_call([sys.executable,"-m","pip","install","six"])
+subprocess.check_call([sys.executable,"-m","pip","install","cycler"])
+subprocess.check_call([sys.executable,"-m","pip","install","python-dateutil"])
+subprocess.check_call([sys.executable,"-m","pip","install","matplotlib"])
 
-PYTHONPATH=$(dirname \`pwd\`) python DesafioGameGui.py
+#installing python3-vote-core
+subprocess.check_call([sys.executable,"-m","pip","install","python-graph-core"])
+subprocess.check_call([sys.executable,"-m","pip","install","python3-vote-core"])
+
+#installing psycopg2
+subprocess.check_call([sys.executable,"-m","pip","install","psycopg2"])
+
+#installing xlrd
+subprocess.check_call([sys.executable,"-m","pip","install","xlrd"])
+
+#installing wxPython
+subprocess.check_call([sys.executable,"-m","pip","install","pillow"])
+subprocess.check_call([sys.executable,"-m","pip","install","wxPython"])
+```
