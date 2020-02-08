@@ -38,9 +38,6 @@ def find_index(header,string):
     return -1
 
 def get_game_rounds(open_csv,players):
-    def player_score(score):
-        return score[1]
-
     number_of_games_per_round = len(players)/2
     player_index = make_map_player_index(players)
     rounds = []
@@ -53,23 +50,35 @@ def get_game_rounds(open_csv,players):
             away_player_index = home_player_index+1
             home_score_index = home_player_index+2
             away_score_index = home_player_index+3
+            result_index = home_player_index+4
         if row[0] == "I1":
             count = count + 1
-            player = row[home_player_index]
-            score = int(row[home_score_index].strip())
-            round_[player_index[player]][1] = round_[player_index[player]][1] + int(score)
-            player = row[away_player_index]
-            score = int(row[away_score_index].strip())
-            round_[player_index[player]][1] = round_[player_index[player]][1] + int(score)
+            if row[result_index] == 'H':
+                player = row[home_player_index]
+                score = 3
+                round_[player_index[player]][1] = round_[player_index[player]][1] + int(score)
+            if row[result_index] == 'A':
+                player = row[away_player_index]
+                score = 3
+                round_[player_index[player]][1] = round_[player_index[player]][1] + int(score)
+            if row[result_index] == 'D':
+                player = row[home_player_index]
+                score = 1
+                round_[player_index[player]][1] = round_[player_index[player]][1] + int(score)
+                player = row[away_player_index]
+                score = 1
+                round_[player_index[player]][1] = round_[player_index[player]][1] + int(score)
             if count == number_of_games_per_round :
                 count = 0
-                round_.sort(reverse=True,key=player_score)
                 rounds.append(round_)
                 round_ = make_round(round_,players)
     return rounds
     
 
 def write_lega_nazionale_on_brasileiro_format(gameFilePath,year):
+    def player_score(score):
+        return score[1]
+
     with open(abspath(gameFilePath),'r') as filestream:
         open_csv = csv.reader(filestream)
         players = get_players(open_csv)
@@ -77,6 +86,8 @@ def write_lega_nazionale_on_brasileiro_format(gameFilePath,year):
     with open(abspath(gameFilePath),'r') as filestream:
         open_csv = csv.reader(filestream)
         game_rounds = get_game_rounds(open_csv,players)
+    for round_ in game_rounds:
+        round_.sort(reverse=True,key=player_score)
     #print(year,len(game_rounds))
     with open(abspath('data/italiano/simples'+year),'w') as filestream:
         filestream.write("[")
