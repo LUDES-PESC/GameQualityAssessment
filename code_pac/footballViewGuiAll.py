@@ -43,6 +43,7 @@ class FootballView(wx.Frame):
         pass
 
     def __makeSizers(self):
+        mainSizer = wx.BoxSizer(wx.HORIZONTAL)
         sizersSizer = wx.BoxSizer(wx.HORIZONTAL)
         lateralSizer = wx.BoxSizer(wx.VERTICAL)
         panelGameExplorerSizer = wx.BoxSizer(wx.VERTICAL)
@@ -50,34 +51,37 @@ class FootballView(wx.Frame):
         panelGraphShowSizer = wx.BoxSizer(wx.VERTICAL)
         
         panelGraphShowSizer.AddSpacer(20)
-        panelGraphShowSizer.Add(self.graphShow,1,wx.EXPAND)
+        panelGraphShowSizer.Add(self.graphShow,proportion=1,flag=wx.EXPAND)
         panelGraphShowSizer.AddSpacer(20)
         self.panelGraphShow.SetSizer(panelGraphShowSizer)
         self.graphShow.SetMinSize((200,200))
 
-        panelDataSizer.Add(self.dataGrid)
+        panelDataSizer.Add(self.dataGrid,proportion=1)
         self.panelData.SetSizer(panelDataSizer)
         self.dataGrid.SetMinSize((200,108))
         self.dataGrid.SetMaxSize((200,108))
 
-        panelGameExplorerSizer.Add(self.gameExplorer,proportion=1)
+        panelGameExplorerSizer.Add(self.gameExplorer,flag=wx.EXPAND)
         self.panelGameExplorer.SetSizer(panelGameExplorerSizer)
         self.gameExplorer.SetMinSize((200,200))
 
         lateralSizer.AddSpacer(20)
-        lateralSizer.Add(self.panelGameExplorer,10,0,5)
+        lateralSizer.Add(self.panelGameExplorer,proportion=1,flag=wx.EXPAND)
         lateralSizer.AddSpacer(20)
-        lateralSizer.Add(self.panelData,proportion=0)
+        lateralSizer.Add(self.panelData)
         lateralSizer.AddSpacer(20)
 
         sizersSizer.AddSpacer(20)
-        sizersSizer.Add(lateralSizer,proportion=1)
+        sizersSizer.Add(lateralSizer)
         sizersSizer.AddSpacer(20)
-        sizersSizer.Add(self.panelGraphShow,10, wx.EXPAND)
+        sizersSizer.Add(self.panelGraphShow, proportion=1, flag=wx.EXPAND)
         sizersSizer.AddSpacer(20)
+
+        mainSizer.Add(self.mainPanel,proportion=1,flag=wx.EXPAND)
 
         self.Maximize(True)
         self.mainPanel.SetSizerAndFit(sizersSizer)
+        self.SetSizerAndFit(mainSizer)
         self.Centre()
         self.Layout()
         pass
@@ -119,7 +123,7 @@ class FootballView(wx.Frame):
         for game in games :
             pcgame = PontosCorridosGame(game)
             dramas.append(Drama(game=pcgame,ignored=0).getMeasureValue())
-            uncerts.append(Uncertainty(game=pcgame,ignored=0).getMeasureValue())
+            uncerts.append(Uncertainty(game=pcgame,ignored=0,scoreLimit=3).getMeasureValue())
             leadChgs.append(LeadChange(game=pcgame,ignored=0).getMeasureValue())
         
         self.dataGrid.SetCellValue(0,0,str(sum(dramas)/len(dramas)))
