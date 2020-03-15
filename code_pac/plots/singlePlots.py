@@ -5,7 +5,7 @@ Created on 15/06/2015
 '''
 import matplotlib
 import numpy as np
-from code_pac.model import DesafioGame
+from GameQualityAssessment.code_pac.model import DesafioGame
 
 def position(inputGame, panel, ignored=0):
     obj = DesafioGame(inputGame)
@@ -14,7 +14,7 @@ def position(inputGame, panel, ignored=0):
     panel.figure.clf()
     axes = panel.figure.gca()    
     
-    x = xrange(1+ignored, len(gameObj)+1)
+    x = list(range(1+ignored, len(gameObj)+1))
     x = np.array(x)
     for player in players:
         y=[]
@@ -34,7 +34,7 @@ def position(inputGame, panel, ignored=0):
         y = np.array(y)
         axes.plot(x,y,'o-',linewidth=2)
     #plt.ylim(0, len(self._players)+1)
-    axes.set_yticks(xrange(0,len(players)+1))
+    axes.set_yticks(list(range(0,len(players)+1)))
     axes.set_ylabel('Position')
     axes.set_xlabel('Turn')
     axes.hlines(axes.get_yticks(),1+ignored, len(gameObj), colors='0.75')
@@ -49,7 +49,7 @@ def points(inputGame, panel, ignored=0):
     panel.figure.clf()
     axes = panel.figure.gca()
     
-    x = xrange(1+ignored, len(gameObj)+1)
+    x = list(range(1+ignored, len(gameObj)+1))
     for player in players:
         y=[]
         for i in range(0+ignored, len(gameObj)):

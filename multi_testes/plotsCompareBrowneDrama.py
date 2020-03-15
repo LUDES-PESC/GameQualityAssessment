@@ -11,7 +11,7 @@ import numpy as np
 def plotHistory(p1, p2, order):
     if not len(p1) == len(p2):
         raise Exception('os tamanhos dos arrays p1 e p2 devem ser iguais')
-    x=xrange(len(p1))
+    x=range(len(p1))
     #y=xrange(4)
     fig = plt.figure(order)
     plt.plot(x,p1, '-bo', markersize=8)

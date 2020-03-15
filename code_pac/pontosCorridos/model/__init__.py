@@ -1,0 +1,1 @@
+from GameQualityAssessment.code_pac.pontosCorridos.model.game import Game

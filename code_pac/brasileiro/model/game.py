@@ -5,18 +5,41 @@ Created on 05/07/2015
 '''
 from collections import namedtuple
 import os
-import ConfigParser
+import configparser
 import json
-from code_pac.configReader import ConfigReader
-from code_pac.desafio.aux_old.modelo_old import Player
+from GameQualityAssessment.code_pac.configReader import ConfigReader
+from GameQualityAssessment.code_pac.desafio.aux_old.modelo_old import Player
 
 ItemBRTuple = namedtuple("ItemBRTuple", ['player', 'totalScore'])
 
 class Game:
-    def __init__(self, year, gameRounds):
+    def __init__(self, year, gameRounds=None):
         self.year = year
-        self.gameRounds = gameRounds
+        if gameRounds == None:
+            self.gameRounds = Game.__getGameRoundsByYear(year)
+        else:
+            self.gameRounds = gameRounds
+    
+    @classmethod
+    def __getGameRoundsByYear(cls,year):
+        foundGameFile = None
+        for gameFile in ConfigReader().listBrasileiroGames():
+            if year in gameFile:
+                foundGameFile = gameFile
+        if foundGameFile == None:
+            raise Exception("Year "+year+" is not archived")
+        f = open(gameFile, 'r')
+        j = json.load(f) #a list of rounds
+        preGame =[]
+        year = gameFile[-4:]
+        for r in j:
+            gameRound = []
+            for p in r:
+                gameRound.append(ItemBRTuple(player=p[0], totalScore=p[1]))
+            preGame.append(gameRound)
+        return preGame
         
+
 
     @classmethod
     def retrieveList(cls):
@@ -37,4 +60,4 @@ class Game:
             
 if __name__ == '__main__':
     lista = Game.retrieveList()
-    print lista
+    print (lista)

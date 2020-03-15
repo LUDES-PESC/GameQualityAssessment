@@ -3,15 +3,15 @@ Created on 07/06/2015
 
 @author: mangeli
 '''
-from code_pac.model import GenericGame, ItemTuple
-from code_pac import dataBaseAdapter
-import code_pac.desafio.model
+from GameQualityAssessment.code_pac.model import GenericGame, ItemTuple
+from GameQualityAssessment.code_pac import dataBaseAdapter
+import GameQualityAssessment.code_pac.desafio.model as desafio_model
 
 class DesafioGame(GenericGame):
     
     def __init__(self, game):
     
-        if not isinstance(game, code_pac.desafio.model.Game):
+        if not isinstance(game, desafio_model):
             raise TypeError('Arg must to be a desafio.model.Game instance')
         
         super(DesafioGame, self).__init__(game)
@@ -21,9 +21,9 @@ class DesafioGame(GenericGame):
         self._players = []
         self._gameData = []
         
-        gameRounds = sorted(code_pac.desafio.model.GameRound.retrieveList(self._game, connection), key=lambda gameRound: gameRound.roundOrder)
+        gameRounds = sorted(desafio_model.GameRound.retrieveList(self._game, connection), key=lambda gameRound: gameRound.roundOrder)
         for gameRound in gameRounds:
-            totalScores = sorted(code_pac.desafio.model.GameRoundResult.retrieveList(gameRound, connection), key=lambda result: result.totalScore, reverse=True)
+            totalScores = sorted(desafio_model.GameRoundResult.retrieveList(gameRound, connection), key=lambda result: result.totalScore, reverse=True)
             scores = []
             for t in totalScores:
                 scores.append(ItemTuple(t.playerCode, t.roundScore, t.totalScore))
@@ -35,14 +35,14 @@ class DesafioGame(GenericGame):
         
 if __name__ == "__main__":
     connection = dataBaseAdapter.getConnection()
-    tournament = code_pac.desafio.model.Tournament.retriveList(connection)[0]
-    series = code_pac.desafio.model.Series.retrieveList(tournament, connection)[0]
-    game = code_pac.desafio.model.Game.retrieveList(series, connection)[0]
+    tournament = desafio_model.Tournament.retriveList(connection)[0]
+    series = desafio_model.Series.retrieveList(tournament, connection)[0]
+    game = desafio_model.Game.retrieveList(series, connection)[0]
     
     o = DesafioGame(game)
-    print o.getGameStruct()
-    print o.getLastRound()
-    print o.getNumberRounds()
-    print o.getPlayers()
-    print o.getRound(6)
-    print o.getWinner()
+    print (o.getGameStruct())
+    print (o.getLastRound())
+    print (o.getNumberRounds())
+    print (o.getPlayers())
+    print (o.getRound(6))
+    print (o.getWinner())

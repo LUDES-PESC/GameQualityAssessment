@@ -8,6 +8,7 @@ from __future__ import division
 
 from bs4 import BeautifulSoup
 from openpyxl import Workbook
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 
 #<div class="rodada-tabela">
 #<tr class="linha-classificacao" rel="juventude" data-escudo="http://s.glbimg.com/es/sde/f/organizacoes/2011/01/03/juventude30.png">
@@ -17,12 +18,17 @@ if __name__ == '__main__':
     anos = range(2003, 2015)
     wb = Workbook()
     for ano in anos:
-        entrada = open('../../data/brasileiro/raw_data/full' + str(ano), 'r')
+        print("Carregando arquivo do ano "+str(ano))
+        entrada = open(abspath('data/brasileiro/raw_data/full' + str(ano)), 'r')
         planilha = wb.create_sheet(title=str(ano))
-        planilha.append(['rodada', u'posição', 'equipe', 'pontos', 'jogos', u'vitórias', 'empates', 'derrotas', 'gols pro', 'gols contra', 'saldo', 'aproveitamento'])
-        parser = BeautifulSoup(entrada.read())
+        planilha.append(['rodada', 'posição', 'equipe', 'pontos', 'jogos', 'vitórias', 'empates', 'derrotas', 'gols pro', 'gols contra', 'saldo', 'aproveitamento'])
+        print("Carregando BeatifulSoup")
+        parser = BeautifulSoup(entrada.read(), features="html.parser")
         entrada.close()
+        print("Realizando busca...")
         rodadas = parser.find_all('div','rodada-tabela')
+        print("Número de rodadas encontradas: ", str(len(rodadas)) )
+        print("Escrevendo dados a planilha...")
         for rodada in rodadas:
             numRodada = rodada.find('table', class_='tabela')['data-rodada']
             for linha in rodada.find_all('tr', 'linha-classificacao'):
@@ -41,4 +47,6 @@ if __name__ == '__main__':
                          ]
                 planilha.append(dados)
                 #print dados
-    wb.save('../../data/brasileiro/raw_data/dados.xlsx')
+    wb.remove(wb.worksheets[0])
+    print("Número de planilhas geradas: "+str(len(wb.worksheets)))
+    wb.save(abspath('data/brasileiro/raw_data/dados.xlsx'))

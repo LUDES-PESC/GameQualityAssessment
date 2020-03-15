@@ -5,7 +5,7 @@ Created on 24/05/2015
 @author: mangeli
 '''
 from __future__ import division
-from code_pac.measures import MeasureTemplate, MeasureType
+from GameQualityAssessment.code_pac.measures import MeasureTemplate, MeasureType
 import math
 
 class DramaByPaths(MeasureTemplate):
@@ -59,10 +59,10 @@ class DramaByPaths(MeasureTemplate):
         return pos
     
 if __name__ == "__main__":
-    from code_pac import dataBaseAdapter
-    from code_pac.gamePlots import GamePlots
-    import code_pac.desafio.model as desafioModel
-    import code_pac.model as model
+    from GameQualityAssessment.code_pac import dataBaseAdapter
+    from GameQualityAssessment.code_pac.gamePlots import GamePlots
+    import GameQualityAssessment.code_pac.desafio.model as desafioModel
+    import GameQualityAssessment.code_pac.model as model
     
     connection = dataBaseAdapter.getConnection()
     tournament = desafioModel.Tournament.retriveList(connection)[0]
@@ -71,10 +71,10 @@ if __name__ == "__main__":
     obj = model.DesafioGame(game)
     value = DramaByPaths(game=obj, ignored=1)
     #game.storeMeasure(value,connection)
-    print value.getWinner(), value.getMeasureValue()
+    print (value.getWinner(), value.getMeasureValue())
     
-    print value.getType().description
-    print game.tournamentCode, " ", game.seriesCode, " ", game.groupCode
+    print (value.getType().description)
+    print (game.tournamentCode, " ", game.seriesCode, " ", game.groupCode)
     dataBaseAdapter.closeConnection(connection)
     GamePlots(obj).byPosition()
     

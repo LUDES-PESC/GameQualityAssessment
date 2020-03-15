@@ -4,8 +4,9 @@ Created on 02/10/2015
 @author: mangeli
 '''
 from __future__ import division
-from code_pac import dataBaseAdapter as db, measures
-from code_pac.desafio.model import Tournament, Series, Game
+from GameQualityAssessment.code_pac import dataBaseAdapter as db, measures
+from GameQualityAssessment.code_pac.desafio.model import Tournament, Series, Game
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 import csv
 import matplotlib as mpl
 #from mpl_toolkits.mplot3d import Axes3D
@@ -82,12 +83,12 @@ def getMeasureValues(games):
     return measures
     
 if __name__ == '__main__':
-    db.setValues('desafio_simples', 'mangeli', 'localhost', 'agoravai', 5432)
+    #db.setValues('desafio_simples', 'mangeli', 'localhost', 'agoravai', 5432)
     conn = db.getConnection()
     dbCursor = db.getCursor(conn)
     
     #reading valid games
-    print "Reading valid games csv..."
+    print ("Reading valid games csv...")
     
     
     '''
@@ -98,10 +99,10 @@ if __name__ == '__main__':
     '''
        
     #retrieving drama information from db
-    print "Retrieving drama information from db..."
+    print ("Retrieving drama information from db...")
     targets = [(123,272), (123,264), (160,296), (160,303), (166,313), (166,324), (127,281), (127,291)]
     for target in targets:
-        arq = csv.reader(open("../../data/desafio/raw_data/valid_games.csv", "r"), delimiter=";")
+        arq = csv.reader(open(abspath("data/desafio/raw_data/valid_games.csv"), "r"), delimiter=";")
         t = Tournament.retrieve(target[0], conn)
         games = getValidGames(Series.retrieve(t, target[1], conn), arq)
         values = getMeasureValues(games)

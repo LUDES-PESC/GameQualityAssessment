@@ -5,11 +5,12 @@ Created on 14/07/2015
 @author: Augusto
 '''
 from __future__ import unicode_literals
-from code_pac import dataBaseAdapter
-from code_pac.gamePlots import GamePlots
-import code_pac.model as model
-from code_pac.measures import DramaByPaths, DramaByPointsUp2First, DramaByPositionUp2First, LeadChange, UncertaintyEntropy, UncertaintyPDD
-import code_pac.diceGame.model as diceGameModel
+from GameQualityAssessment.code_pac import dataBaseAdapter
+from GameQualityAssessment.code_pac.gamePlots import GamePlots
+import GameQualityAssessment.code_pac.model as model
+from GameQualityAssessment.code_pac.measures import DramaByPaths, DramaByPointsUp2First, DramaByPositionUp2First, LeadChange, UncertaintyEntropy, UncertaintyPDD
+import GameQualityAssessment.code_pac.diceGame.model as diceGameModel
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 import matplotlib.pyplot as plot
 
 from collections import namedtuple
@@ -46,12 +47,12 @@ def calculaIncertezaPDD(game):
 
     
 def plotaGraficoPorPontos(game):
-    obj = model.DiceGame(game);
-    GamePlots(obj).byPoints();
+    obj = model.DiceGame(game)
+    GamePlots(obj).byPoints()
 
 def plotaGraficoPorPosicao(game):
-    obj = model.DiceGame(game);
-    GamePlots(obj).byPosition();    
+    obj = model.DiceGame(game)
+    GamePlots(obj).byPosition()    
 
 def winnerPosition(x):
     return {
@@ -64,7 +65,7 @@ def winnerPosition(x):
 def plotaPieChart(numberWins):
     labels = 'Player 1', 'Player 2', 'Player 3', 'Player 4'
     explode = (0, 0, 0, 0)
-    fig1, ax1 = plot.subplots();
+    fig1, ax1 = plot.subplots()
     ax1.pie(numberWins, explode=explode, labels=labels, autopct='%1.1f%%',
         shadow=True, startangle=90)
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
@@ -72,15 +73,15 @@ def plotaPieChart(numberWins):
     
 def winnerPieChart(games):
     players = model.DiceGame(games[0]).getPlayers()
-    numberPlayers = len(players);
-    numberWins = [];
+    numberPlayers = len(players)
+    numberWins = []
     for i in range(numberPlayers):
-        numberWins.append(0);
+        numberWins.append(0)
     for game in games:
-        obj = model.DiceGame(game);
-        winner = obj.getWinner();
+        obj = model.DiceGame(game)
+        winner = obj.getWinner()
         numberWins[winnerPosition(winner)] = numberWins[winnerPosition(winner)] + 1        
-    print numberWins;
+    print (numberWins)
     plotaPieChart(numberWins)
         
 
@@ -90,49 +91,48 @@ def salvaArquivoValores(valores, arquivo):
             f.write("%s\n" % valor)   
 
 def calculaESalvaDramas(games, indiceVariante):
-    dramasPontos = [];
-    dramasPosicao = [];
-    dramasCaminho = [];
+    dramasPontos = []
+    dramasPosicao = []
+    dramasCaminho = []
     for game in games:
         dramasPontos.append(calculaDramaPorPontos(game))
         dramasPosicao.append(calculaDramaPorPosicao(game))
         dramasCaminho.append(calculaDramaPorCaminho(game))
         
-    salvaArquivoValores(dramasPontos, 'dramaporpontos_grupo'+ indiceVariante +'.txt')
-    salvaArquivoValores(dramasPosicao, 'dramaporposicao_grupo'+ indiceVariante +'.txt')
-    salvaArquivoValores(dramasCaminho, 'dramaporcaminho_grupo'+ indiceVariante +'.txt')
+    salvaArquivoValores(dramasPontos, abspath('code_pac/dramaporpontos_grupo'+ indiceVariante +'.txt'))
+    salvaArquivoValores(dramasPosicao, abspath('code_pac/dramaporposicao_grupo'+ indiceVariante +'.txt'))
+    salvaArquivoValores(dramasCaminho, abspath('code_pac/dramaporcaminho_grupo'+ indiceVariante +'.txt'))
 
 def calculaESalvaMudancaLideranca(games, indiceVariante):
-    mudancaLiderancao = [];
+    mudancaLiderancao = []
     for game in games:
         mudancaLiderancao.append(calculaMudancasLideranca(game))
-    salvaArquivoValores(mudancaLiderancao, 'leadchange_grupo'+ indiceVariante +'.txt')
+    salvaArquivoValores(mudancaLiderancao, abspath('code_pac/deadchange_grupo'+ indiceVariante +'.txt'))
     
     
 def calculaESalvaIncerteza(games, indiceVariante):
-    incertezaEntropia = [];
-    incertezaPDD = [];
+    incertezaEntropia = []
+    incertezaPDD = []
     for game in games:
         incertezaEntropia.append(calculaIncertezaEntropia(game))
         incertezaPDD.append(calculaIncertezaPDD(game))
-    salvaArquivoValores(incertezaEntropia, 'incertezaentropia_grupo'+ indiceVariante +'.txt')
-    salvaArquivoValores(incertezaPDD, 'incertezapdd_grupo'+ indiceVariante +'.txt')
-   
+    salvaArquivoValores(incertezaEntropia, abspath('code_pac/dncertezaentropia_grupo'+ indiceVariante +'.txt'))
+    salvaArquivoValores(incertezaPDD, abspath('code_pac/dncertezapdd_grupo'+ indiceVariante +'.txt'))
 
-    
-    
+
 if __name__ == '__main__':
-    games = diceGameModel.Game.retrieveList();
+    
+    games = diceGameModel.Game.retrieveList()
     
     #for game in games:
     #    print calculaIncertezaPDD(game);
     
     #winnerPieChart(games)
-    quebrando para nao rodar sem querer
-    indiceVariante = "2";
-    calculaESalvaDramas(games, indiceVariante);
-    calculaESalvaMudancaLideranca(games, indiceVariante);
-    calculaESalvaIncerteza(games, indiceVariante);
+    #quebrando para nao rodar sem querer
+    indiceVariante = "2"
+    calculaESalvaDramas(games, indiceVariante)
+    calculaESalvaMudancaLideranca(games, indiceVariante)
+    calculaESalvaIncerteza(games, indiceVariante)
     #print calculaDramaPorPontos(games[0]);
     #print calculaDramaPorCaminho(games[0]);
     #print calculaDramaPorPosicao(games[0]);

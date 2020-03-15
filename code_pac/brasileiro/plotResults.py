@@ -8,6 +8,8 @@ from __future__ import division
 import matplotlib.pyplot as plt
 import numpy as np
 import csv
+import codecs
+from GameQualityAssessment.project_path import make_absolute_path as abspath
 
 def normalizeData(dados):
     maxPoints= max(dados)
@@ -18,7 +20,7 @@ def normalizeData(dados):
     return retorno
 
 if __name__ == "__main__":
-    arq = csv.reader(open("tabela_resultados_full.csv", "r"))
+    arq = csv.reader(codecs.open(abspath("code_pac/brasileiro/tabela_resultados_full.csv"), "r", 'ansi'))
     tabela = []
     
     for linha in arq:
@@ -27,7 +29,8 @@ if __name__ == "__main__":
     #only data
     pre_dados = []
     edition = []
-    for i in xrange(1, len(tabela)):
+    for i in range(1, len(tabela)):
+        print(tabela[i])
         edition.append(int(tabela[i][0]))
         pre_dados.append([float(tabela[i][1]), float(tabela[i][2]), float(tabela[i][3])])
     

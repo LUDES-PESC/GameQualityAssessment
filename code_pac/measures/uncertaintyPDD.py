@@ -4,9 +4,9 @@ ge
 @author: mangeli
 '''
 from __future__ import division
-from code_pac.measures import MeasureTemplate, MeasureType
-from code_pac.model import GenericGame
-from code_pac.measures import probWinning
+from GameQualityAssessment.code_pac.measures import MeasureTemplate, MeasureType
+from GameQualityAssessment.code_pac.model import GenericGame
+from GameQualityAssessment.code_pac.measures import probWinning
 
 import math, sys
 
@@ -81,12 +81,12 @@ class UncertaintyPDD(MeasureTemplate):
             self._measureValue = matchUncertainty / (self._nTurns - 1)
                 
 if __name__ == '__main__':
-    import code_pac.brasileiro.model as brasileiroModel
-    import code_pac.model as model
-    import code_pac.measures as measures
+    import GameQualityAssessment.code_pac.brasileiro.model as brasileiroModel
+    import GameQualityAssessment.code_pac.model as model
+    import GameQualityAssessment.code_pac.measures as measures
     
-    from code_pac import dataBaseAdapter
-    import code_pac.desafio.model as desafioModel
+    from GameQualityAssessment.code_pac import dataBaseAdapter
+    import GameQualityAssessment.code_pac.desafio.model as desafioModel
     
     #set the test type (brasileiro = 1, desafio = 2)
     testType = 2
@@ -100,15 +100,15 @@ if __name__ == '__main__':
     if testType == 1:
         games = brasileiroModel.Game.retrieveList()
         for game in games:
-            print game.year
-            print measures.UncertaintyPDD(game=model.BrasileiroGame(game), ignored=0, scoreLimit=3).getMeasureValue()
-            print '==================='
+            print (game.year)
+            print (measures.UncertaintyPDD(game=model.BrasileiroGame(game), ignored=0, scoreLimit=3).getMeasureValue())
+            print ('===================')
     elif testType == 2:
         conn = dataBaseAdapter.getConnection()
         tournament = desafioModel.Tournament.retrieve(tournamentCode, conn)
         series = desafioModel.Series.retrieve(tournament, seriesCode, conn)
         game = desafioModel.Game(series, groupCode)
-        print tournament.refYear
-        print measures.UncertaintyPDD(game=model.DesafioGame(game), ignored=1, minScore=50).getMeasureValue()
-        print '================'
+        print (tournament.refYear)
+        print (measures.UncertaintyPDD(game=model.DesafioGame(game), ignored=1, minScore=50).getMeasureValue())
+        print ('================')
     
