@@ -9,7 +9,7 @@ In order to run the program, one need to follow the steps below:
 
 + Clone the repository
 ```
-git clone https://github.com/FilipeMSoares/GameQualityAssessment.git
+git clone https://github.com/LUDES-PESC/GameQualityAssessment
 ```
 + Create the virtual environment
 ```
